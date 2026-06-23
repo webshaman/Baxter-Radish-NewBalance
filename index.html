@@ -478,7 +478,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
     ['The House','Studio S','assets/house/20-studio-s.jpg','image'],
     ['Track record','King Princess - Fantastic','https://www.youtube.com/embed/t9mpyRzipww?autoplay=1&rel=0'],
     ['Radish Music','Meta x Oakley - Athletic Intelligence Is Here','https://www.youtube.com/embed/NerlyGrv7WM?autoplay=1&rel=0'],
-  ].map(([kicker,title,src,type]) => (
+  ].map(([kicker,title,src,type]) => ({
     kicker, title,
     bodyHtml: type === 'image'
       ? `<div class="video-embed"><img src="${src}" alt="${title}" style="width:100%;height:100%;object-fit:cover;display:block"></div>`
