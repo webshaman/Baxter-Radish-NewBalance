@@ -53,7 +53,7 @@ nav a:hover{color:#fff;padding-left:4px;transition:.2s ease}
 nav a.active-nav{color:#fff;padding-left:4px;border-bottom-color:var(--accent-2)}
 nav a.subnav{font-size:12px;color:var(--nav-fg-dim);padding-left:12px;font-weight:500}
 
-main{margin-left:var(--nav-w);padding:34px 44px 84px;max-width:none;min-height:100vh;background:var(--accent);
+main{margin-left:var(--nav-w);padding:34px 16px 84px;max-width:none;min-height:100vh;background:var(--accent);
   opacity:1;transition:opacity var(--fade-ms) ease}
 main.page-fade{opacity:.18}
 @media(prefers-reduced-motion:reduce){main{transition:none}main.page-fade{opacity:1}}
@@ -69,7 +69,7 @@ main > section.active-section{display:block}
 .hero.is-hidden{display:none}
 
 .hero{position:relative;overflow:hidden;background:var(--accent);color:#fff;padding:86px 72px;
-  box-shadow:none;margin:-34px -44px -84px;min-height:calc(100vh - 5px);display:flex;flex-direction:column;justify-content:center}
+  box-shadow:none;margin:-34px -16px -84px;min-height:calc(100vh - 5px);display:flex;flex-direction:column;justify-content:center}
 .eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:18px;font-weight:800;opacity:.85;margin-bottom:18px}
 h1.big{font-size:64px;line-height:1.02;margin:0 0 28px;letter-spacing:-1.4px;font-weight:800;color:#fff;max-width:1050px}
 .hero p{font-size:34px;max-width:990px;margin:0;color:#fff;font-weight:300}
@@ -155,13 +155,13 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 
 @media(max-width:1050px){
   nav{position:static;width:auto}
-  main{margin-left:0;padding:24px}
+  main{margin-left:0;padding:16px}
   body:after{left:0}
   .span-3,.span-4,.span-6,.span-8{grid-column:span 12}
   .video-grid{grid-template-columns:repeat(2,1fr)}
   .track-grid{grid-template-columns:1fr}
   .logo-row{grid-template-columns:1fr}
-  .hero{margin:-24px -24px 24px;padding:56px 32px}
+  .hero{margin:-16px -16px 24px;padding:56px 32px}
   h1.big,h2{font-size:52px}
   .hero p{font-size:24px}
   .eyebrow{font-size:13px}
@@ -180,7 +180,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   <a href="#who">Who Is Baxter House?</a>
   <a href="#who-radish">Who Is Radish?</a>
 
-  <div class="nav-group">Approach</div>
+  <div class="nav-group">Track Record</div>
   <a href="#track-record">Baxter → Music</a>
   <a href="#baxter-advertising">Baxter → Advertising</a>
   <a href="#radish-advertising">Radish → Advertising</a>
