@@ -35,8 +35,9 @@ html{scroll-behavior:auto}
 body{margin:0;background:var(--accent);color:var(--ink);
   font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;line-height:1.48}
 
-body:before{content:"";position:fixed;top:0;left:0;right:0;height:70px;background:linear-gradient(to bottom,rgba(0,0,0,.82),rgba(0,0,0,0));z-index:20;pointer-events:none}
-body:after{content:"";position:fixed;left:0;right:0;bottom:0;height:80px;background:linear-gradient(to top,rgba(0,0,0,.82),rgba(0,0,0,0));z-index:20;pointer-events:none}
+body:before{content:"";position:fixed;top:0;left:0;right:0;height:5px;background:var(--accent);z-index:20}
+body:after{content:"";position:fixed;left:var(--nav-w);right:0;bottom:0;height:120px;background:linear-gradient(to top,#000 0%,rgba(0,0,0,.82) 28%,rgba(0,0,0,0) 100%);z-index:60;pointer-events:none}
+main:before{content:"";position:fixed;left:var(--nav-w);right:0;top:0;height:120px;background:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.82) 28%,rgba(0,0,0,0) 100%);z-index:60;pointer-events:none}
 
 nav{position:fixed;top:5px;bottom:0;left:0;width:var(--nav-w);overflow:auto;
   background:var(--nav-bg);color:var(--nav-fg);padding:28px 24px}
@@ -148,6 +149,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 @media(max-width:1050px){
   nav{position:static;width:auto}
   main{margin-left:0;padding:24px}
+  body:after,main:before{left:0}
   .span-3,.span-4,.span-6,.span-8{grid-column:span 12}
   .video-grid{grid-template-columns:repeat(2,1fr)}
   .track-grid{grid-template-columns:1fr}
