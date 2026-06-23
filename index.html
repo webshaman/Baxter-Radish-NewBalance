@@ -114,8 +114,6 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 .partner-plain p{font-size:22px;line-height:1.42;color:rgba(255,255,255,.86);max-width:50%}
 .partner-logo{height:208px;max-width:520px;object-fit:contain;object-position:left center;margin-bottom:18px}
 .partner-logo.radish{height:208px;max-width:680px}
-.partner-grid{display:grid;grid-template-columns:minmax(520px,1fr) minmax(520px,1fr);gap:20px;align-items:start;margin-top:28px;max-width:1120px}
-.partner-grid .partner-plain{grid-column:auto}
 .span-3{grid-column:span 3}.span-4{grid-column:span 4}.span-6{grid-column:span 6}
 .span-8{grid-column:span 8}.span-12{grid-column:span 12}
 
@@ -156,7 +154,6 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   .video-grid{grid-template-columns:repeat(2,1fr)}
   .track-grid{grid-template-columns:1fr}
   .logo-row{grid-template-columns:1fr}
-  .partner-grid{grid-template-columns:1fr;gap:28px}
   .hero{margin:-24px -24px 24px;padding:56px 32px}
   h1.big,h2{font-size:52px}
   .hero p{font-size:24px}
@@ -210,9 +207,9 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   <!-- 2 - THE PARTNERSHIP -->
   <section id="partnership">
     <div class="section-head"><h2>Baxter House is thrilled to be partnering with Radish Music</h2></div>
-    <div class="partner-grid">
-      <div class="partner-plain"><img class="partner-logo" src="assets/baxter-house-logo.png" alt="Baxter House Music logo"><p>A culture-driven music company curating and championing some of today's most compelling new voices.</p></div>
-      <div class="partner-plain"><img class="partner-logo radish" src="assets/radish-music-logo.png" alt="Radish Music logo"><p>A creative music supervision company with strategy and culture at its core.</p></div>
+    <div class="grid" style="margin-top:28px">
+      <div class="partner-plain span-6"><img class="partner-logo" src="assets/baxter-house-logo.png" alt="Baxter House Music logo"><p>A culture-driven music company curating and championing some of today's most compelling new voices.</p></div>
+      <div class="partner-plain span-6"><img class="partner-logo radish" src="assets/radish-music-logo.png" alt="Radish Music logo"><p>A creative music supervision company with strategy and culture at its core.</p></div>
     </div>
   </section>
 
