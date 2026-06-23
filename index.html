@@ -93,6 +93,13 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 .video-card:hover img{transform:scale(1.045);filter:saturate(1.05) contrast(1.08) brightness(1.04)}
 .video-card:before{content:"▶";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:26px;text-shadow:0 2px 9px rgba(0,0,0,.75);z-index:1}
 .video-card span{position:absolute;left:0;right:0;bottom:0;padding:28px 9px 8px;font-size:11px;font-weight:700;background:linear-gradient(transparent,rgba(0,0,0,.82));z-index:2}
+.track-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.track-card{position:relative;display:block;aspect-ratio:16/10;overflow:hidden;background:#111;border:1px solid rgba(255,255,255,.28);color:#fff;text-decoration:none}
+.track-card img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.78);transition:.25s ease}
+.track-card:hover img{transform:scale(1.04);filter:brightness(.96)}
+.track-card:before{content:"▶";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:26px;text-shadow:0 2px 8px #000;z-index:1}
+.track-card .track-meta{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:32px 10px 10px;background:linear-gradient(transparent,rgba(0,0,0,.88))}
+.track-card b{display:block;font-size:13px;line-height:1.1}.track-card em{display:block;font-style:normal;font-size:11px;opacity:.82;margin-top:3px}
 .logo-strip{background:#fff;border:1px solid var(--line);padding:38px 44px;box-shadow:var(--shadow)}
 .logo-strip h3{margin:0 0 24px;text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--muted)}
 .logo-row{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;align-items:center}
@@ -142,6 +149,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   main{margin-left:0;padding:24px}
   .span-3,.span-4,.span-6,.span-8{grid-column:span 12}
   .video-grid{grid-template-columns:repeat(2,1fr)}
+  .track-grid{grid-template-columns:repeat(2,1fr)}
   .logo-row{grid-template-columns:1fr}
   .hero{margin:-24px -24px 24px;padding:56px 32px}
   h1.big,h2{font-size:52px}
@@ -241,18 +249,18 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 
   <!-- 5 - MUSIC TRACK RECORD -->
   <section id="track-record">
-    <div class="section-head"><h2>Baxter House Track Record</h2><div class="hint">Deep roots in pop, with an equal passion for music for picture.</div></div>
-    <div class="grid">
-      <div class="pill span-6">Bad Bunny</div>
-      <div class="pill span-6">BTS</div>
-      <div class="pill span-6">Rosalía</div>
-      <div class="pill span-6">Tate McRae</div>
-      <div class="pill span-6">Anderson .Paak</div>
-      <div class="pill span-6">Karol G</div>
-      <div class="pill span-6">David Guetta</div>
-      <div class="pill span-6">Rauw Alejandro</div>
-      <div class="pill span-6">U2</div>
-      <div class="pill span-6">OneRepublic</div>
+    <div class="section-head"><h2>Baxter House Track Record</h2><div class="hint">Selected Tyler Spry producer credits — click any tile to play.</div></div>
+    <div class="track-grid">
+      <a class="track-card openable" href="https://www.youtube.com/watch?v=gLSzEYVDads" data-item="9"><img src="https://img.youtube.com/vi/gLSzEYVDads/hqdefault.jpg" alt="Bad Bunny — DeBÍ TiRAR MáS FOToS"><span class="track-meta"><b>Bad Bunny</b><em>DeBÍ TiRAR MáS FOToS</em></span></a>
+      <a class="track-card openable" href="https://www.youtube.com/watch?v=gdZLi9oWNZg" data-item="10"><img src="https://img.youtube.com/vi/gdZLi9oWNZg/hqdefault.jpg" alt="BTS — Dynamite"><span class="track-meta"><b>BTS</b><em>Dynamite</em></span></a>
+      <a class="track-card openable" href="https://www.youtube.com/watch?v=5g2hT4GmAGU" data-item="11"><img src="https://img.youtube.com/vi/5g2hT4GmAGU/hqdefault.jpg" alt="Rosalía — Despechá"><span class="track-meta"><b>Rosalía</b><em>Despechá</em></span></a>
+      <a class="track-card openable" href="https://www.youtube.com/watch?v=YXt0Nw8xWh0" data-item="12"><img src="https://img.youtube.com/vi/YXt0Nw8xWh0/hqdefault.jpg" alt="Tate McRae — exes"><span class="track-meta"><b>Tate McRae</b><em>exes</em></span></a>
+      <a class="track-card openable" href="https://www.youtube.com/watch?v=7Jj83FOlBF8" data-item="13"><img src="https://img.youtube.com/vi/7Jj83FOlBF8/hqdefault.jpg" alt="Anderson .Paak — Make It Better"><span class="track-meta"><b>Anderson .Paak</b><em>Make It Better</em></span></a>
+      <a class="track-card openable" href="https://www.youtube.com/watch?v=NCmp7AV8O9s" data-item="14"><img src="https://img.youtube.com/vi/NCmp7AV8O9s/hqdefault.jpg" alt="KAROL G, Tiësto — CONTIGO"><span class="track-meta"><b>Karol G</b><em>CONTIGO</em></span></a>
+      <a class="track-card openable" href="https://www.youtube.com/watch?v=dSDbwfXX5_I" data-item="15"><img src="https://img.youtube.com/vi/dSDbwfXX5_I/hqdefault.jpg" alt="David Guetta & OneRepublic — I Don't Wanna Wait"><span class="track-meta"><b>David Guetta</b><em>I Don't Wanna Wait</em></span></a>
+      <a class="track-card openable" href="https://www.youtube.com/watch?v=UUzmHevEneY" data-item="16"><img src="https://img.youtube.com/vi/UUzmHevEneY/hqdefault.jpg" alt="Rauw Alejandro — Déjame Entrar"><span class="track-meta"><b>Rauw Alejandro</b><em>Déjame Entrar</em></span></a>
+      <a class="track-card openable" href="https://www.youtube.com/watch?v=WIPVM4cnIxg" data-item="17"><img src="https://img.youtube.com/vi/WIPVM4cnIxg/hqdefault.jpg" alt="U2 — You're The Best Thing About Me"><span class="track-meta"><b>U2</b><em>You're The Best Thing About Me</em></span></a>
+      <a class="track-card openable" href="https://www.youtube.com/watch?v=mNEUkkoUoIA" data-item="18"><img src="https://img.youtube.com/vi/mNEUkkoUoIA/hqdefault.jpg" alt="OneRepublic — I Ain't Worried"><span class="track-meta"><b>OneRepublic</b><em>I Ain't Worried</em></span></a>
     </div>
     <p class="footnote">Collaborations with leading film and television studios, plus hundreds of placements across global advertising campaigns.</p>
   </section>
@@ -402,11 +410,28 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
     ['Rauw Alejandro - Déjame Entrar','UUzmHevEneY'],
     ['Tate McRae - exes','YXt0Nw8xWh0']
   ];
-  const ITEMS = VIDEO_ITEMS.map(([title,id]) => ({
-    kicker: 'Video reel',
-    title,
-    bodyHtml: `<div class="video-embed"><iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe></div>`
-  }));
+  const TRACK_ITEMS = [
+    ['Bad Bunny - DeBÍ TiRAR MáS FOToS','gLSzEYVDads'],
+    ['BTS - Dynamite','gdZLi9oWNZg'],
+    ['Rosalía - Despechá','5g2hT4GmAGU'],
+    ['Tate McRae - exes','YXt0Nw8xWh0'],
+    ['Anderson .Paak - Make It Better','7Jj83FOlBF8'],
+    ['Karol G - CONTIGO','NCmp7AV8O9s'],
+    ['David Guetta - I Don\'t Wanna Wait','dSDbwfXX5_I'],
+    ['Rauw Alejandro - Déjame Entrar','UUzmHevEneY'],
+    ['U2 - You\'re The Best Thing About Me','WIPVM4cnIxg'],
+    ['OneRepublic - I Ain\'t Worried','mNEUkkoUoIA']
+  ];
+  const ITEMS = [
+    ...VIDEO_ITEMS.map(([title,id]) => ({
+      kicker: 'Video reel', title,
+      bodyHtml: `<div class="video-embed"><iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe></div>`
+    })),
+    ...TRACK_ITEMS.map(([title,id]) => ({
+      kicker: 'Tyler Spry producer credit', title,
+      bodyHtml: `<div class="video-embed"><iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe></div>`
+    }))
+  ];
   const modal = document.getElementById('modal');
   let current = 0;
   function render(i){
