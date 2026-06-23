@@ -152,7 +152,8 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:16px 20px}
 .modal-head h3{margin:0;color:#fff;font-size:22px}
 .modal-kicker{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.72);font-weight:800;margin-bottom:6px}
-.modal-actions{display:flex;gap:6px;align-items:center}
+.modal-actions{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end;max-width:86px}
+.modal-count{flex-basis:100%;text-align:center;color:rgba(255,255,255,.74);font-size:12px;font-weight:700;letter-spacing:.08em;margin-top:2px}
 .modal-actions button{border:0;background:var(--accent);color:#fff;font-size:18px;min-width:34px;height:34px;cursor:pointer;font-weight:800}
 .modal-actions .modal-close{background:var(--nav-bg)}
 .modal-body{padding:18px 20px;color:#fff}
@@ -363,6 +364,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
         <button type="button" id="modalPrev" aria-label="Previous" title="Previous - Left arrow">&#8249;</button>
         <button type="button" id="modalNext" aria-label="Next" title="Next - Right arrow">&#8250;</button>
         <button type="button" class="modal-close" id="modalClose" aria-label="Close">&#215;</button>
+        <div class="modal-count" id="modalCount"></div>
       </div>
     </div>
     <div class="modal-body" id="modalBody"></div>
@@ -476,6 +478,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   }));
   const modal = document.getElementById('modal');
   let current = 0;
+  let modalGroup = ITEMS.map((_, i) => i);
   function render(i){
     if(!ITEMS.length) return;
     current = (i + ITEMS.length) % ITEMS.length;
@@ -483,16 +486,29 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
     document.getElementById('modalKicker').textContent = it.kicker || '';
     document.getElementById('modalTitle').textContent = it.title || '';
     document.getElementById('modalBody').innerHTML = it.bodyHtml || '';
+    const groupPos = modalGroup.indexOf(current);
+    document.getElementById('modalCount').textContent = groupPos >= 0 ? `${groupPos + 1} of ${modalGroup.length}` : '';
     modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
+  }
+  function moveModal(delta){
+    const pos = modalGroup.indexOf(current);
+    if(pos < 0) return render(current + delta);
+    render(modalGroup[(pos + delta + modalGroup.length) % modalGroup.length]);
   }
   const close = () => {
     modal.classList.remove('open'); modal.setAttribute('aria-hidden','true');
     document.getElementById('modalBody').innerHTML = ''; // stop video playback
   };
   document.querySelectorAll('.openable').forEach(el =>
-    el.addEventListener('click', e => { e.preventDefault(); render(parseInt(el.dataset.item,10) || 0); }));
-  document.getElementById('modalPrev').addEventListener('click', () => render(current-1));
-  document.getElementById('modalNext').addEventListener('click', () => render(current+1));
+    el.addEventListener('click', e => {
+      e.preventDefault();
+      const section = el.closest('section');
+      modalGroup = Array.from(section ? section.querySelectorAll('.openable[data-item]') : document.querySelectorAll('.openable[data-item]'))
+        .map(node => parseInt(node.dataset.item,10)).filter(Number.isFinite);
+      render(parseInt(el.dataset.item,10) || 0);
+    }));
+  document.getElementById('modalPrev').addEventListener('click', () => moveModal(-1));
+  document.getElementById('modalNext').addEventListener('click', () => moveModal(1));
   document.getElementById('modalClose').addEventListener('click', close);
   modal.addEventListener('click', e => { if(e.target === modal) close(); });
 
@@ -501,8 +517,8 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
     const open = modal.classList.contains('open');
     if(e.key === 'Escape'){ close(); return; }
     if(open){
-      if(e.key === 'ArrowLeft'){ e.preventDefault(); render(current-1); }
-      if(e.key === 'ArrowRight'){ e.preventDefault(); render(current+1); }
+      if(e.key === 'ArrowLeft'){ e.preventDefault(); moveModal(-1); }
+      if(e.key === 'ArrowRight'){ e.preventDefault(); moveModal(1); }
       return;
     }
     if(['ArrowRight','ArrowDown','PageDown'].includes(e.key)){ e.preventDefault(); moveSection(1); }
