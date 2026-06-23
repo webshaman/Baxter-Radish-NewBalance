@@ -93,7 +93,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 .video-card:hover img{transform:scale(1.045);filter:saturate(1.05) contrast(1.08) brightness(1.04)}
 .video-card:before{content:"▶";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:26px;text-shadow:0 2px 9px rgba(0,0,0,.75);z-index:1}
 .video-card span{position:absolute;left:0;right:0;bottom:0;padding:28px 9px 8px;font-size:11px;font-weight:700;background:linear-gradient(transparent,rgba(0,0,0,.82));z-index:2}
-.track-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.track-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
 .track-card{position:relative;display:block;aspect-ratio:16/10;overflow:hidden;background:#111;border:1px solid rgba(255,255,255,.28);color:#fff;text-decoration:none}
 .track-card img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.78);transition:.25s ease}
 .track-card:hover img{transform:scale(1.04);filter:brightness(.96)}
@@ -130,7 +130,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.86);display:none;align-items:center;
   justify-content:center;z-index:100;padding:18px}
 .modal-backdrop.open{display:flex}
-.modal{background:#141416;width:min(1760px,98vw);max-height:96vh;overflow:auto;border:1px solid #fff;
+.modal{background:#141416;width:min(98vw, calc((96vh - 74px) * 1.777));max-height:96vh;overflow:hidden;border:1px solid #fff;
   box-shadow:0 30px 80px rgba(0,0,0,.62)}
 .modal-head{position:sticky;top:0;z-index:2;background:#141416;border-bottom:1px solid rgba(255,255,255,.35);
   display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:16px 20px}
@@ -149,7 +149,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   main{margin-left:0;padding:24px}
   .span-3,.span-4,.span-6,.span-8{grid-column:span 12}
   .video-grid{grid-template-columns:repeat(2,1fr)}
-  .track-grid{grid-template-columns:repeat(2,1fr)}
+  .track-grid{grid-template-columns:1fr}
   .logo-row{grid-template-columns:1fr}
   .hero{margin:-24px -24px 24px;padding:56px 32px}
   h1.big,h2{font-size:52px}
