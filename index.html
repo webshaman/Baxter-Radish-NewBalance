@@ -56,6 +56,7 @@ nav a:hover{color:#fff;padding-left:4px;transition:.2s ease}
 a:focus,button:focus{outline:none}
 nav a.active-nav{color:#fff;padding-left:4px;border-bottom-color:var(--accent-2)}
 nav a.subnav{font-size:12px;color:var(--nav-fg-dim);padding-left:12px;font-weight:500}
+.nav-toggle{display:none;position:fixed;top:14px;left:14px;z-index:95;width:42px;height:42px;border:1px solid rgba(255,255,255,.6);background:#111;color:#fff;font-size:24px;font-weight:800;line-height:1;cursor:pointer}
 
 main{position:relative;margin-left:var(--nav-w);padding:34px 16px 84px;max-width:none;min-height:100vh;background:var(--accent);
   opacity:1;transition:opacity var(--fade-ms) ease}
@@ -175,7 +176,10 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 .video-embed iframe{width:100%;height:100%;border:0;display:block}
 
 @media(max-width:1050px){
-  nav{position:static;width:auto}
+  .nav-toggle{display:block}
+  nav{position:fixed;top:0;bottom:0;left:0;width:min(320px,86vw);z-index:94;transform:translateX(-105%);transition:transform .22s ease;box-shadow:18px 0 50px rgba(0,0,0,.45);padding-top:72px}
+  nav.nav-open{transform:translateX(0)}
+  body.nav-is-open:before{content:"";position:fixed;inset:0;background:rgba(0,0,0,.52);z-index:93}
   main{margin-left:0;padding:16px}
   body:after,main:after{left:0}
   .span-3,.span-4,.span-6,.span-8{grid-column:span 12}
@@ -195,8 +199,11 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 </head>
 <body>
 
+<!-- ===================== MOBILE NAV TOGGLE ===================== -->
+<button type="button" class="nav-toggle" id="navToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+
 <!-- ===================== SIDEBAR NAV ===================== -->
-<nav aria-label="Section navigation">
+<nav id="sideNav" aria-label="Section navigation">
   <h1>Baxter House<br/>&times; Radish Music</h1>
 
   <div class="nav-group">Introduction</div>
@@ -398,6 +405,8 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   /* ---------- SLIDE NAVIGATION ---------- */
   const main = document.querySelector('main');
   const hero = document.querySelector('.hero');
+  const sideNav = document.getElementById('sideNav');
+  const navToggle = document.getElementById('navToggle');
   const navLinks = Array.from(document.querySelectorAll('nav a[href^="#"]'));
   const sectionIds = navLinks.map(a => a.getAttribute('href'))
     .filter((v,i,a)=>a.indexOf(v)===i).map(h=>h.slice(1));
@@ -425,10 +434,18 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
     if(next < 0 || next >= sectionIds.length) return;
     showSection(sectionIds[next]);
   }
+  function setNavOpen(open){
+    if(!sideNav || !navToggle) return;
+    sideNav.classList.toggle('nav-open', open);
+    document.body.classList.toggle('nav-is-open', open);
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    navToggle.textContent = open ? '×' : '☰';
+  }
+  if(navToggle) navToggle.addEventListener('click', () => setNavOpen(!sideNav.classList.contains('nav-open')));
   navLinks.forEach(link => link.addEventListener('click', e => {
     const id = link.getAttribute('href').slice(1);
     if(!document.getElementById(id)) return;
-    e.preventDefault(); showSection(id);
+    e.preventDefault(); showSection(id); setNavOpen(false);
   }));
   document.getElementById('sectionPrev').addEventListener('click', () => moveSection(-1));
   document.getElementById('sectionNext').addEventListener('click', () => moveSection(1));
@@ -539,7 +556,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   /* ---------- KEYBOARD (modal takes precedence over deck) ---------- */
   document.addEventListener('keydown', e => {
     const open = modal.classList.contains('open');
-    if(e.key === 'Escape'){ close(); return; }
+    if(e.key === 'Escape'){ close(); setNavOpen(false); return; }
     if(open){
       if(e.key === 'ArrowLeft'){ e.preventDefault(); moveModal(-1); }
       if(e.key === 'ArrowRight'){ e.preventDefault(); moveModal(1); }
