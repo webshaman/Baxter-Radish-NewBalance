@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>New Balance - Baxter House × Radish Music</title>
+<style>
+/* ----------------------------------------------------------------------------
+   COLOR / BRAND TOKENS - edit ONLY these to rebrand (design pass comes next).
+   Neutral grayscale placeholder for now.
+---------------------------------------------------------------------------- */
+:root{
+  --nav-bg:#1a1a1a;
+  --nav-fg:#e8e8e8;
+  --nav-fg-dim:#9aa0a6;
+  --nav-line:rgba(255,255,255,.10);
+  --accent:#000000;          /* black */
+  --accent-2:#2a2a2a;        /* charcoal */
+  --ink:#161616;
+  --muted:#5a5a5a;
+  --paper:#ffffff;
+  --bg:#f7f4ef;
+  --soft:#f1ece4;
+  --line:#e0e0e0;
+  --shadow:0 10px 24px rgba(0,0,0,.08);
+  --nav-w:300px;
+  --fade-ms:170ms;
+}
+
+/* ----------------------------------------------------------------------------
+   LAYOUT + INTERACTION - leave as-is.
+---------------------------------------------------------------------------- */
+*{box-sizing:border-box}
+html{scroll-behavior:auto}
+body{margin:0;background:var(--accent);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;line-height:1.48}
+
+body:before{content:"";position:fixed;top:0;left:0;right:0;height:5px;background:var(--accent);z-index:20}
+
+nav{position:fixed;top:5px;bottom:0;left:0;width:var(--nav-w);overflow:auto;
+  background:var(--nav-bg);color:var(--nav-fg);padding:28px 24px}
+nav h1{margin:0 0 24px;color:#fff;font-size:19px;line-height:1.15;font-weight:700;
+  padding-bottom:18px;border-bottom:2px solid var(--accent)}
+nav h1:before{content:"FOR NEW BALANCE";display:block;color:var(--nav-fg-dim);font-size:11px;
+  letter-spacing:.16em;text-transform:uppercase;margin-bottom:8px;font-weight:700}
+.nav-group{margin:20px 0 5px;color:var(--nav-fg-dim);font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;font-weight:800;border-bottom:1px solid var(--nav-line);padding-bottom:5px}
+.nav-group:first-of-type{margin-top:0}
+nav a{display:block;color:var(--nav-fg);text-decoration:none;padding:8px 0;
+  border-bottom:1px solid var(--nav-line);font-size:13px;font-weight:600}
+nav a:hover{color:#fff;padding-left:4px;transition:.2s ease}
+nav a.active-nav{color:#fff;padding-left:4px;border-bottom-color:var(--accent-2)}
+nav a.subnav{font-size:12px;color:var(--nav-fg-dim);padding-left:12px;font-weight:500}
+
+main{margin-left:var(--nav-w);padding:34px 44px 84px;max-width:none;min-height:100vh;background:var(--accent);
+  opacity:1;transition:opacity var(--fade-ms) ease}
+main.page-fade{opacity:.18}
+@media(prefers-reduced-motion:reduce){main{transition:none}main.page-fade{opacity:1}}
+
+.section-controls{position:fixed;top:18px;right:22px;z-index:30;display:flex;gap:6px}
+.section-controls button{border:1px solid #fff;background:var(--nav-bg);color:#fff;width:34px;height:34px;
+  font-size:18px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.18)}
+.section-controls button:hover{background:var(--accent)}
+
+section{margin:32px 0;scroll-margin-top:28px}
+main > section{display:none}
+main > section.active-section{display:block}
+.hero.is-hidden{display:none}
+
+.hero{position:relative;overflow:hidden;background:var(--accent);color:#fff;padding:86px 72px;
+  box-shadow:none;margin:-34px -44px -84px;min-height:calc(100vh - 5px);display:flex;flex-direction:column;justify-content:center}
+.eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:18px;font-weight:800;opacity:.85;margin-bottom:18px}
+h1.big{font-size:64px;line-height:1.02;margin:0 0 28px;letter-spacing:-1.4px;font-weight:800;color:#fff;max-width:1050px}
+.hero p{font-size:34px;max-width:990px;margin:0;color:#fff;font-weight:300}
+.meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.tag{border:1px solid rgba(255,255,255,.55);padding:8px 11px;color:#fff;font-size:13px;
+  background:rgba(255,255,255,.10);font-weight:600}
+
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:22px;margin:10px 0 16px;
+  border-bottom:1px solid rgba(255,255,255,.24);padding-bottom:12px}
+h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;font-weight:800;max-width:1050px}
+.hint{color:rgba(255,255,255,.78);font-size:15px;max-width:650px}
+.lead{font-size:18px;color:#fff;max-width:860px;margin:0 0 18px;font-weight:400}
+.footnote{color:rgba(255,255,255,.78);font-size:14px;margin-top:18px;max-width:900px}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.card{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.28);padding:20px 21px;box-shadow:0 2px 8px rgba(0,0,0,.08);color:#fff}
+.card h3{margin:0 0 9px;color:#fff;font-size:19px;line-height:1.22;font-weight:700}
+.card p{margin:0;color:rgba(255,255,255,.82)}
+.pill{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.28);padding:14px 18px;font-weight:700;color:#fff}
+.video-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.video-card{position:relative;display:block;aspect-ratio:16/9;overflow:hidden;background:#000;color:#fff;text-decoration:none;border:1px solid rgba(0,0,0,.18)}
+.video-card img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.92) contrast(1.03);transition:transform .25s ease,filter .25s ease}
+.video-card:hover img{transform:scale(1.045);filter:saturate(1.05) contrast(1.08) brightness(1.04)}
+.video-card:before{content:"▶";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:26px;text-shadow:0 2px 9px rgba(0,0,0,.75);z-index:1}
+.video-card span{position:absolute;left:0;right:0;bottom:0;padding:28px 9px 8px;font-size:11px;font-weight:700;background:linear-gradient(transparent,rgba(0,0,0,.82));z-index:2}
+.logo-strip{background:#fff;border:1px solid var(--line);padding:38px 44px;box-shadow:var(--shadow)}
+.logo-strip h3{margin:0 0 24px;text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--muted)}
+.logo-row{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;align-items:center}
+.logo-tile{min-height:170px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;padding:34px;background:#fff}
+.logo-tile img{max-width:78%;max-height:96px;object-fit:contain}
+.logo-tile.baxter img{max-height:118px}
+.logo-tile.radish img{max-height:130px;max-width:88%}
+.partner-plain{background:transparent;border:0;box-shadow:none;padding:0;color:#fff}
+.partner-plain h3{font-size:28px;color:#fff}
+.partner-plain p{font-size:22px;line-height:1.42;color:rgba(255,255,255,.86);max-width:50%}
+.partner-logo{height:208px;max-width:520px;object-fit:contain;object-position:left center;margin-bottom:18px}
+.partner-logo.radish{height:208px;max-width:680px}
+.span-3{grid-column:span 3}.span-4{grid-column:span 4}.span-6{grid-column:span 6}
+.span-8{grid-column:span 8}.span-12{grid-column:span 12}
+
+.collapse{background:#fff;border:1px solid var(--line);margin:10px 0;overflow:hidden;box-shadow:0 1px 5px rgba(0,0,0,.035)}
+.collapse h3{font-size:18px;margin:0;color:var(--ink);font-weight:700;padding:16px 52px 16px 18px;
+  cursor:pointer;position:relative}
+.collapse h3:after{content:"+";position:absolute;right:18px;top:13px;color:var(--accent-2);font-size:22px}
+.collapse.open h3{background:var(--soft)}
+.collapse.open h3:after{content:"\2013"}
+.collapse-body{display:none;padding:0 18px 18px;color:var(--muted)}
+.collapse.open .collapse-body{display:block}
+
+.openable{cursor:pointer}
+.openable:hover{text-decoration:underline}
+
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.62);display:none;align-items:center;
+  justify-content:center;z-index:100;padding:24px}
+.modal-backdrop.open{display:flex}
+.modal{background:#fff;width:min(880px,96vw);max-height:90vh;overflow:auto;border:1px solid var(--line);
+  box-shadow:0 24px 60px rgba(0,0,0,.35)}
+.modal-head{position:sticky;top:0;z-index:2;background:var(--soft);border-bottom:1px solid var(--line);
+  display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:16px 20px}
+.modal-head h3{margin:0;color:var(--ink);font-size:22px}
+.modal-kicker{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--accent-2);font-weight:800;margin-bottom:6px}
+.modal-actions{display:flex;gap:6px;align-items:center}
+.modal-actions button{border:0;background:var(--accent);color:#fff;font-size:18px;min-width:34px;height:34px;cursor:pointer;font-weight:800}
+.modal-actions .modal-close{background:var(--nav-bg)}
+.modal-body{padding:18px 20px;color:var(--ink)}
+.modal-body ul{padding-left:18px}
+.video-embed{aspect-ratio:16/9;background:#000;margin:-18px -20px 0}
+.video-embed iframe{width:100%;height:100%;border:0;display:block}
+
+@media(max-width:1050px){
+  nav{position:static;width:auto}
+  main{margin-left:0;padding:24px}
+  .span-3,.span-4,.span-6,.span-8{grid-column:span 12}
+  .video-grid{grid-template-columns:repeat(2,1fr)}
+  .logo-row{grid-template-columns:1fr}
+  .hero{margin:-24px -24px 24px;padding:56px 32px}
+  h1.big,h2{font-size:52px}
+  .hero p{font-size:24px}
+  .eyebrow{font-size:13px}
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== SIDEBAR NAV ===================== -->
+<nav aria-label="Section navigation">
+  <h1>Baxter House<br/>&times; Radish Music</h1>
+
+  <div class="nav-group">Introduction</div>
+  <a href="#cover">Cover</a>
+  <a href="#partnership">The Partnership</a>
+  <a href="#who">Who Is Baxter House?</a>
+  <a href="#who-radish">Who Is Radish?</a>
+
+  <div class="nav-group">Approach &amp; Track Record</div>
+  <a href="#approach">Sound, Story &amp; Visual Context</a>
+  <a href="#track-record">Music Track Record</a>
+  <a href="#video-reel">Video Reel</a>
+  <a href="#advertising">Advertising Track Record</a>
+
+  <div class="nav-group">Team &amp; Studio</div>
+  <a href="#max-levin">Featuring: Max Levin</a>
+  <a href="#the-house">The House</a>
+
+  <div class="nav-group">Next Steps</div>
+  <a href="#closing">Let's Build Something Together</a>
+</nav>
+
+<!-- ===================== SECTION CONTROLS ===================== -->
+<div class="section-controls" aria-label="Slide navigation">
+  <button type="button" id="sectionPrev" title="Previous slide - Left arrow">&#8249;</button>
+  <button type="button" id="sectionNext" title="Next slide - Right arrow">&#8250;</button>
+</div>
+
+<!-- ===================== MAIN SLIDE AREA ===================== -->
+<main>
+  <!-- hero shows only on the first slide -->
+  <div class="hero">
+    <div class="eyebrow">A music &amp; creative proposal for</div>
+    <h1 class="big">New Balance</h1>
+    <p>Presented by Baxter House &amp; Radish Music</p>
+  </div>
+
+  <!-- 1 - COVER -->
+  <section id="cover"></section>
+
+  <!-- 2 - THE PARTNERSHIP -->
+  <section id="partnership">
+    <div class="section-head"><h2>Baxter House is thrilled to be partnering with Radish Music</h2></div>
+    <div class="grid" style="margin-top:28px">
+      <div class="partner-plain span-6"><img class="partner-logo" src="assets/baxter-house-logo.png" alt="Baxter House Music logo"><p>A culture-driven music company curating and championing some of today's most compelling new voices.</p></div>
+      <div class="partner-plain span-6"><img class="partner-logo radish" src="assets/radish-music-logo.png" alt="Radish Music logo"><p>A creative music supervision company with strategy and culture at its core.</p></div>
+    </div>
+  </section>
+
+  <!-- 3 - WHO IS BAXTER HOUSE -->
+  <section id="who">
+    <div class="section-head"><h2>Who is Baxter House?</h2></div>
+    <p class="lead">A culture-driven music company dedicated to curating and championing some of the most compelling new voices shaping today's landscape.</p>
+  </section>
+
+  <!-- 4 - WHO IS RADISH -->
+  <section id="who-radish">
+    <div class="section-head"><h2>Who is Radish?</h2></div>
+    <div class="grid">
+      <div class="card span-6">
+        <h3>Full-service supervision</h3>
+        <p>Radish is a full-service supervision team specializing in advertising, film, and television.</p>
+      </div>
+      <div class="card span-6">
+        <h3>Impactful musical experiences</h3>
+        <p>They partner with artists, directors, and brands through supervision, licensing, original composition, and creative strategy.</p>
+      </div>
+      <div class="card span-12">
+        <h3>Award-winning campaigns for</h3>
+        <div class="meta" style="margin-top:12px">
+          <span class="tag">Apple</span>
+          <span class="tag">Uber Eats</span>
+          <span class="tag">Verizon</span>
+          <span class="tag">Visa</span>
+          <span class="tag">Jeep</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 - SOUND, STORY & VISUAL CONTEXT -->
+  <section id="approach">
+    <div class="section-head"><h2>Sound, Story &amp; Visual Context</h2><div class="hint">The moment music lands in culture is multifaceted - sound, story, and visual context.</div></div>
+    <div class="grid">
+      <div class="card span-6"><h3>Music for Picture</h3><p>We develop music that translates seamlessly to picture and leaves a lasting imprint.</p></div>
+      <div class="card span-6"><h3>Sync as Artist Marketing</h3><p>We treat sync as the modern engine of artist marketing, with a brand-first mindset.</p></div>
+      <div class="card span-6"><h3>Cultural Entities</h3><p>We see our artists as enduring cultural entities, not one-dimensional acts.</p></div>
+      <div class="card span-6"><h3>Collaboration &amp; Trust</h3><p>Our model is built on collaboration, trust, shared creative ambition, and the power of real-world, IRL presentation.</p></div>
+    </div>
+  </section>
+
+  <!-- 5 - MUSIC TRACK RECORD -->
+  <section id="track-record">
+    <div class="section-head"><h2>Baxter House Track Record</h2><div class="hint">Deep roots in pop, with an equal passion for music for picture.</div></div>
+    <div class="grid">
+      <div class="pill span-6">Bad Bunny</div>
+      <div class="pill span-6">BTS</div>
+      <div class="pill span-6">Rosalía</div>
+      <div class="pill span-6">Tate McRae</div>
+      <div class="pill span-6">Anderson .Paak</div>
+      <div class="pill span-6">Karol G</div>
+      <div class="pill span-6">David Guetta</div>
+      <div class="pill span-6">Rauw Alejandro</div>
+      <div class="pill span-6">U2</div>
+      <div class="pill span-6">OneRepublic</div>
+    </div>
+    <p class="footnote">Collaborations with leading film and television studios, plus hundreds of placements across global advertising campaigns.</p>
+  </section>
+
+  <!-- 6 - VIDEO REEL -->
+  <section id="video-reel">
+    <div class="section-head"><h2>Selected music video reel</h2><div class="hint">Click any tile to open the source video in a new tab.</div></div>
+    <div class="video-grid">
+      <a class="video-card openable" href="https://www.youtube.com/watch?v=gLSzEYVDads" data-item="0"><img src="thumbs/01-bad-bunny.jpg" alt="Bad Bunny - DeBÍ TiRAR MáS FOToS"><span>Bad Bunny - DeBÍ TiRAR MáS FOToS</span></a>
+      <a class="video-card openable" href="https://www.youtube.com/watch?v=ea5c7TYW62E" data-item="1"><img src="thumbs/02-maroon-5.jpg" alt="Maroon 5 - Cigarettes"><span>Maroon 5 - Cigarettes</span></a>
+      <a class="video-card openable" href="https://www.youtube.com/watch?v=nNYOk4y8RsA" data-item="2"><img src="thumbs/03-almost-monday.jpg" alt="almost monday - enjoy the ride"><span>almost monday - enjoy the ride</span></a>
+      <a class="video-card openable" href="https://www.youtube.com/watch?v=DEEL9nvxwsc" data-item="3"><img src="thumbs/04-dove-cameron.jpg" alt="Dove Cameron - Too Much"><span>Dove Cameron - Too Much</span></a>
+      <a class="video-card openable" href="https://www.youtube.com/watch?v=cVG807Biok4" data-item="4"><img src="thumbs/05-tate-mcrae-i-know-love.jpg" alt="Tate McRae - I know love"><span>Tate McRae - I know love</span></a>
+      <a class="video-card openable" href="https://www.youtube.com/watch?v=dSDbwfXX5_I" data-item="5"><img src="thumbs/08-david-guetta-onerepublic.jpg" alt="David Guetta & OneRepublic - I Don't Wanna Wait"><span>David Guetta & OneRepublic</span></a>
+      <a class="video-card openable" href="https://www.youtube.com/watch?v=NCmp7AV8O9s" data-item="6"><img src="thumbs/11-karol-g-tiesto-contigo.jpg" alt="KAROL G, Tiësto - CONTIGO"><span>KAROL G, Tiësto - CONTIGO</span></a>
+      <a class="video-card openable" href="https://www.youtube.com/watch?v=UUzmHevEneY" data-item="7"><img src="thumbs/13-rauw-alejandro.jpg" alt="Rauw Alejandro - Déjame Entrar"><span>Rauw Alejandro - Déjame Entrar</span></a>
+      <a class="video-card openable" href="https://www.youtube.com/watch?v=YXt0Nw8xWh0" data-item="8"><img src="thumbs/15-tate-mcrae-exes.jpg" alt="Tate McRae - exes"><span>Tate McRae - exes</span></a>
+    </div>
+  </section>
+
+  <!-- 7 - ADVERTISING TRACK RECORD -->
+  <section id="advertising">
+    <div class="section-head"><h2>Baxter House Advertising Track Record</h2><div class="hint">Deep roots in pop, with an equal passion for music for picture.</div></div>
+    <div class="grid">
+      <div class="pill span-6">Olympics × Coke - "Hello World"</div>
+      <div class="pill span-6">New Balance 2026</div>
+      <div class="pill span-6">Super Bowl 2025 - Novartis "I See You Looking" (Allister X, Love Lola Love)</div>
+      <div class="pill span-6">"Just Keep Watching" - Tate McRae - F1 The Movie</div>
+      <div class="pill span-6">Meduza - Official UEFA 2024</div>
+      <div class="pill span-6">Pepsi "Debut" - KATSEYE</div>
+      <div class="pill span-6">Top Gun: Maverick - "I Ain't Worried" (Beach scene)</div>
+      <div class="pill span-6">Degree - FIFA World Cup 2026</div>
+      <div class="pill span-6">Virgin Cruises - The Voyage</div>
+      <div class="pill span-6">BMW - SSE</div>
+    </div>
+    <p class="footnote">Collaborations with leading film and television studios, plus hundreds of placements across global advertising campaigns.</p>
+  </section>
+
+  <!-- 7 - FEATURING: MAX LEVIN -->
+  <section id="max-levin">
+    <div class="section-head"><h2>Baxter House featuring: Max Levin, Creative Director</h2><div class="hint">producer • songwriter</div></div>
+    <p class="lead">A multi-platinum producer, songwriter, and pianist based in Los Angeles - recognized for ear-catching melodies, exceptional sound design, and infectious drum grooves.</p>
+    <div class="grid">
+      <div class="card span-3"><h3>New Balance 2026</h3><p>Recently tapped for New Balance's 2026 Global Campaign, creating music arrangements across the hero spots.</p></div>
+      <div class="card span-3"><h3>Billboard #1</h3><p>Landed a #1 on the Billboard 200 with ATEEZ last year.</p></div>
+      <div class="card span-3"><h3>Artist Collaborations</h3><p>Worked with Travis Scott, Ciara, Tinashe, Burna Boy, Wale, Macklemore, Big Freedia, and ZEROBASEONE.</p></div>
+      <div class="card span-3"><h3>Touring Roots</h3><p>Roots as a touring musician and music director, honed across rhythmic, pop, and world genres.</p></div>
+    </div>
+  </section>
+
+  <!-- 8 - THE HOUSE -->
+  <section id="the-house">
+    <div class="section-head"><h2>The House</h2></div>
+    <p class="lead">A creative compound in the heart of Los Angeles - sweeping views, stunning architecture, and 6 state-of-the-art music studios.</p>
+    <div class="grid">
+      <div class="card span-6"><h3>Collaborate In Person</h3><p>Our best results come from spending meaningful time collaborating with our partners in person.</p></div>
+      <div class="card span-6"><h3>Make Yourself at Home</h3><p>Bring your concepts, and spend the day in our creative space - built for bold ideas and real creative breakthroughs.</p></div>
+    </div>
+  </section>
+
+  <!-- 9 - CLOSING -->
+  <section id="closing">
+    <div class="section-head"><h2>Let's Build Something Together</h2><div class="hint">Baxter House × Radish Music - for New Balance</div></div>
+    <div class="grid">
+      <div class="card span-4"><h3>Music Supervision</h3><p>Full-service creative strategy and licensing for your campaign.</p></div>
+      <div class="card span-4"><h3>Original Composition</h3><p>Bespoke music crafted to picture, built to resonate in culture.</p></div>
+      <div class="card span-4"><h3>Creative Partnership</h3><p>A collaborative, brand-first approach rooted in trust and shared ambition.</p></div>
+    </div>
+  </section>
+</main>
+
+<!-- ===================== DETAIL MODAL (unused in scaffold; kept for design pass) ===================== -->
+<div class="modal-backdrop" id="modal" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-head">
+      <div><div class="modal-kicker" id="modalKicker">Item</div><h3 id="modalTitle">Title</h3></div>
+      <div class="modal-actions">
+        <button type="button" id="modalPrev" aria-label="Previous" title="Previous - Left arrow">&#8249;</button>
+        <button type="button" id="modalNext" aria-label="Next" title="Next - Right arrow">&#8250;</button>
+        <button type="button" class="modal-close" id="modalClose" aria-label="Close">&#215;</button>
+      </div>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  /* ---------- SLIDE NAVIGATION ---------- */
+  const main = document.querySelector('main');
+  const hero = document.querySelector('.hero');
+  const navLinks = Array.from(document.querySelectorAll('nav a[href^="#"]'));
+  const sectionIds = navLinks.map(a => a.getAttribute('href'))
+    .filter((v,i,a)=>a.indexOf(v)===i).map(h=>h.slice(1));
+  const sections = Array.from(document.querySelectorAll('main > section[id]'));
+  const firstId = sectionIds[0];
+  let activeId = '';
+
+  function showSection(id, updateHash=true){
+    const target = document.getElementById(id);
+    if(!target) return;
+    activeId = id;
+    main.classList.add('page-fade');
+    setTimeout(() => {
+      sections.forEach(s => s.classList.toggle('active-section', s.id === id));
+      navLinks.forEach(a => a.classList.toggle('active-nav', a.getAttribute('href') === '#'+id));
+      if(hero) hero.classList.toggle('is-hidden', id !== firstId);
+      window.scrollTo(0,0);
+      if(updateHash) history.replaceState(null,'','#'+id);
+      requestAnimationFrame(() => main.classList.remove('page-fade'));
+    }, 90);
+  }
+  function moveSection(delta){
+    const i = sectionIds.indexOf(activeId);
+    showSection(sectionIds[(i + delta + sectionIds.length) % sectionIds.length]);
+  }
+  navLinks.forEach(link => link.addEventListener('click', e => {
+    const id = link.getAttribute('href').slice(1);
+    if(!document.getElementById(id)) return;
+    e.preventDefault(); showSection(id);
+  }));
+  document.getElementById('sectionPrev').addEventListener('click', () => moveSection(-1));
+  document.getElementById('sectionNext').addEventListener('click', () => moveSection(1));
+  const startId = location.hash && document.getElementById(location.hash.slice(1))
+    ? location.hash.slice(1) : firstId;
+  showSection(startId, false);
+
+  /* ---------- IN-SLIDE COLLAPSIBLES ---------- */
+  document.querySelectorAll('.collapse').forEach(card => {
+    const h = card.querySelector('h3');
+    if(!h) return;
+    h.setAttribute('tabindex','0'); h.setAttribute('role','button'); h.setAttribute('aria-expanded','false');
+    const toggle = () => h.setAttribute('aria-expanded', card.classList.toggle('open') ? 'true' : 'false');
+    h.addEventListener('click', toggle);
+    h.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggle(); } });
+  });
+
+  /* ---------- DETAIL MODAL / VIDEO REEL ---------- */
+  const VIDEO_ITEMS = [
+    ['Bad Bunny - DeBÍ TiRAR MáS FOToS','gLSzEYVDads'],
+    ['Maroon 5 - Cigarettes','ea5c7TYW62E'],
+    ['almost monday - enjoy the ride','nNYOk4y8RsA'],
+    ['Dove Cameron - Too Much','DEEL9nvxwsc'],
+    ['Tate McRae - I know love','cVG807Biok4'],
+    ['David Guetta & OneRepublic - I Don\'t Wanna Wait','dSDbwfXX5_I'],
+    ['KAROL G, Tiësto - CONTIGO','NCmp7AV8O9s'],
+    ['Rauw Alejandro - Déjame Entrar','UUzmHevEneY'],
+    ['Tate McRae - exes','YXt0Nw8xWh0']
+  ];
+  const ITEMS = VIDEO_ITEMS.map(([title,id]) => ({
+    kicker: 'Video reel',
+    title,
+    bodyHtml: `<div class="video-embed"><iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe></div>`
+  }));
+  const modal = document.getElementById('modal');
+  let current = 0;
+  function render(i){
+    if(!ITEMS.length) return;
+    current = (i + ITEMS.length) % ITEMS.length;
+    const it = ITEMS[current];
+    document.getElementById('modalKicker').textContent = it.kicker || '';
+    document.getElementById('modalTitle').textContent = it.title || '';
+    document.getElementById('modalBody').innerHTML = it.bodyHtml || '';
+    modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
+  }
+  const close = () => {
+    modal.classList.remove('open'); modal.setAttribute('aria-hidden','true');
+    document.getElementById('modalBody').innerHTML = ''; // stop video playback
+  };
+  document.querySelectorAll('.openable').forEach(el =>
+    el.addEventListener('click', e => { e.preventDefault(); render(parseInt(el.dataset.item,10) || 0); }));
+  document.getElementById('modalPrev').addEventListener('click', () => render(current-1));
+  document.getElementById('modalNext').addEventListener('click', () => render(current+1));
+  document.getElementById('modalClose').addEventListener('click', close);
+  modal.addEventListener('click', e => { if(e.target === modal) close(); });
+
+  /* ---------- KEYBOARD (modal takes precedence over deck) ---------- */
+  document.addEventListener('keydown', e => {
+    const open = modal.classList.contains('open');
+    if(e.key === 'Escape'){ close(); return; }
+    if(open){
+      if(e.key === 'ArrowLeft'){ e.preventDefault(); render(current-1); }
+      if(e.key === 'ArrowRight'){ e.preventDefault(); render(current+1); }
+      return;
+    }
+    if(['ArrowRight','ArrowDown','PageDown'].includes(e.key)){ e.preventDefault(); moveSection(1); }
+    if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){ e.preventDefault(); moveSection(-1); }
+  });
+})();
+</script>
+</body>
+</html>

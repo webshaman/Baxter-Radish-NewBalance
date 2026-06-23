@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baxter House Music — Video Grid</title>
+<style>
+  :root { --gap: 10px; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #0e0e10; font-family: -apple-system, Helvetica, Arial, sans-serif; padding: 24px; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); max-width: 1200px; margin: 0 auto; }
+  button.cell { position: relative; display: block; aspect-ratio: 16/9; overflow: hidden; border-radius: 4px;
+    background: #000; padding: 0; border: 0; cursor: pointer; font: inherit; }
+  button.cell img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s ease, filter .35s ease; }
+  button.cell::after { content: "▶"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 30px; opacity: .85; text-shadow: 0 2px 8px rgba(0,0,0,.6); pointer-events: none; transition: opacity .3s, transform .3s; }
+  button.cell:hover img { transform: scale(1.05); filter: brightness(1.08); }
+  button.cell:hover::after { opacity: 1; transform: scale(1.2); }
+  .cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 18px 8px 6px; font-size: 11px; color: #fff; text-align: left;
+    background: linear-gradient(transparent, rgba(0,0,0,.75)); opacity: 0; transition: opacity .3s; pointer-events: none; }
+  button.cell:hover .cap { opacity: 1; }
+  @media (max-width: 700px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+
+  /* Modal */
+  .modal { position: fixed; inset: 0; background: rgba(0,0,0,.85); display: none; align-items: center; justify-content: center;
+    z-index: 1000; padding: 24px; opacity: 0; transition: opacity .2s ease; }
+  .modal.open { display: flex; opacity: 1; }
+  .modal-inner { position: relative; width: min(92vw, 1100px); aspect-ratio: 16/9; }
+  .modal-inner iframe { width: 100%; height: 100%; border: 0; border-radius: 6px; background: #000; }
+  .modal-close { position: absolute; top: -42px; right: 0; background: none; border: 0; color: #fff; font-size: 30px;
+    line-height: 1; cursor: pointer; padding: 4px 8px; opacity: .85; }
+  .modal-close:hover { opacity: 1; }
+</style>
+</head>
+<body>
+<div class="grid" id="grid"></div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Video player">
+  <div class="modal-inner">
+    <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+    <iframe id="player" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
+  </div>
+</div>
+
+<script>
+const videos = [
+ ["01-bad-bunny.jpg","Bad Bunny — DeBÍ TiRAR MáS FOToS","gLSzEYVDads"],
+ ["02-maroon-5.jpg","Maroon 5 — Cigarettes","ea5c7TYW62E"],
+ ["03-almost-monday.jpg","almost monday — enjoy the ride","nNYOk4y8RsA"],
+ ["04-dove-cameron.jpg","Dove Cameron — Too Much","DEEL9nvxwsc"],
+ ["05-tate-mcrae-i-know-love.jpg","Tate McRae — I know love","cVG807Biok4"],
+ ["06-tiesto-hot-honey.jpg","Tiësto — Hot Honey","iuYAG3kfqCg"],
+ ["07-mimi-webb.jpg","Mimi Webb — Erase You","1MZSrayutlQ"],
+ ["08-david-guetta-onerepublic.jpg","David Guetta & OneRepublic — I Don't Wanna Wait","dSDbwfXX5_I"],
+ ["09-diplo-maren-morris-42.jpg","Diplo, Maren Morris — 42","cAt816L8a4E"],
+ ["10-katseye.jpg","KATSEYE","bYg6aMDQ_TA"],
+ ["11-karol-g-tiesto-contigo.jpg","KAROL G, Tiësto — CONTIGO","NCmp7AV8O9s"],
+ ["12-meduza-fire.jpg","MEDUZA, OneRepublic, Leony — Fire","C5B22ONbFrc"],
+ ["13-rauw-alejandro.jpg","Rauw Alejandro — Déjame Entrar","UUzmHevEneY"],
+ ["14-beyonce.jpg","Beyoncé — I Was Here","i41qWJ6QjPI"],
+ ["15-tate-mcrae-exes.jpg","Tate McRae — exes","YXt0Nw8xWh0"],
+ ["16-txt-anitta.jpg","TXT, Anitta — Back for More","e42AhJzYpVE"],
+ ["17-u2.jpg","U2 — You're The Best Thing About Me","WIPVM4cnIxg"],
+ ["18-x-ambassadors.jpg","X Ambassadors — Deep End","JKYJ_AwZHOg"],
+ ["19-portugal-the-man.jpg","Portugal. The Man — What, Me Worry?","FUBRjHDnzE8"],
+ ["20-surfaces.jpg","Surfaces — Baby Blue","vEmS1oHC59o"],
+ ["21-cannons.jpg","Cannons — Loving You","0QaefDV7cb8"],
+];
+
+const grid = document.getElementById("grid");
+grid.innerHTML = videos.map(([img,title,id]) =>
+ `<button class="cell" data-id="${id}" aria-label="Play ${title}">
+    <img src="thumbs/${img}" alt="${title}">
+    <span class="cap">${title}</span>
+  </button>`).join("");
+
+const modal  = document.getElementById("modal");
+const player = document.getElementById("player");
+const closeBtn = document.getElementById("modalClose");
+
+function openModal(id) {
+  player.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
+  modal.classList.add("open");
+}
+function closeModal() {
+  modal.classList.remove("open");
+  player.src = "";  // stop playback
+}
+
+grid.addEventListener("click", e => {
+  const cell = e.target.closest("button.cell");
+  if (cell) openModal(cell.dataset.id);
+});
+closeBtn.addEventListener("click", closeModal);
+modal.addEventListener("click", e => { if (e.target === modal) closeModal(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+</script>
+</body>
+</html>
