@@ -152,8 +152,8 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:16px 20px}
 .modal-head h3{margin:0;color:#fff;font-size:22px}
 .modal-kicker{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.72);font-weight:800;margin-bottom:6px}
-.modal-actions{display:flex;gap:6px;align-items:center;justify-content:flex-end}
-.modal-count{color:rgba(255,255,255,.74);font-size:12px;font-weight:700;letter-spacing:.08em;margin-right:6px;white-space:nowrap}
+.modal-actions{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end;max-width:86px}
+.modal-count{flex-basis:100%;text-align:center;color:rgba(255,255,255,.74);font-size:12px;font-weight:700;letter-spacing:.08em;margin-top:2px}
 .modal-actions button{border:0;background:var(--accent);color:#fff;font-size:18px;min-width:34px;height:34px;cursor:pointer;font-weight:800}
 .modal-actions .modal-close{position:absolute;right:-46px;top:0;background:var(--nav-bg);border:1px solid rgba(255,255,255,.45)}
 .modal-body{padding:18px 20px;color:#fff}
@@ -361,10 +361,10 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
     <div class="modal-head">
       <div><div class="modal-kicker" id="modalKicker">Item</div><h3 id="modalTitle">Title</h3></div>
       <div class="modal-actions">
-        <div class="modal-count" id="modalCount"></div>
         <button type="button" id="modalPrev" aria-label="Previous" title="Previous - Left arrow">&#8249;</button>
         <button type="button" id="modalNext" aria-label="Next" title="Next - Right arrow">&#8250;</button>
         <button type="button" class="modal-close" id="modalClose" aria-label="Close">&#215;</button>
+        <div class="modal-count" id="modalCount"></div>
       </div>
     </div>
     <div class="modal-body" id="modalBody"></div>
