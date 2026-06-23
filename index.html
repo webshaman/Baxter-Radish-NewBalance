@@ -118,12 +118,13 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 .logo-tile img{max-width:78%;max-height:96px;object-fit:contain}
 .logo-tile.baxter img{max-height:118px}
 .logo-tile.radish img{max-height:130px;max-width:88%}
-.partner-plain{background:transparent;border:0;box-shadow:none;padding:0;color:#fff}
-.partner-plain h3{font-size:28px;color:#fff}
-.partner-plain p{font-size:22px;line-height:1.42;color:rgba(255,255,255,.86);max-width:50%}
-.partner-logo{height:208px;max-width:520px;object-fit:contain;object-position:left center;margin-bottom:18px}
-.partner-logo.radish{height:208px;max-width:680px}
-#partnership .partner-plain:nth-child(2){transform:translateX(-220px)}
+.partner-stack{display:grid;gap:46px;margin-top:28px;max-width:1180px}
+.partner-row{display:grid;grid-template-columns:320px minmax(420px,680px);gap:54px;align-items:center}
+.partner-logo-wrap{display:flex;align-items:center;justify-content:center;width:320px}
+.partner-copy{color:#fff;text-align:left}
+.partner-copy p{font-size:28px;line-height:1.38;color:rgba(255,255,255,.88);margin:0;max-width:680px}
+.partner-logo{height:208px;max-width:300px;object-fit:contain;object-position:center center;display:block}
+.partner-logo.radish{height:208px;max-width:320px}
 .max-hero{display:grid;grid-template-columns:50% 1fr;gap:34px;align-items:start;margin:0;background:#000}
 .max-photo{width:100%;height:auto;object-fit:contain;display:block;border:1px solid rgba(255,255,255,.28)}
 .max-callouts{display:grid;grid-template-columns:1fr;gap:26px;padding:8px 0 0}
@@ -174,6 +175,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   .video-grid{grid-template-columns:repeat(2,1fr)}
   .track-grid{grid-template-columns:1fr}
   .logo-row{grid-template-columns:1fr}
+  .partner-row{grid-template-columns:1fr;gap:18px}.partner-logo-wrap{width:100%;justify-content:flex-start}.partner-copy p{font-size:23px}
   .max-hero{grid-template-columns:1fr}
   .max-callouts{grid-template-columns:1fr;padding:18px 0 0}
   .hero{margin:-16px -16px 24px;padding:56px 32px}
@@ -229,9 +231,15 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   <!-- 2 - THE PARTNERSHIP -->
   <section id="partnership">
     <div class="section-head"><h2>Baxter House is thrilled to be partnering with Radish Music</h2></div>
-    <div class="grid" style="margin-top:28px">
-      <div class="partner-plain span-6"><img class="partner-logo" src="assets/baxter-house-logo.png" alt="Baxter House Music logo"><p>A culture-driven music company curating and championing some of today's most compelling new voices.</p></div>
-      <div class="partner-plain span-6"><img class="partner-logo radish" src="assets/radish-music-logo.png" alt="Radish Music logo"><p>A creative music supervision company with strategy and culture at its core.</p></div>
+    <div class="partner-stack">
+      <div class="partner-row">
+        <div class="partner-logo-wrap"><img class="partner-logo" src="assets/baxter-house-logo.png" alt="Baxter House Music logo"></div>
+        <div class="partner-copy"><p>A culture-driven music company curating and championing some of today's most compelling new voices.</p></div>
+      </div>
+      <div class="partner-row">
+        <div class="partner-logo-wrap"><img class="partner-logo radish" src="assets/radish-music-logo.png" alt="Radish Music logo"></div>
+        <div class="partner-copy"><p>A creative music supervision company with strategy and culture at its core.</p></div>
+      </div>
     </div>
   </section>
 
