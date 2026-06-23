@@ -35,7 +35,8 @@ html{scroll-behavior:auto}
 body{margin:0;background:var(--accent);color:var(--ink);
   font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;line-height:1.48}
 
-body:before{content:"";position:fixed;top:0;left:0;right:0;height:5px;background:var(--accent);z-index:20}
+body:before{content:"";position:fixed;top:0;left:0;right:0;height:70px;background:linear-gradient(to bottom,rgba(0,0,0,.82),rgba(0,0,0,0));z-index:20;pointer-events:none}
+body:after{content:"";position:fixed;left:0;right:0;bottom:0;height:80px;background:linear-gradient(to top,rgba(0,0,0,.82),rgba(0,0,0,0));z-index:20;pointer-events:none}
 
 nav{position:fixed;top:5px;bottom:0;left:0;width:var(--nav-w);overflow:auto;
   background:var(--nav-bg);color:var(--nav-fg);padding:28px 24px}
@@ -258,7 +259,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
       <a class="track-card openable" href="https://www.youtube.com/watch?v=NCmp7AV8O9s" data-item="14"><img src="https://img.youtube.com/vi/NCmp7AV8O9s/hqdefault.jpg" alt="KAROL G, Tiësto — CONTIGO"><span class="track-meta"><b>Karol G</b><em>CONTIGO</em></span></a>
       <a class="track-card openable" href="https://www.youtube.com/watch?v=dSDbwfXX5_I" data-item="15"><img src="https://img.youtube.com/vi/dSDbwfXX5_I/hqdefault.jpg" alt="David Guetta & OneRepublic — I Don't Wanna Wait"><span class="track-meta"><b>David Guetta</b><em>I Don't Wanna Wait</em></span></a>
       <a class="track-card openable" href="https://www.youtube.com/watch?v=UUzmHevEneY" data-item="16"><img src="https://img.youtube.com/vi/UUzmHevEneY/hqdefault.jpg" alt="Rauw Alejandro — Déjame Entrar"><span class="track-meta"><b>Rauw Alejandro</b><em>Déjame Entrar</em></span></a>
-      <a class="track-card openable" href="https://www.youtube.com/watch?v=WIPVM4cnIxg" data-item="17"><img src="https://img.youtube.com/vi/WIPVM4cnIxg/hqdefault.jpg" alt="U2 — You're The Best Thing About Me"><span class="track-meta"><b>U2</b><em>You're The Best Thing About Me</em></span></a>
+      <a class="track-card openable" href="https://www.youtube.com/watch?v=nd_EYo96lmo" data-item="17"><img src="https://img.youtube.com/vi/nd_EYo96lmo/hqdefault.jpg" alt="U2 — You're The Best Thing About Me"><span class="track-meta"><b>U2</b><em>You're The Best Thing About Me</em></span></a>
       <a class="track-card openable" href="https://www.youtube.com/watch?v=mNEUkkoUoIA" data-item="18"><img src="https://img.youtube.com/vi/mNEUkkoUoIA/hqdefault.jpg" alt="OneRepublic — I Ain't Worried"><span class="track-meta"><b>OneRepublic</b><em>I Ain't Worried</em></span></a>
     </div>
     <p class="footnote">Collaborations with leading film and television studios, plus hundreds of placements across global advertising campaigns.</p>
@@ -418,7 +419,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
     ['Karol G - CONTIGO','NCmp7AV8O9s'],
     ['David Guetta - I Don\'t Wanna Wait','dSDbwfXX5_I'],
     ['Rauw Alejandro - Déjame Entrar','UUzmHevEneY'],
-    ['U2 - You\'re The Best Thing About Me','WIPVM4cnIxg'],
+    ['U2 - You\'re The Best Thing About Me','nd_EYo96lmo'],
     ['OneRepublic - I Ain\'t Worried','mNEUkkoUoIA']
   ];
   const ITEMS = [
