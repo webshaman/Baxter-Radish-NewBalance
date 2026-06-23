@@ -275,6 +275,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
       <a class="track-card openable" href="https://www.youtube.com/watch?v=UUzmHevEneY" data-item="6"><img src="https://img.youtube.com/vi/UUzmHevEneY/hqdefault.jpg" alt="Rauw Alejandro - Déjame Entrar"><span class="track-meta"><b>Rauw Alejandro</b><em>Déjame Entrar</em></span></a>
       <a class="track-card openable" href="https://www.youtube.com/watch?v=NCmp7AV8O9s" data-item="7"><img src="https://img.youtube.com/vi/NCmp7AV8O9s/hqdefault.jpg" alt="Karol G - Contigo"><span class="track-meta"><b>Karol G</b><em>Contigo</em></span></a>
       <a class="track-card openable" href="https://www.youtube.com/watch?v=i41qWJ6QjPI" data-item="8"><img src="https://img.youtube.com/vi/i41qWJ6QjPI/hqdefault.jpg" alt="Beyoncé - I Was Here"><span class="track-meta"><b>Beyoncé</b><em>I Was Here</em></span></a>
+      <a class="track-card openable" href="https://www.youtube.com/watch?v=t9mpyRzipww" data-item="44"><img src="https://img.youtube.com/vi/t9mpyRzipww/hqdefault.jpg" alt="King Princess - Fantastic"><span class="track-meta"><b>King Princess</b><em>Fantastic</em></span></a>
     </div>
   </section>
 
@@ -306,6 +307,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
       <a class="track-card openable" href="https://vimeo.com/955638197/697424cbf1" data-item="23"><img src="https://i.vimeocdn.com/video/1867056897-5e2ef38ce1d753640ef202a90cb6e2d6d85ff4c131822fa90b42f34741b3760e-d_640x360?region=us" alt="Athleta - Power of She"><span class="track-meta"><b>Athleta</b><em>Power of She</em></span></a>
       <a class="track-card openable" href="https://www.youtube.com/watch?v=ym7_oefUhmM" data-item="24"><img src="https://img.youtube.com/vi/ym7_oefUhmM/hqdefault.jpg" alt="Apple - Share Your Gifts"><span class="track-meta"><b>Apple</b><em>Share Your Gifts</em></span></a>
       <a class="track-card openable" href="https://vimeo.com/325068516" data-item="25"><img src="https://vumbnail.com/325068516.jpg" alt="Prince - Capital One"><span class="track-meta"><b>Prince</b><em>Capital One</em></span></a>
+      <a class="track-card openable" href="https://www.radish.mx/work/walgreensthisisashot-7d8kr-yf55f-9gkbd-whxyz-eh6yk-sgyy2-anzd3-4zhd5-r72e8-39tks-e3fgy-wtdys" data-item="45"><img src="https://static1.squarespace.com/static/61302df2cc95ff02963c3119/61302df2cc95ff02963c3143/6985017714c5e46d21f8a628/1775584964544/athletic-intelligence-meta-2026.jpeg?format=1500w" alt="Meta x Oakley - Athletic Intelligence Is Here"><span class="track-meta"><b>Meta x Oakley</b><em>Athletic Intelligence Is Here</em></span></a>
     </div>
   </section>
 
@@ -474,7 +476,9 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
     ['The House','Studio B','assets/house/18-studio-b.jpg','image'],
     ['The House','Studio K','assets/house/19-studio-k.jpg','image'],
     ['The House','Studio S','assets/house/20-studio-s.jpg','image'],
-  ].map(([kicker,title,src,type]) => ({
+    ['Track record','King Princess - Fantastic','https://www.youtube.com/embed/t9mpyRzipww?autoplay=1&rel=0'],
+    ['Radish Music','Meta x Oakley - Athletic Intelligence Is Here','https://www.youtube.com/embed/NerlyGrv7WM?autoplay=1&rel=0'],
+  ].map(([kicker,title,src,type]) => (
     kicker, title,
     bodyHtml: type === 'image'
       ? `<div class="video-embed"><img src="${src}" alt="${title}" style="width:100%;height:100%;object-fit:cover;display:block"></div>`
