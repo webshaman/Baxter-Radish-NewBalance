@@ -182,7 +182,8 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 
   <div class="nav-group">Approach &amp; Track Record</div>
   <a href="#track-record">Music Track Record</a>
-  <a href="#advertising">Advertising Track Record</a>
+  <a href="#baxter-advertising">Baxter Advertising Track Record</a>
+  <a href="#radish-advertising">Radish Advertising Track Record</a>
 
   <div class="nav-group">Team &amp; Studio</div>
   <a href="#max-levin">Featuring: Max Levin</a>
@@ -263,7 +264,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   </section>
 
   <!-- 6 - ADVERTISING TRACK RECORD -->
-  <section id="advertising">
+  <section id="baxter-advertising">
     <div class="section-head"><div><div class="slide-kicker">Baxter House</div><h2>Advertising Track Record</h2></div></div>
     <div class="grid">
       <div class="pill span-6">Olympics × Coke - "Hello World"</div>
@@ -280,7 +281,21 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
     <p class="footnote">Collaborations with leading film and television studios, plus hundreds of placements across global advertising campaigns.</p>
   </section>
 
-  <!-- 7 - FEATURING: MAX LEVIN -->
+  <!-- 7 - RADISH ADVERTISING TRACK RECORD -->
+  <section id="radish-advertising">
+    <div class="section-head"><div><div class="slide-kicker">Radish Music</div><h2>Advertising Track Record</h2></div></div>
+    <div class="track-grid">
+      <a class="track-card openable" href="https://vimeo.com/1024834803" data-item="9"><img src="https://vumbnail.com/1024834803.jpg" alt="Uber Eats — Cox Goes to College"><span class="track-meta"><b>Uber Eats</b><em>Cox Goes to College</em></span></a>
+      <a class="track-card openable" href="https://www.youtube.com/watch?v=xrZZAfgMfOY" data-item="10"><img src="https://img.youtube.com/vi/xrZZAfgMfOY/hqdefault.jpg" alt="Apple HomePod — Spike Jonze"><span class="track-meta"><b>Apple HomePod</b><em>Spike Jonze</em></span></a>
+      <a class="track-card openable" href="https://youtu.be/9wxmlwRaZHc" data-item="11"><img src="https://img.youtube.com/vi/9wxmlwRaZHc/hqdefault.jpg" alt="ChatGPT — Every Day Possibilities"><span class="track-meta"><b>ChatGPT</b><em>Every Day Possibilities</em></span></a>
+      <a class="track-card openable" href="https://vimeo.com/955638197/697424cbf1" data-item="12"><img src="https://vumbnail.com/955638197.jpg" alt="Athleta — Power of She"><span class="track-meta"><b>Athleta</b><em>Power of She</em></span></a>
+      <a class="track-card openable" href="https://www.youtube.com/watch?v=ym7_oefUhmM" data-item="13"><img src="https://img.youtube.com/vi/ym7_oefUhmM/hqdefault.jpg" alt="Apple — Share Your Gifts"><span class="track-meta"><b>Apple</b><em>Share Your Gifts</em></span></a>
+      <a class="track-card openable" href="https://vimeo.com/325068516" data-item="14"><img src="https://vumbnail.com/325068516.jpg" alt="Prince — Capital One"><span class="track-meta"><b>Prince</b><em>Capital One</em></span></a>
+      <a class="track-card openable" href="https://youtu.be/evSchEBfn94" data-item="15"><img src="https://img.youtube.com/vi/evSchEBfn94/hqdefault.jpg" alt="Meta — Glasses by Kylie"><span class="track-meta"><b>Meta</b><em>Glasses by Kylie</em></span></a>
+    </div>
+  </section>
+
+  <!-- 8 - FEATURING: MAX LEVIN -->
   <section id="max-levin">
     <div class="section-head"><h2>Baxter House featuring: Max Levin, Creative Director</h2><div class="hint">producer • songwriter</div></div>
     <p class="lead">A multi-platinum producer, songwriter, and pianist based in Los Angeles - recognized for ear-catching melodies, exceptional sound design, and infectious drum grooves.</p>
@@ -380,20 +395,26 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   });
 
   /* ---------- DETAIL MODAL / TRACK RECORD ---------- */
-  const TRACK_ITEMS = [
-    ['Bad Bunny - DTMF','Tw08lNebAjE'],
-    ['KATSEYE - Debut','bYg6aMDQ_TA'],
-    ['Tate McRae - Just Keep Watching','dpvQqmX6SUI'],
-    ['Tate McRae - I Know Love','cVG807Biok4'],
-    ['BTS - Swim','b4iVv91Z6lY'],
-    ['OneRepublic - I Ain\'t Worried','mNEUkkoUoIA'],
-    ['Rauw Alejandro - Déjame Entrar','UUzmHevEneY'],
-    ['Karol G - Contigo','NCmp7AV8O9s'],
-    ['Beyoncé - I Was Here','i41qWJ6QjPI']
-  ];
-  const ITEMS = TRACK_ITEMS.map(([title,id]) => ({
-    kicker: 'Track record', title,
-    bodyHtml: `<div class="video-embed"><iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe></div>`
+  const ITEMS = [
+    ['Track record','Bad Bunny - DTMF','https://www.youtube.com/embed/Tw08lNebAjE?autoplay=1&rel=0'],
+    ['Track record','KATSEYE - Debut','https://www.youtube.com/embed/bYg6aMDQ_TA?autoplay=1&rel=0'],
+    ['Track record','Tate McRae - Just Keep Watching','https://www.youtube.com/embed/dpvQqmX6SUI?autoplay=1&rel=0'],
+    ['Track record','Tate McRae - I Know Love','https://www.youtube.com/embed/cVG807Biok4?autoplay=1&rel=0'],
+    ['Track record','BTS - Swim','https://www.youtube.com/embed/b4iVv91Z6lY?autoplay=1&rel=0'],
+    ['Track record','OneRepublic - I Ain\'t Worried','https://www.youtube.com/embed/mNEUkkoUoIA?autoplay=1&rel=0'],
+    ['Track record','Rauw Alejandro - Déjame Entrar','https://www.youtube.com/embed/UUzmHevEneY?autoplay=1&rel=0'],
+    ['Track record','Karol G - Contigo','https://www.youtube.com/embed/NCmp7AV8O9s?autoplay=1&rel=0'],
+    ['Track record','Beyoncé - I Was Here','https://www.youtube.com/embed/i41qWJ6QjPI?autoplay=1&rel=0'],
+    ['Radish Music','Uber Eats - Cox Goes to College','https://player.vimeo.com/video/1024834803?autoplay=1'],
+    ['Radish Music','Apple HomePod - Spike Jonze','https://www.youtube.com/embed/xrZZAfgMfOY?autoplay=1&rel=0'],
+    ['Radish Music','ChatGPT - Every Day Possibilities','https://www.youtube.com/embed/9wxmlwRaZHc?autoplay=1&rel=0'],
+    ['Radish Music','Athleta - Power of She','https://player.vimeo.com/video/955638197?h=697424cbf1&autoplay=1'],
+    ['Radish Music','Apple - Share Your Gifts','https://www.youtube.com/embed/ym7_oefUhmM?autoplay=1&rel=0'],
+    ['Radish Music','Prince - Capital One','https://player.vimeo.com/video/325068516?autoplay=1'],
+    ['Radish Music','Meta - Glasses by Kylie','https://www.youtube.com/embed/evSchEBfn94?autoplay=1&rel=0']
+  ].map(([kicker,title,src]) => ({
+    kicker, title,
+    bodyHtml: `<div class="video-embed"><iframe src="${src}" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe></div>`
   }));
   const modal = document.getElementById('modal');
   let current = 0;
