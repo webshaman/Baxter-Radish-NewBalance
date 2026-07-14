@@ -133,6 +133,10 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 .cs-hero img{display:block;width:100%;height:auto;max-height:calc(100vh - 5px);object-fit:contain}
 .cs-hero-video{position:relative;aspect-ratio:16/9;overflow:hidden}
 .cs-hero-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none}
+/* fixed, dimmed video background — content scrolls over it */
+.cs-hero.cs-video-bg{position:fixed;top:5px;left:var(--nav-w);right:0;bottom:0;margin:0;width:auto;height:auto;aspect-ratio:auto;opacity:.12;z-index:-1;overflow:hidden;pointer-events:none;background:#000}
+.cs-hero.cs-video-bg iframe{position:absolute;inset:0;width:100%;height:100%;transform:none;min-width:0;min-height:0}
+section[id^="cs-"]:has(.cs-video-bg){min-height:165vh}
 /* case-study title: flush under hero, no sticky bar / blur */
 section[id^="cs-"] .section-head{position:static;margin:0;padding:22px 0 0;border-bottom:none}
 section[id^="cs-"] .section-head:before,
@@ -204,6 +208,7 @@ section[id^="cs-"] .section-head + .cs-layout{margin-top:24px}
   .cs-media{columns:2}
   .cs-hero{margin:-16px -16px 0;height:auto}
   .cs-hero img{width:100%;max-height:none}
+  .cs-hero.cs-video-bg{left:0}
   .section-head:before{top:-16px}
   .hero{margin:-16px -16px 24px;padding:56px 32px}
   h1.big,h2{font-size:36px}
@@ -331,7 +336,7 @@ section[id^="cs-"] .section-head + .cs-layout{margin-top:24px}
 
   <!-- CS: NEW BALANCE (assets + ASK to come from client) -->
   <section id="cs-new-balance">
-    <figure class="cs-hero cs-hero-video"><iframe src="" data-src="https://www.youtube-nocookie.com/embed/rH-YloK2Te4?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=rH-YloK2Te4&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3&amp;cc_load_policy=0&amp;enablejsapi=1&amp;fs=0&amp;hd=1&amp;vq=hd1080" title="New Balance — We Got Now" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></figure>
+    <figure class="cs-hero cs-hero-video cs-video-bg"><iframe src="" data-src="https://www.youtube-nocookie.com/embed/rH-YloK2Te4?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=rH-YloK2Te4&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3&amp;cc_load_policy=0&amp;enablejsapi=1&amp;fs=0&amp;hd=1&amp;vq=hd1080" title="New Balance — We Got Now" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></figure>
     <div class="section-head"><div><div class="slide-kicker">Case Study</div><h2>New Balance — We Got Now</h2></div></div>
     <div class="cs-layout">
       <div class="cs-ask">
@@ -352,7 +357,7 @@ section[id^="cs-"] .section-head + .cs-layout{margin-top:24px}
 
   <!-- CS: CHICK-FIL-A -->
   <section id="cs-chick-fil-a">
-    <figure class="cs-hero cs-hero-video"><iframe src="" data-src="https://www.youtube-nocookie.com/embed/SMlOCuUbl2c?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=SMlOCuUbl2c&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3&amp;cc_load_policy=0&amp;enablejsapi=1&amp;fs=0&amp;hd=1&amp;vq=hd1080" title="Chick-fil-A — Jalapeño Ranch" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></figure>
+    <figure class="cs-hero cs-hero-video cs-video-bg"><iframe src="" data-src="https://www.youtube-nocookie.com/embed/SMlOCuUbl2c?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=SMlOCuUbl2c&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3&amp;cc_load_policy=0&amp;enablejsapi=1&amp;fs=0&amp;hd=1&amp;vq=hd1080" title="Chick-fil-A — Jalapeño Ranch" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></figure>
     <div class="section-head"><div><div class="slide-kicker">Case Study</div><h2>Chick-fil-A — Jalapeño Ranch</h2></div></div>
     <div class="cs-layout">
       <div class="cs-ask">
@@ -403,7 +408,7 @@ section[id^="cs-"] .section-head + .cs-layout{margin-top:24px}
 
   <!-- CS: NOVARTIS (assets + ASK to come from client) -->
   <section id="cs-novartis">
-    <figure class="cs-hero cs-hero-video"><iframe src="" data-src="https://www.youtube-nocookie.com/embed/vVCU6sg8cjk?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=vVCU6sg8cjk&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3&amp;cc_load_policy=0&amp;enablejsapi=1&amp;fs=0&amp;hd=1&amp;vq=hd1080" title="Novartis — Super Bowl Spot" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></figure>
+    <figure class="cs-hero cs-hero-video cs-video-bg"><iframe src="" data-src="https://www.youtube-nocookie.com/embed/vVCU6sg8cjk?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=vVCU6sg8cjk&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3&amp;cc_load_policy=0&amp;enablejsapi=1&amp;fs=0&amp;hd=1&amp;vq=hd1080" title="Novartis — Super Bowl Spot" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></figure>
     <div class="section-head"><div><div class="slide-kicker">Case Study</div><h2>Novartis — Super Bowl Spot</h2></div></div>
     <div class="cs-layout">
       <div class="cs-ask">
