@@ -138,10 +138,10 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 .cs-hero.cs-hero-sticky{position:sticky;top:5px;z-index:0}
 .cs-body{position:relative;z-index:1;background:rgba(0,0,0,.9);min-height:100vh;margin:0 -16px;padding:0 16px}
 /* case-study title: flush under hero, no sticky bar / blur */
-section[id^="cs-"] .section-head{position:static;margin:0;padding:22px 0 0;border-bottom:none}
-section[id^="cs-"] .section-head:before,
-section[id^="cs-"] .section-head:after{display:none}
-section[id^="cs-"] .section-head + .cs-layout{margin-top:24px}
+.cs-body .section-head{position:static;margin:0;padding:22px 0 0;border-bottom:none}
+.cs-body .section-head:before,
+.cs-body .section-head:after{display:none}
+.cs-body .section-head + .cs-layout,.cs-body .section-head + .grid{margin-top:24px}
 .cs-media{columns:3;column-gap:16px;margin-top:26px}
 .cs-media figure{break-inside:avoid;margin:0 0 16px}
 .cs-media img{width:100%;height:auto;display:block;border:1px solid rgba(255,255,255,.2);background:#000}
@@ -276,12 +276,15 @@ section[id^="cs-"] .section-head + .cs-layout{margin-top:24px}
 
   <!-- 2 - WHO IS BAXTER HOUSE -->
   <section id="who">
-    <div class="section-head"><h2>Who is Baxter House?</h2></div>
+    <figure class="cs-hero cs-hero-video cs-hero-sticky"><iframe src="" data-src="https://www.youtube-nocookie.com/embed/AdTM5IqfqFE?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=AdTM5IqfqFE&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3&amp;cc_load_policy=0&amp;enablejsapi=1&amp;fs=0&amp;hd=1&amp;vq=hd1080" title="Baxter House 2026 Sync Reel" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></figure>
+    <div class="cs-body">
+    <div class="section-head"><div><div class="slide-kicker">Baxter House</div><h2>Who is Baxter House?</h2></div></div>
     <div class="grid">
       <div class="card span-6"><h3>Sound, Story &amp; Visual Context</h3><p>The moment music lands in culture is multifaceted; <strong>sound, story, and visual context.</strong></p></div>
       <div class="card span-6"><h3>Music for Picture</h3><p>We develop music that translates seamlessly to picture and leaves a lasting imprint.</p></div>
       <div class="card span-6"><h3>Cultural Entities</h3><p>We see our artists as enduring cultural entities, not one-dimensional acts.</p></div>
       <div class="card span-6"><h3>Collaboration &amp; Trust</h3><p>Our model is built on collaboration, trust, shared creative ambition, and the power of real-world, IRL presentation.</p></div>
+    </div>
     </div>
   </section>
 
