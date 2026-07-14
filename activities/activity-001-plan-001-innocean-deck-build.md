@@ -64,6 +64,21 @@ Built the first version of the INNOCEAN deck as a self-contained subdirectory at
     offered Away We Go cover / music-video still as richer alternatives, awaiting client call)
 - Rule applied: when >1 hero candidate, use the one appearing first in the PDF.
 
+## Revision 4 (client feedback: ASKs, video heroes, deploy config)
+- Filled real "The Ask" copy for New Balance, Chick-fil-A, Novartis (verbatim from client).
+- Added muted, looping, caption-suppressed **background-video heroes**:
+  - Chick-fil-A → YouTube SMlOCuUbl2c
+  - Novartis → Super Bowl spot vVCU6sg8cjk (redundant grid thumbnail removed)
+  - New Balance → We Got Now rH-YloK2Te4
+  Hero videos lazy-load per active slide (one at a time) for quality/perf, and stop on
+  navigate-away. Captions forced off via the IFrame API (`unloadModule('captions')` over
+  postMessage) since `cc_load_policy=0` alone wasn't honored. Any remaining on-screen text is
+  baked into the ad footage (e.g. Chick-fil-A "GRILLED"), not a caption.
+- Added the Chick-fil-A video as a card in the Music Customization & Arrangements grid
+  (reused a freed Radish-era ITEMS slot, index 19).
+- Added `vercel.json`: bare domain root (`/`) redirects to https://baxterhousemusic.com;
+  decks served at `/new-balance/` and `/innocean/`.
+
 ## Files
 - `/innocean/index.html` — the deck
 - `/innocean/assets/**` — self-contained assets (splittable to its own Vercel project later)
