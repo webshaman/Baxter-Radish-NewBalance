@@ -160,7 +160,9 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
 .cs-media figcaption b{display:block;color:#fff;font-weight:700;font-size:13px}
 
 /* ---- BRANDS WALL ---- */
-.brands-wall{width:100%;height:auto;display:block;border:1px solid rgba(255,255,255,.18);margin-top:76px;cursor:zoom-in}
+.who-brands{margin-top:64px}
+.who-brands-title{text-align:center}
+.brands-wall{width:100%;height:auto;display:block;margin-top:28px;cursor:zoom-in}
 
 .closing-stack{display:grid;gap:54px;max-width:760px;min-height:55vh;align-content:center}
 .section-head + .closing-stack{margin-top:76px}
@@ -169,6 +171,9 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
 #who .card{min-height:290px;padding:38px 44px}
 #who .card h3{font-size:34px;line-height:1.15;margin-bottom:24px}
 #who .card p{font-size:27px;line-height:1.55}
+.who-house{position:relative;margin-top:24px;padding:48px;background:linear-gradient(rgba(0,0,0,0.0),rgba(0,0,0,0.0)),url("assets/who/house.png") center/cover no-repeat;border:1px solid rgba(255,255,255,.18)}
+.who-house .card{min-height:210px;display:flex;align-items:center;justify-content:center;text-align:center;background:rgba(0,0,0,0.11);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.who-house .card h3{margin:0}
 .span-3{grid-column:span 3}.span-4{grid-column:span 4}.span-6{grid-column:span 6}
 .span-8{grid-column:span 8}.span-12{grid-column:span 12}
 
@@ -246,9 +251,6 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
   <div class="nav-group">The Studio</div>
   <a href="#the-house">The House</a>
 
-  <div class="nav-group">Friends &amp; Family</div>
-  <a href="#brands">Brands We Love</a>
-
   <div class="nav-group">Next Steps</div>
   <a href="#closing">Let's Build Something Together</a>
 </nav>
@@ -277,17 +279,17 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
     <figure class="cs-hero cs-hero-video cs-hero-sticky"><iframe src="" data-src="https://www.youtube-nocookie.com/embed/VO7hxIdJYfU?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=VO7hxIdJYfU&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3&amp;cc_load_policy=0&amp;enablejsapi=1&amp;fs=0&amp;hd=1&amp;vq=hd1080" title="Baxter House 2026 Sync Reel" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></figure>
     <div class="cs-body">
     <div class="section-head"><div><div class="slide-kicker">Baxter House</div><h2>Who is Baxter House?</h2></div></div>
-    <div class="grid">
-      <div class="card span-6"><h3>Sound, Story &amp; Visual Context</h3><p>The moment music lands in culture is multifaceted; <strong>sound, story, and visual context.</strong></p></div>
-      <div class="card span-6"><h3>Music for Picture</h3><p>We develop music that translates seamlessly to picture and leaves a lasting imprint.</p></div>
-      <div class="card span-6"><h3>Cultural Entities</h3><p>We see our artists as enduring cultural entities, not one-dimensional acts.</p></div>
-      <div class="card span-6"><h3>Collaboration &amp; Trust</h3><p>Our model is built on collaboration, trust, shared creative ambition, and the power of real-world, IRL presentation.</p></div>
+    <div class="who-house">
+      <div class="grid">
+        <div class="card span-6"><h3>Artist Partnerships + Customs</h3></div>
+        <div class="card span-6"><h3>Licensing</h3></div>
+        <div class="card span-6"><h3>Remixes and Covers</h3></div>
+        <div class="card span-6"><h3>The House</h3></div>
+      </div>
     </div>
-    <div class="who-pillars">
-      <div class="pillar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><span>Customs</span></div>
-      <div class="pillar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Artist / Brand Partnerships</span></div>
-      <div class="pillar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg><span>Creative Licensing</span></div>
-      <div class="pillar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg><span>Remixes</span></div>
+    <div class="who-brands">
+      <div class="slide-kicker who-brands-title">Some of the brands we've delivered for</div>
+      <img class="brands-wall openable" src="assets/brands/logos.png" alt="Some of the brands we've delivered for" data-item="46">
     </div>
     </div>
   </section>
@@ -428,11 +430,6 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
     </div>
   </section>
 
-  <!-- BRANDS WE LOVE -->
-  <section id="brands">
-    <div class="section-head"><div><div class="slide-kicker">Friends &amp; Family</div><h2>Brands We Love &amp; Who Love Us</h2><div class="hint">A concise overview of the brands already in the Baxter House circle — so you know you're in good hands.</div></div></div>
-    <img class="brands-wall openable" src="assets/brands/brands-wall.jpg" alt="Brands We Love & Who Love Us" data-item="46">
-  </section>
 
   <!-- CLOSING -->
   <section id="closing">
@@ -649,7 +646,7 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
     ['The House','Studio S','assets/house/20-studio-s.jpg','image'],
     ['Track record','King Princess - Fantastic','https://www.youtube.com/embed/t9mpyRzipww?autoplay=1&rel=0'],
     ['',''],
-    ['Friends & Family','Brands We Love & Who Love Us','assets/brands/brands-wall.jpg','image'],
+    ['Friends & Family','Brands We Love & Who Love Us','assets/brands/logos.png','image'],
   ].map(([kicker,title,src,type]) => ({
     kicker, title,
     bodyHtml: type === 'image'
