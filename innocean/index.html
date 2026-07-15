@@ -133,6 +133,12 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 .cs-hero img{display:block;width:100%;height:auto;max-height:calc(100vh - 5px);object-fit:contain}
 .cs-hero-video{position:relative;aspect-ratio:16/9;overflow:hidden}
 .cs-hero-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none}
+.section-controls .hero-mute-btn{border:2px solid #fff;background:var(--nav-bg);color:#fff;width:34px;height:34px;border-radius:50%;
+  margin-right:12px;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 12px rgba(0,0,0,.18);transition:background .18s ease}
+.section-controls .hero-mute-btn:hover{background:#000}
+.section-controls .hero-mute-btn.is-on{background:#fff;color:#111;border-color:#fff}
+.hero-mute-btn svg{display:block}
 /* fixed, dimmed video background — content scrolls over it */
 /* sticky hero: normal hero at top, pins as you scroll, content rises over it */
 .cs-hero.cs-hero-sticky{position:sticky;top:5px;z-index:0}
@@ -213,6 +219,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   .nav-toggle{display:block;top:auto;bottom:14px;left:14px;width:55px;height:55px;font-size:31px}
   .section-controls{top:auto;bottom:14px;right:14px}
   .section-controls button{width:44px;height:44px;font-size:24px}
+  .section-controls .hero-mute-btn{width:44px;height:44px}
   nav{position:fixed;top:0;bottom:0;left:0;width:min(320px,86vw);z-index:94;transform:translateX(-105%);transition:transform .22s ease;box-shadow:18px 0 50px rgba(0,0,0,.45);padding-top:72px}
   nav.nav-open{transform:translateX(0)}
   body.nav-is-open:before{content:"";position:fixed;inset:0;background:rgba(0,0,0,.52);z-index:93}
@@ -283,6 +290,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 
 <!-- ===================== SECTION CONTROLS ===================== -->
 <div class="section-controls" aria-label="Slide navigation">
+  <button type="button" id="heroMute" class="hero-mute-btn" aria-label="Unmute video" title="Unmute" style="display:none"></button>
   <button type="button" id="sectionPrev" title="Previous slide - Left arrow">&#8249;</button>
   <button type="button" id="sectionNext" title="Next slide - Right arrow">&#8250;</button>
 </div>
@@ -693,6 +701,68 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   const firstId = sectionIds[0];
   let activeId = '';
 
+  /* ---------- HERO VIDEO AUDIO (per-slide mute/unmute) ---------- */
+  const ICON_MUTED = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>';
+  const ICON_ON = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>';
+  const heroFigs = Array.from(document.querySelectorAll('.cs-hero-video'));
+  heroFigs.forEach(fig => { fig.dataset.muted = '1'; });
+  const heroMuteBtn = document.getElementById('heroMute');
+  function setBtnState(btn, muted){
+    btn.innerHTML = muted ? ICON_MUTED : ICON_ON;
+    btn.setAttribute('aria-label', muted ? 'Unmute video' : 'Mute video');
+    btn.setAttribute('title', muted ? 'Unmute' : 'Mute');
+    btn.classList.toggle('is-on', !muted);
+  }
+  function activeHeroFig(){ return document.querySelector('main > section.active-section .cs-hero-video'); }
+  // Reflect the active slide's hero on the fixed button; hide it when the slide has no video.
+  function syncHeroMuteBtn(){
+    if(!heroMuteBtn) return;
+    const fig = activeHeroFig();
+    heroMuteBtn.style.display = fig ? '' : 'none';
+    if(fig) setBtnState(heroMuteBtn, fig.dataset.muted !== '0');
+  }
+  // Send a YouTube IFrame API command, retrying so it lands even before the player is ready.
+  function applyMute(fig, muted){
+    const f = fig.querySelector('iframe');
+    if(!f) return;
+    fig.dataset.muted = muted ? '1' : '0';
+    const token = (fig._muteToken = (fig._muteToken || 0) + 1);
+    let tries = 0;
+    const send = () => {
+      if(token !== fig._muteToken || tries++ > 6 || !f.getAttribute('src')) return;
+      try { f.contentWindow.postMessage(
+        JSON.stringify({event:'command', func: muted ? 'mute' : 'unMute', args:[]}), '*'); } catch(e){}
+      setTimeout(send, 250);
+    };
+    send();
+  }
+  // Play/pause a hero, retrying so the command lands even before the player is ready.
+  function playHero(fig, play){
+    const f = fig.querySelector('iframe');
+    if(!f) return;
+    const token = (fig._playToken = (fig._playToken || 0) + 1);
+    let tries = 0;
+    const send = () => {
+      if(token !== fig._playToken || tries++ > 6 || !f.getAttribute('src')) return;
+      try { f.contentWindow.postMessage(
+        JSON.stringify({event:'command', func: play ? 'playVideo' : 'pauseVideo', args:[]}), '*'); } catch(e){}
+      setTimeout(send, 250);
+    };
+    send();
+  }
+  // Only one hero may have sound at a time.
+  function soloUnmute(fig){ heroFigs.forEach(h => applyMute(h, h !== fig)); }
+  function muteAllHeroes(){ heroFigs.forEach(h => applyMute(h, true)); syncHeroMuteBtn(); }
+  if(heroMuteBtn){
+    heroMuteBtn.addEventListener('click', e => {
+      e.preventDefault();
+      const fig = activeHeroFig();
+      if(!fig) return;
+      if(fig.dataset.muted !== '0') soloUnmute(fig); else applyMute(fig, true);
+      syncHeroMuteBtn();
+    });
+  }
+
   function showSection(id, updateHash=true){
     const target = document.getElementById(id);
     if(!target) return;
@@ -702,9 +772,11 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
       sections.forEach(s => s.classList.toggle('active-section', s.id === id));
       navLinks.forEach(a => a.classList.toggle('active-nav', a.getAttribute('href') === '#'+id));
       if(hero) hero.classList.toggle('is-hidden', id !== firstId);
-      // hero background videos: play only the active slide's, stop the rest
-      document.querySelectorAll('.cs-hero-video iframe[data-src]').forEach(f => {
-        const inActive = f.closest('section') && f.closest('section').id === id;
+      // hero background videos: active slide plays (muted by default); the rest are paused + muted
+      heroFigs.forEach(fig => {
+        const f = fig.querySelector('iframe[data-src]');
+        if(!f) return;
+        const inActive = fig.closest('section') && fig.closest('section').id === id;
         if(inActive){
           if(f.getAttribute('src') !== f.dataset.src){
             f.setAttribute('src', f.dataset.src);
@@ -722,9 +794,14 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
             };
             setTimeout(killCC, 700);
           }
+          applyMute(fig, true);   // muted by default (autoplay requirement)
+          playHero(fig, true);    // resume if it was paused on a previous visit
+        } else if(f.getAttribute('src')){
+          applyMute(fig, true);   // force mute
+          playHero(fig, false);   // pause unfocused slides
         }
-        else if(f.getAttribute('src')){ f.setAttribute('src',''); }
       });
+      syncHeroMuteBtn();
       window.scrollTo(0,0);
       if(updateHash) history.replaceState(null,'','#'+id);
       requestAnimationFrame(() => main.classList.remove('page-fade'));
@@ -847,6 +924,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
     document.getElementById('modalBody').innerHTML = it.bodyHtml || '';
     const groupPos = modalGroup.indexOf(current);
     document.getElementById('modalCount').textContent = groupPos >= 0 ? `${groupPos + 1} of ${modalGroup.length}` : '';
+    muteAllHeroes(); // modal videos carry their own audio — never let a hero bleed under them
     modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
   }
   function moveModal(delta){
