@@ -133,12 +133,12 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 .cs-hero img{display:block;width:100%;height:auto;max-height:calc(100vh - 5px);object-fit:contain}
 .cs-hero-video{position:relative;aspect-ratio:16/9;overflow:hidden}
 .cs-hero-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none}
-.cs-audio-toggle{position:absolute;bottom:16px;left:16px;z-index:4;width:44px;height:44px;padding:0;border:0;border-radius:50%;
-  background:rgba(0,0,0,.55);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;
-  pointer-events:auto;box-shadow:0 4px 14px rgba(0,0,0,.32);transition:background .18s ease,transform .18s ease}
-.cs-audio-toggle:hover{background:rgba(0,0,0,.82);transform:scale(1.06)}
-.cs-audio-toggle.is-on{background:#fff;color:#111}
-.cs-audio-toggle svg{display:block}
+.section-controls .hero-mute-btn{border:2px solid #fff;background:var(--nav-bg);color:#fff;width:34px;height:34px;border-radius:50%;
+  margin-right:12px;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 12px rgba(0,0,0,.18);transition:background .18s ease}
+.section-controls .hero-mute-btn:hover{background:#000}
+.section-controls .hero-mute-btn.is-on{background:#fff;color:#111;border-color:#fff}
+.hero-mute-btn svg{display:block}
 /* fixed, dimmed video background — content scrolls over it */
 /* sticky hero: normal hero at top, pins as you scroll, content rises over it */
 .cs-hero.cs-hero-sticky{position:sticky;top:5px;z-index:0}
@@ -219,6 +219,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   .nav-toggle{display:block;top:auto;bottom:14px;left:14px;width:55px;height:55px;font-size:31px}
   .section-controls{top:auto;bottom:14px;right:14px}
   .section-controls button{width:44px;height:44px;font-size:24px}
+  .section-controls .hero-mute-btn{width:44px;height:44px}
   nav{position:fixed;top:0;bottom:0;left:0;width:min(320px,86vw);z-index:94;transform:translateX(-105%);transition:transform .22s ease;box-shadow:18px 0 50px rgba(0,0,0,.45);padding-top:72px}
   nav.nav-open{transform:translateX(0)}
   body.nav-is-open:before{content:"";position:fixed;inset:0;background:rgba(0,0,0,.52);z-index:93}
@@ -289,6 +290,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 
 <!-- ===================== SECTION CONTROLS ===================== -->
 <div class="section-controls" aria-label="Slide navigation">
+  <button type="button" id="heroMute" class="hero-mute-btn" aria-label="Unmute video" title="Unmute" style="display:none"></button>
   <button type="button" id="sectionPrev" title="Previous slide - Left arrow">&#8249;</button>
   <button type="button" id="sectionNext" title="Next slide - Right arrow">&#8250;</button>
 </div>
@@ -703,19 +705,27 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   const ICON_MUTED = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>';
   const ICON_ON = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>';
   const heroFigs = Array.from(document.querySelectorAll('.cs-hero-video'));
+  heroFigs.forEach(fig => { fig.dataset.muted = '1'; });
+  const heroMuteBtn = document.getElementById('heroMute');
   function setBtnState(btn, muted){
     btn.innerHTML = muted ? ICON_MUTED : ICON_ON;
     btn.setAttribute('aria-label', muted ? 'Unmute video' : 'Mute video');
     btn.setAttribute('title', muted ? 'Unmute' : 'Mute');
     btn.classList.toggle('is-on', !muted);
   }
+  function activeHeroFig(){ return document.querySelector('main > section.active-section .cs-hero-video'); }
+  // Reflect the active slide's hero on the fixed button; hide it when the slide has no video.
+  function syncHeroMuteBtn(){
+    if(!heroMuteBtn) return;
+    const fig = activeHeroFig();
+    heroMuteBtn.style.display = fig ? '' : 'none';
+    if(fig) setBtnState(heroMuteBtn, fig.dataset.muted !== '0');
+  }
   // Send a YouTube IFrame API command, retrying so it lands even before the player is ready.
   function applyMute(fig, muted){
     const f = fig.querySelector('iframe');
     if(!f) return;
     fig.dataset.muted = muted ? '1' : '0';
-    const btn = fig.querySelector('.cs-audio-toggle');
-    if(btn) setBtnState(btn, muted);
     const token = (fig._muteToken = (fig._muteToken || 0) + 1);
     let tries = 0;
     const send = () => {
@@ -742,19 +752,16 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   }
   // Only one hero may have sound at a time.
   function soloUnmute(fig){ heroFigs.forEach(h => applyMute(h, h !== fig)); }
-  function muteAllHeroes(){ heroFigs.forEach(h => applyMute(h, true)); }
-  heroFigs.forEach(fig => {
-    fig.dataset.muted = '1';
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'cs-audio-toggle';
-    setBtnState(btn, true);
-    btn.addEventListener('click', e => {
-      e.preventDefault(); e.stopPropagation();
+  function muteAllHeroes(){ heroFigs.forEach(h => applyMute(h, true)); syncHeroMuteBtn(); }
+  if(heroMuteBtn){
+    heroMuteBtn.addEventListener('click', e => {
+      e.preventDefault();
+      const fig = activeHeroFig();
+      if(!fig) return;
       if(fig.dataset.muted !== '0') soloUnmute(fig); else applyMute(fig, true);
+      syncHeroMuteBtn();
     });
-    fig.appendChild(btn);
-  });
+  }
 
   function showSection(id, updateHash=true){
     const target = document.getElementById(id);
@@ -794,6 +801,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
           playHero(fig, false);   // pause unfocused slides
         }
       });
+      syncHeroMuteBtn();
       window.scrollTo(0,0);
       if(updateHash) history.replaceState(null,'','#'+id);
       requestAnimationFrame(() => main.classList.remove('page-fade'));
