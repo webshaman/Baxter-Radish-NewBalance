@@ -87,7 +87,7 @@ h1.big{font-size:64px;line-height:1.02;margin:0 0 28px;letter-spacing:-1.4px;fon
   border-bottom:1px solid rgba(255,255,255,.24);padding:10px 0 12px;background:transparent;isolation:isolate}
 .section-head:before{content:"";position:absolute;left:-16px;right:-16px;top:-34px;bottom:0;background:rgba(0,0,0,.76);backdrop-filter:blur(8px);z-index:-1;pointer-events:none}
 .section-head:after{content:"";position:absolute;left:-16px;right:-16px;bottom:-60px;height:60px;background:linear-gradient(to bottom,rgba(0,0,0,.76) 0%,rgba(0,0,0,.54) 28%,rgba(0,0,0,0) 100%);pointer-events:none}
-.section-head + .grid,.section-head + .lead,.section-head + .track-grid,.section-head + .video-grid,.section-head + .remix-grid{margin-top:76px}
+.section-head + .grid,.section-head + .lead,.section-head + .track-grid,.section-head + .video-grid{margin-top:76px}
 h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;font-weight:800;max-width:1050px}
 .hint{color:rgba(255,255,255,.78);font-size:15px;max-width:650px}
 .house-head .hint{margin-top:4px;max-width:760px}
@@ -133,10 +133,21 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 .cs-hero img{display:block;width:100%;height:auto;max-height:calc(100vh - 5px);object-fit:contain}
 .cs-hero-video{position:relative;aspect-ratio:16/9;overflow:hidden}
 .cs-hero-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none}
+.section-controls .hero-mute-btn{border:2px solid #fff;background:var(--nav-bg);color:#fff;width:34px;height:34px;border-radius:50%;
+  margin-right:12px;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 12px rgba(0,0,0,.18);transition:background .18s ease}
+.section-controls .hero-mute-btn:hover{background:#000}
+.section-controls .hero-mute-btn.is-on{background:#fff;color:#111;border-color:#fff}
+.hero-mute-btn svg{display:block}
 /* fixed, dimmed video background — content scrolls over it */
 /* sticky hero: normal hero at top, pins as you scroll, content rises over it */
 .cs-hero.cs-hero-sticky{position:sticky;top:5px;z-index:0}
-.cs-body{position:relative;z-index:1;background:rgba(0,0,0,.9);min-height:100vh;margin:0 -16px;padding:0 16px}
+/* content sits in a band over the sticky hero; the trailing space lets the band
+   scroll up off-screen and re-reveal the pinned video/image in place */
+.cs-body{position:relative;z-index:1;background:rgba(0,0,0,.9);margin:0 -16px;padding:0 16px 72px}
+/* in-flow spacer (extends the sticky content box so the hero stays pinned
+   as the content band clears the top, re-revealing the video/image in place) */
+section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
 /* case-study title: flush under hero, no sticky bar / blur */
 .cs-body .section-head{position:static;margin:0;padding:22px 0 0;border-bottom:none}
 .cs-body .section-head:before,
@@ -147,33 +158,6 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 .cs-media img{width:100%;height:auto;display:block;border:1px solid rgba(255,255,255,.2);background:#000}
 .cs-media figcaption{color:rgba(255,255,255,.72);font-size:12.5px;margin-top:7px;line-height:1.35}
 .cs-media figcaption b{display:block;color:#fff;font-weight:700;font-size:13px}
-
-/* ---- VIRGIN ALT A: scrollytelling ---- */
-.cs-body--plain{background:none;min-height:0}
-.vv-lead{font-size:20px;line-height:1.5;color:rgba(255,255,255,.9);max-width:780px;margin:22px 0 0;font-weight:300}
-.vv-lead b{display:block;text-transform:uppercase;letter-spacing:.16em;font-size:13px;font-weight:800;color:rgba(255,255,255,.7);margin-bottom:10px}
-.vv-scrolly{display:grid;grid-template-columns:1.05fr .95fr;gap:54px;align-items:start;margin-top:40px}
-.vv-media{display:flex;flex-direction:column;gap:22px}
-.vv-group{display:flex;flex-direction:column;gap:22px}
-.vv-media img{width:100%;height:auto;display:block;border:1px solid rgba(255,255,255,.2);background:#000}
-.vv-group-text{display:none}
-.vv-sticky{position:sticky;top:5px;height:calc(100vh - 5px);display:flex;align-items:center}
-.vv-caption{font-size:34px;line-height:1.34;color:#fff;font-weight:300;max-width:520px;opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s ease}
-.vv-caption.in{opacity:1;transform:none}
-.vv-reveal{height:110vh}
-@media(max-width:1050px){.vv-reveal{height:60vh}}
-
-/* ---- VIRGIN ALT B: lines as boxes ---- */
-.cs-did-boxes{display:grid;gap:12px}
-.cs-box{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.28);padding:17px 20px;font-size:18px;line-height:1.4;color:rgba(255,255,255,.92)}
-.cs-pending{border:1px dashed rgba(255,255,255,.4);background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;text-align:center;color:rgba(255,255,255,.55);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;min-height:150px;padding:24px;margin-top:26px}
-.cs-note{color:rgba(255,255,255,.55);font-size:13px;font-style:italic;margin-top:10px}
-.cs-ask.pending p{color:rgba(255,255,255,.6);font-style:italic;font-weight:400;font-size:19px}
-
-/* ---- REMIXES ---- */
-.remix-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.remix-grid .track-card{aspect-ratio:16/9}
-.remix-grid .track-card:before{content:none}
 
 /* ---- BRANDS WALL ---- */
 .who-brands{margin-top:64px}
@@ -218,6 +202,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   .nav-toggle{display:block;top:auto;bottom:14px;left:14px;width:55px;height:55px;font-size:31px}
   .section-controls{top:auto;bottom:14px;right:14px}
   .section-controls button{width:44px;height:44px;font-size:24px}
+  .section-controls .hero-mute-btn{width:44px;height:44px}
   nav{position:fixed;top:0;bottom:0;left:0;width:min(320px,86vw);z-index:94;transform:translateX(-105%);transition:transform .22s ease;box-shadow:18px 0 50px rgba(0,0,0,.45);padding-top:72px}
   nav.nav-open{transform:translateX(0)}
   body.nav-is-open:before{content:"";position:fixed;inset:0;background:rgba(0,0,0,.52);z-index:93}
@@ -227,14 +212,11 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   .who-pillars{grid-template-columns:repeat(2,1fr)}
   .video-grid{grid-template-columns:repeat(2,1fr)}
   .track-grid{grid-template-columns:1fr}
-  .remix-grid{grid-template-columns:1fr}
   .cs-layout{grid-template-columns:1fr}
   .cs-media{columns:2}
-  .vv-scrolly{grid-template-columns:1fr;gap:22px}
-  .vv-sticky{display:none}
-  .vv-group-text{display:block;font-size:23px;line-height:1.35;color:#fff;font-weight:300;margin:0 0 2px}
   .cs-hero{margin:-16px -16px 0;height:auto}
   .cs-hero img{width:100%;max-height:none}
+  section:has(> .cs-hero-sticky)::after{height:60vh}
   .section-head:before{top:-16px}
   .hero{margin:-16px -16px 24px;padding:56px 32px}
   h1.big,h2{font-size:36px}
@@ -251,7 +233,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 
 <!-- ===================== SIDEBAR NAV ===================== -->
 <nav id="sideNav" aria-label="Section navigation">
-  <h1>Baxter House</h1>
+  <h1>Baxter House Music</h1>
 
   <div class="nav-group">Introduction</div>
   <a href="#cover">Cover</a>
@@ -264,20 +246,10 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   <div class="nav-group">Case Studies</div>
   <a href="#cs-new-balance">New Balance</a>
   <a href="#cs-chick-fil-a">Chick-fil-A</a>
-  <a href="#cs-virgin">Virgin Voyages</a>
   <a href="#cs-novartis">Novartis</a>
-  <a href="#cs-smirnoff">Smirnoff</a>
-  <a href="#cs-optimum">Optimum</a>
-
-  <div class="nav-group">Remixes</div>
-  <a href="#remixes">Remix Reel</a>
 
   <div class="nav-group">The Studio</div>
   <a href="#the-house">The House</a>
-
-  <div class="nav-group">Exploration</div>
-  <a href="#cs-virgin-a">Virgin — Alt A (Scroll)</a>
-  <a href="#cs-virgin-b">Virgin — Alt B (Boxes)</a>
 
   <div class="nav-group">Next Steps</div>
   <a href="#closing">Let's Build Something Together</a>
@@ -285,6 +257,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 
 <!-- ===================== SECTION CONTROLS ===================== -->
 <div class="section-controls" aria-label="Slide navigation">
+  <button type="button" id="heroMute" class="hero-mute-btn" aria-label="Unmute video" title="Unmute" style="display:none"></button>
   <button type="button" id="sectionPrev" title="Previous slide - Left arrow">&#8249;</button>
   <button type="button" id="sectionNext" title="Next slide - Right arrow">&#8250;</button>
 </div>
@@ -295,7 +268,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   <div class="hero">
     <div class="eyebrow">A music &amp; creative screening for</div>
     <h1 class="big">INNOCEAN</h1>
-    <p>Presented by Baxter House</p>
+    <p>Presented by Baxter House Music</p>
   </div>
 
   <!-- 1 - COVER -->
@@ -316,7 +289,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
     </div>
     <div class="who-brands">
       <div class="slide-kicker who-brands-title">Some of the brands we've delivered for</div>
-      <img class="brands-wall openable" src="assets/brands/logos.png" alt="Some of the brands we've delivered for" data-item="77">
+      <img class="brands-wall openable" src="assets/brands/logos.png" alt="Some of the brands we've delivered for" data-item="46">
     </div>
     </div>
   </section>
@@ -350,7 +323,6 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
       <a class="track-card openable" href="https://www.youtube.com/watch?v=NFljoiSqLVg" data-item="14"><img src="https://img.youtube.com/vi/NFljoiSqLVg/hqdefault.jpg" alt="Pepsi Debut - KATSEYE"><span class="track-meta"><b>Pepsi</b><em>Debut - KATSEYE</em></span></a>
       <a class="track-card openable" href="https://www.youtube.com/watch?v=x9DtI1q55HM" data-item="15"><img src="https://img.youtube.com/vi/x9DtI1q55HM/hqdefault.jpg" alt="Top Gun: Maverick - I Ain't Worried"><span class="track-meta"><b>Top Gun: Maverick</b><em>I Ain't Worried</em></span></a>
       <a class="track-card openable" href="https://www.youtube.com/watch?v=EwbobNQahpw" data-item="16"><img src="https://img.youtube.com/vi/EwbobNQahpw/hqdefault.jpg" alt="Degree - FIFA World Cup 2026"><span class="track-meta"><b>Degree</b><em>FIFA World Cup 2026</em></span></a>
-      <a class="track-card openable" href="https://www.youtube.com/watch?v=fvKjueGQR0o" data-item="17"><img src="https://img.youtube.com/vi/fvKjueGQR0o/hqdefault.jpg" alt="Virgin Cruises - The Voyage"><span class="track-meta"><b>Virgin Cruises</b><em>The Voyage</em></span></a>
       <a class="track-card openable" href="https://www.youtube.com/watch?v=l_XnqdDtFj0" data-item="18"><img src="https://img.youtube.com/vi/l_XnqdDtFj0/hqdefault.jpg" alt="BMW - SSE"><span class="track-meta"><b>BMW</b><em>SSE</em></span></a>
       <a class="track-card openable" href="https://www.youtube.com/watch?v=SMlOCuUbl2c" data-item="19"><img src="https://img.youtube.com/vi/SMlOCuUbl2c/hqdefault.jpg" alt="Chick-fil-A - Jalapeño Ranch"><span class="track-meta"><b>Chick-fil-A</b><em>Jalapeño Ranch</em></span></a>
     </div>
@@ -412,40 +384,6 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
     </div>
   </section>
 
-  <!-- CS: VIRGIN VOYAGES (live) -->
-  <section id="cs-virgin">
-    <figure class="cs-hero cs-hero-video cs-hero-sticky"><iframe src="" data-src="https://www.youtube-nocookie.com/embed/vd2GFfa8Rso?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=vd2GFfa8Rso&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3&amp;cc_load_policy=0&amp;enablejsapi=1&amp;fs=0&amp;hd=1&amp;vq=hd1080" title="Virgin Voyages — The Voyage (Karma Chameleon) Music Video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></figure>
-    <div class="cs-body">
-    <div class="section-head"><div><div class="slide-kicker">Case Study</div><h2>Virgin Voyages</h2></div></div>
-    <div class="cs-layout">
-      <div class="cs-ask">
-        <div class="cs-label">The Ask</div>
-        <p>Find an artist to cover Culture Club's &ldquo;Karma Chameleon&rdquo; and star in a music video filmed on a Virgin Voyages cruise alongside Richard Branson.</p>
-      </div>
-      <div class="cs-did">
-        <div class="cs-label">What We Delivered</div>
-        <ul>
-          <li>Produced a custom cover of &ldquo;Karma Chameleon&rdquo; featuring Drew Love.</li>
-          <li>Full-length music video at sea, with Drew Love on-camera with Richard Branson.</li>
-          <li>Campaign aired during the Super Bowl and Grammys (220M+ viewers).</li>
-          <li>Extended the campaign with a DSP release, Billboard charting, and an official Austin Millz remix.</li>
-          <li>The song peaked at No. 16 on the Billboard Adult Contemporary chart.</li>
-        </ul>
-      </div>
-    </div>
-    <div class="cs-media">
-      <figure><img src="assets/case-studies/virgin-voyages/karma-chameleon-cover.jpg" alt="Karma Chameleon — The Voyage Edition"><figcaption><b>Karma Chameleon</b>The Voyage Edition, feat. Drew Love</figcaption></figure>
-      <figure><img src="assets/case-studies/virgin-voyages/music-video-still.jpg" alt="Music video still — Drew Love"><figcaption><b>Music Video</b>Aired during the Super Bowl &amp; Grammys — 220M+ viewers</figcaption></figure>
-      <figure><img src="assets/case-studies/virgin-voyages/drew-love-portrait.jpg" alt="Drew Love"><figcaption><b>Drew Love</b>Direct-to-fans marketing on Instagram</figcaption></figure>
-      <figure><img src="assets/case-studies/virgin-voyages/drew-love-ship-deck.jpg" alt="Live performance on deck"><figcaption><b>Official Austin Millz Remix</b>+ live performance aboard ship</figcaption></figure>
-      <figure><img src="assets/case-studies/virgin-voyages/billboard-chart.jpg" alt="Billboard Adult Contemporary chart"><figcaption><b>Billboard Adult Contemporary</b>Peaked at No. 16</figcaption></figure>
-      <figure><img src="assets/case-studies/virgin-voyages/dsp-playlists.jpg" alt="DSP playlisting"><figcaption><b>DSP Release</b>Released on all platforms + playlisting strategy</figcaption></figure>
-      <figure><img src="assets/case-studies/virgin-voyages/ship-sunset.jpg" alt="Aboard a Virgin Voyages ship"><figcaption><b>Filmed Aboard Virgin Voyages</b></figcaption></figure>
-      <figure><img src="assets/case-studies/virgin-voyages/the-voyage-title.jpg" alt="The Voyage title card"><figcaption><b>The Voyage</b></figcaption></figure>
-    </div>
-    </div>
-  </section>
-
   <!-- CS: NOVARTIS (assets + ASK to come from client) -->
   <section id="cs-novartis">
     <figure class="cs-hero cs-hero-video cs-hero-sticky"><iframe src="" data-src="https://www.youtube-nocookie.com/embed/vVCU6sg8cjk?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=vVCU6sg8cjk&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3&amp;cc_load_policy=0&amp;enablejsapi=1&amp;fs=0&amp;hd=1&amp;vq=hd1080" title="Novartis — Super Bowl Spot" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></figure>
@@ -464,89 +402,6 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
         </ul>
       </div>
     </div>
-    </div>
-  </section>
-
-  <!-- CS: SMIRNOFF (live) -->
-  <section id="cs-smirnoff">
-    <figure class="cs-hero cs-hero-sticky"><img src="assets/case-studies/smirnoff/we-do-we-hero.jpg" alt="Smirnoff — We Do We"></figure>
-    <div class="cs-body">
-    <div class="section-head"><div><div class="slide-kicker">Case Study</div><h2>Smirnoff — Sound of We</h2></div></div>
-    <div class="cs-layout">
-      <div class="cs-ask">
-        <div class="cs-label">The Ask</div>
-        <p>Collaborate with two Canadian artists to develop four original tracks featuring Smirnoff product sounds as a core creative element.</p>
-      </div>
-      <div class="cs-did">
-        <div class="cs-label">What We Delivered</div>
-        <ul>
-          <li>Brought Canadian artists Leila Dey and Isaac Zale together.</li>
-          <li>Produced original music inspired by custom Smirnoff creator kits.</li>
-          <li>Released music across DSPs and amplified through social content.</li>
-          <li>Culminated in live performances at Toronto Pride.</li>
-        </ul>
-      </div>
-    </div>
-    <div class="cs-media">
-      <figure><img src="assets/case-studies/smirnoff/leila-dey-portrait.jpg" alt="Leila Dey"><figcaption><b>Leila Dey</b>Canadian artist</figcaption></figure>
-      <figure><img src="assets/case-studies/smirnoff/isaac-zale-portrait.jpg" alt="Isaac Zale"><figcaption><b>Isaac Zale</b>Canadian artist</figcaption></figure>
-      <figure><img src="assets/case-studies/smirnoff/song-see-you-leila.jpg" alt="See You — ft. Leila Dey"><figcaption><b>See You</b>ft. Leila Dey</figcaption></figure>
-      <figure><img src="assets/case-studies/smirnoff/song-see-you-isaac.jpg" alt="See You — ft. Isaac Zale"><figcaption><b>See You</b>ft. Isaac Zale</figcaption></figure>
-      <figure><img src="assets/case-studies/smirnoff/song-day-one-leila.jpg" alt="Day One — ft. Leila Dey"><figcaption><b>Day One</b>ft. Leila Dey</figcaption></figure>
-      <figure><img src="assets/case-studies/smirnoff/song-day-one-isaac.jpg" alt="Day One — ft. Isaac Zale"><figcaption><b>Day One</b>ft. Isaac Zale</figcaption></figure>
-      <figure><img src="assets/case-studies/smirnoff/pride-performance.jpg" alt="Live at Toronto Pride"><figcaption><b>Live at Toronto Pride</b>Leila Dey on the Smirnoff float</figcaption></figure>
-      <figure><img src="assets/case-studies/smirnoff/float-truck.jpg" alt="Smirnoff Pride float"><figcaption><b>Smirnoff Pride Float</b>Toronto Pride Parade</figcaption></figure>
-      <figure><img src="assets/case-studies/smirnoff/social-1.jpg" alt="Social process content"><figcaption><b>Social Content</b>Documented the creation process</figcaption></figure>
-      <figure><img src="assets/case-studies/smirnoff/social-2.jpg" alt="Social process content"><figcaption><b>Social Content</b>Isaac Zale — Vancouver</figcaption></figure>
-      <figure><img src="assets/case-studies/smirnoff/we-do-we-circle.jpg" alt="We Do We activation"><figcaption><b>We Do We</b>Activation</figcaption></figure>
-    </div>
-    </div>
-  </section>
-
-  <!-- CS: OPTIMUM ONLINE (live) -->
-  <section id="cs-optimum">
-    <figure class="cs-hero cs-hero-sticky"><img src="assets/case-studies/optimum/optimum-logo.jpg" alt="Optimum"></figure>
-    <div class="cs-body">
-    <div class="section-head"><div><div class="slide-kicker">Case Study</div><h2>Optimum Online</h2></div></div>
-    <div class="cs-layout">
-      <div class="cs-ask">
-        <div class="cs-label">The Ask</div>
-        <p>Bring together an artist and producer through our network to create an original track that supports Optimum's brand transformation.</p>
-      </div>
-      <div class="cs-did">
-        <div class="cs-label">What We Delivered</div>
-        <ul>
-          <li>Paired artist ROZES with producer Allister X to create an original song for the Optimum rebrand.</li>
-          <li>Released the song across all Digital Streaming Platforms.</li>
-          <li>Created an official The Stickmen Project remix, plus a live performance.</li>
-          <li>Interviewed the artist and producer, spotlighting their partnership with the Optimum brand.</li>
-          <li>Released the Stickmen Project remix on all DSPs with a playlisting strategy.</li>
-        </ul>
-      </div>
-    </div>
-    <div class="cs-media">
-      <figure><img src="assets/case-studies/optimum/away-we-go-cover.jpg" alt="Away We Go — ROZES | Allister X"><figcaption><b>Away We Go</b>ROZES | Allister X — original song</figcaption></figure>
-      <figure><img src="assets/case-studies/optimum/music-video-still.jpg" alt="Music video still"><figcaption><b>Music Video</b></figcaption></figure>
-      <figure><img src="assets/case-studies/optimum/rozes-portrait.jpg" alt="ROZES"><figcaption><b>ROZES</b>Artist</figcaption></figure>
-      <figure><img src="assets/case-studies/optimum/allister-x-portrait.jpg" alt="Allister X"><figcaption><b>Allister X</b>Producer</figcaption></figure>
-      <figure><img src="assets/case-studies/optimum/rozes-studio.jpg" alt="ROZES in the studio"><figcaption><b>In the Studio</b>Interviewed on the Optimum partnership</figcaption></figure>
-      <figure><img src="assets/case-studies/optimum/stickmen-live.jpg" alt="The Stickmen Project live"><figcaption><b>Live Performance</b>The Stickmen Project</figcaption></figure>
-      <figure><img src="assets/case-studies/optimum/away-we-go-remix.jpg" alt="Away We Go — The Stickmen Project Remix"><figcaption><b>Away We Go</b>The Stickmen Project Remix</figcaption></figure>
-      <figure><img src="assets/case-studies/optimum/dsp-playlists.jpg" alt="DSP playlisting"><figcaption><b>DSP Release</b>All platforms + playlisting strategy</figcaption></figure>
-    </div>
-    </div>
-  </section>
-
-  <!-- REMIXES -->
-  <section id="remixes">
-    <div class="section-head"><div><div class="slide-kicker">Baxter House</div><h2>Remixes</h2></div></div>
-    <div class="remix-grid">
-      <a class="track-card openable" href="assets/remixes/2k24-motley-crue.jpg" data-item="71"><img src="assets/remixes/2k24-motley-crue.jpg" alt="2K24 Official Launch — Kickstart My Heart (NOIRCEUR Remix)"><span class="track-meta"><b>2K24 Official Launch</b><em>Kickstart My Heart — Mötley Crüe (NOIRCEUR Remix)</em></span></a>
-      <a class="track-card openable" href="assets/remixes/gatorade-vince-staples.jpg" data-item="72"><img src="assets/remixes/gatorade-vince-staples.jpg" alt="Gatorade — FUN! (Martin Wave Remix)"><span class="track-meta"><b>Gatorade · Fueled By The Beast</b><em>FUN! — Vince Staples (Martin Wave Remix)</em></span></a>
-      <a class="track-card openable" href="assets/remixes/google-maggie-rogers.jpg" data-item="73"><img src="assets/remixes/google-maggie-rogers.jpg" alt="Google Year In Search — Back In My Body (Bettina Bergström Remix)"><span class="track-meta"><b>Google · Year In Search</b><em>Back In My Body — Maggie Rogers (Bettina Bergström Remix)</em></span></a>
-      <a class="track-card openable" href="assets/remixes/accenture-james-blake.jpg" data-item="74"><img src="assets/remixes/accenture-james-blake.jpg" alt="Accenture — Thrown Around (R-CANE Remix)"><span class="track-meta"><b>Accenture</b><em>Thrown Around — James Blake (R-CANE Remix)</em></span></a>
-      <a class="track-card openable" href="assets/remixes/essentia-yma-sumac.jpg" data-item="75"><img src="assets/remixes/essentia-yma-sumac.jpg" alt="Essentia Hydro Boost — Goomba Boomba (Martin Wave Remix)"><span class="track-meta"><b>Essentia · Hydro Boost</b><em>Goomba Boomba — Yma Sumac (Martin Wave Remix)</em></span></a>
-      <a class="track-card openable" href="assets/remixes/honda-panda-bear.jpg" data-item="76"><img src="assets/remixes/honda-panda-bear.jpg" alt="Honda — Edge of the Edge (Allister X Remix)"><span class="track-meta"><b>Honda</b><em>Edge of the Edge — Panda Bear, Sonic Boom (Allister X Remix)</em></span></a>
     </div>
   </section>
 
@@ -575,77 +430,6 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
     </div>
   </section>
 
-  <!-- CS: VIRGIN VOYAGES — ALT A (scrollytelling) -->
-  <section id="cs-virgin-a">
-    <figure class="cs-hero cs-hero-video cs-hero-sticky"><iframe src="" data-src="https://www.youtube-nocookie.com/embed/vd2GFfa8Rso?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=vd2GFfa8Rso&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3&amp;cc_load_policy=0&amp;enablejsapi=1&amp;fs=0&amp;hd=1&amp;vq=hd1080" title="Virgin Voyages — The Voyage (Karma Chameleon) Music Video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></figure>
-    <div class="cs-body">
-    <div class="section-head"><div><div class="slide-kicker">Case Study · Alt A</div><h2>Virgin Voyages</h2></div></div>
-    <div class="vv-lead"><b>The Ask</b>Find an artist to cover Culture Club's &ldquo;Karma Chameleon&rdquo; and star in a music video filmed on a Virgin Voyages cruise alongside Richard Branson.</div>
-    <div class="vv-scrolly">
-      <div class="vv-media">
-        <div class="vv-group" data-text="Produced a custom cover of &ldquo;Karma Chameleon&rdquo; featuring Drew Love.">
-          <p class="vv-group-text">Produced a custom cover of &ldquo;Karma Chameleon&rdquo; featuring Drew Love.</p>
-          <img src="assets/case-studies/virgin-voyages/karma-chameleon-cover.jpg" alt="Karma Chameleon — The Voyage Edition">
-          <img src="assets/case-studies/virgin-voyages/drew-love-portrait.jpg" alt="Drew Love">
-        </div>
-        <div class="vv-group" data-text="Full-length music video at sea, with Drew Love on-camera with Richard Branson.">
-          <p class="vv-group-text">Full-length music video at sea, with Drew Love on-camera with Richard Branson.</p>
-          <img src="assets/case-studies/virgin-voyages/the-voyage-title.jpg" alt="The Voyage">
-          <img src="assets/case-studies/virgin-voyages/ship-sunset.jpg" alt="Aboard a Virgin Voyages ship">
-        </div>
-        <div class="vv-group" data-text="Aired during the Super Bowl and the Grammys, reaching 220M+ viewers.">
-          <p class="vv-group-text">Aired during the Super Bowl and the Grammys, reaching 220M+ viewers.</p>
-          <img src="assets/case-studies/virgin-voyages/music-video-still.jpg" alt="Music video still">
-        </div>
-        <div class="vv-group" data-text="Extended the campaign with a DSP release, playlisting, and an official Austin Millz remix.">
-          <p class="vv-group-text">Extended the campaign with a DSP release, playlisting, and an official Austin Millz remix.</p>
-          <img src="assets/case-studies/virgin-voyages/dsp-playlists.jpg" alt="DSP playlisting">
-          <img src="assets/case-studies/virgin-voyages/drew-love-ship-deck.jpg" alt="Official Austin Millz remix — live performance aboard ship">
-        </div>
-        <div class="vv-group" data-text="Peaked at No. 16 on the Billboard Adult Contemporary chart.">
-          <p class="vv-group-text">Peaked at No. 16 on the Billboard Adult Contemporary chart.</p>
-          <img src="assets/case-studies/virgin-voyages/billboard-chart.jpg" alt="Billboard Adult Contemporary — No. 16">
-        </div>
-      </div>
-      <div class="vv-sticky"><p class="vv-caption"></p></div>
-    </div>
-    </div>
-    <div class="vv-reveal"></div>
-  </section>
-
-  <!-- CS: VIRGIN VOYAGES — ALT B (lines as boxes) -->
-  <section id="cs-virgin-b">
-    <figure class="cs-hero cs-hero-video cs-hero-sticky"><iframe src="" data-src="https://www.youtube-nocookie.com/embed/vd2GFfa8Rso?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=vd2GFfa8Rso&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3&amp;cc_load_policy=0&amp;enablejsapi=1&amp;fs=0&amp;hd=1&amp;vq=hd1080" title="Virgin Voyages — The Voyage (Karma Chameleon) Music Video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></figure>
-    <div class="cs-body">
-    <div class="section-head"><div><div class="slide-kicker">Case Study · Alt B</div><h2>Virgin Voyages</h2></div></div>
-    <div class="cs-layout">
-      <div class="cs-ask">
-        <div class="cs-label">The Ask</div>
-        <p>Find an artist to cover Culture Club's &ldquo;Karma Chameleon&rdquo; and star in a music video filmed on a Virgin Voyages cruise alongside Richard Branson.</p>
-      </div>
-      <div class="cs-did">
-        <div class="cs-label">What We Delivered</div>
-        <div class="cs-did-boxes">
-          <div class="cs-box">Produced a custom cover of &ldquo;Karma Chameleon&rdquo; featuring Drew Love.</div>
-          <div class="cs-box">Full-length music video at sea, with Drew Love on-camera with Richard Branson.</div>
-          <div class="cs-box">Campaign aired during the Super Bowl and Grammys (220M+ viewers).</div>
-          <div class="cs-box">Extended the campaign with a DSP release, Billboard charting, and an official Austin Millz remix.</div>
-          <div class="cs-box">The song peaked at No. 16 on the Billboard Adult Contemporary chart.</div>
-        </div>
-      </div>
-    </div>
-    <div class="cs-media">
-      <figure><img src="assets/case-studies/virgin-voyages/karma-chameleon-cover.jpg" alt="Karma Chameleon — The Voyage Edition"><figcaption><b>Karma Chameleon</b>The Voyage Edition, feat. Drew Love</figcaption></figure>
-      <figure><img src="assets/case-studies/virgin-voyages/music-video-still.jpg" alt="Music video still — Drew Love"><figcaption><b>Music Video</b>Aired during the Super Bowl &amp; Grammys — 220M+ viewers</figcaption></figure>
-      <figure><img src="assets/case-studies/virgin-voyages/drew-love-portrait.jpg" alt="Drew Love"><figcaption><b>Drew Love</b>Direct-to-fans marketing on Instagram</figcaption></figure>
-      <figure><img src="assets/case-studies/virgin-voyages/drew-love-ship-deck.jpg" alt="Live performance on deck"><figcaption><b>Official Austin Millz Remix</b>+ live performance aboard ship</figcaption></figure>
-      <figure><img src="assets/case-studies/virgin-voyages/billboard-chart.jpg" alt="Billboard Adult Contemporary chart"><figcaption><b>Billboard Adult Contemporary</b>Peaked at No. 16</figcaption></figure>
-      <figure><img src="assets/case-studies/virgin-voyages/dsp-playlists.jpg" alt="DSP playlisting"><figcaption><b>DSP Release</b>Released on all platforms + playlisting strategy</figcaption></figure>
-      <figure><img src="assets/case-studies/virgin-voyages/ship-sunset.jpg" alt="Aboard a Virgin Voyages ship"><figcaption><b>Filmed Aboard Virgin Voyages</b></figcaption></figure>
-      <figure><img src="assets/case-studies/virgin-voyages/the-voyage-title.jpg" alt="The Voyage title card"><figcaption><b>The Voyage</b></figcaption></figure>
-    </div>
-    </div>
-  </section>
 
   <!-- CLOSING -->
   <section id="closing">
@@ -689,6 +473,68 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   const firstId = sectionIds[0];
   let activeId = '';
 
+  /* ---------- HERO VIDEO AUDIO (per-slide mute/unmute) ---------- */
+  const ICON_MUTED = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>';
+  const ICON_ON = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>';
+  const heroFigs = Array.from(document.querySelectorAll('.cs-hero-video'));
+  heroFigs.forEach(fig => { fig.dataset.muted = '1'; });
+  const heroMuteBtn = document.getElementById('heroMute');
+  function setBtnState(btn, muted){
+    btn.innerHTML = muted ? ICON_MUTED : ICON_ON;
+    btn.setAttribute('aria-label', muted ? 'Unmute video' : 'Mute video');
+    btn.setAttribute('title', muted ? 'Unmute' : 'Mute');
+    btn.classList.toggle('is-on', !muted);
+  }
+  function activeHeroFig(){ return document.querySelector('main > section.active-section .cs-hero-video'); }
+  // Reflect the active slide's hero on the fixed button; hide it when the slide has no video.
+  function syncHeroMuteBtn(){
+    if(!heroMuteBtn) return;
+    const fig = activeHeroFig();
+    heroMuteBtn.style.display = fig ? '' : 'none';
+    if(fig) setBtnState(heroMuteBtn, fig.dataset.muted !== '0');
+  }
+  // Send a YouTube IFrame API command, retrying so it lands even before the player is ready.
+  function applyMute(fig, muted){
+    const f = fig.querySelector('iframe');
+    if(!f) return;
+    fig.dataset.muted = muted ? '1' : '0';
+    const token = (fig._muteToken = (fig._muteToken || 0) + 1);
+    let tries = 0;
+    const send = () => {
+      if(token !== fig._muteToken || tries++ > 6 || !f.getAttribute('src')) return;
+      try { f.contentWindow.postMessage(
+        JSON.stringify({event:'command', func: muted ? 'mute' : 'unMute', args:[]}), '*'); } catch(e){}
+      setTimeout(send, 250);
+    };
+    send();
+  }
+  // Play/pause a hero, retrying so the command lands even before the player is ready.
+  function playHero(fig, play){
+    const f = fig.querySelector('iframe');
+    if(!f) return;
+    const token = (fig._playToken = (fig._playToken || 0) + 1);
+    let tries = 0;
+    const send = () => {
+      if(token !== fig._playToken || tries++ > 6 || !f.getAttribute('src')) return;
+      try { f.contentWindow.postMessage(
+        JSON.stringify({event:'command', func: play ? 'playVideo' : 'pauseVideo', args:[]}), '*'); } catch(e){}
+      setTimeout(send, 250);
+    };
+    send();
+  }
+  // Only one hero may have sound at a time.
+  function soloUnmute(fig){ heroFigs.forEach(h => applyMute(h, h !== fig)); }
+  function muteAllHeroes(){ heroFigs.forEach(h => applyMute(h, true)); syncHeroMuteBtn(); }
+  if(heroMuteBtn){
+    heroMuteBtn.addEventListener('click', e => {
+      e.preventDefault();
+      const fig = activeHeroFig();
+      if(!fig) return;
+      if(fig.dataset.muted !== '0') soloUnmute(fig); else applyMute(fig, true);
+      syncHeroMuteBtn();
+    });
+  }
+
   function showSection(id, updateHash=true){
     const target = document.getElementById(id);
     if(!target) return;
@@ -698,9 +544,11 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
       sections.forEach(s => s.classList.toggle('active-section', s.id === id));
       navLinks.forEach(a => a.classList.toggle('active-nav', a.getAttribute('href') === '#'+id));
       if(hero) hero.classList.toggle('is-hidden', id !== firstId);
-      // hero background videos: play only the active slide's, stop the rest
-      document.querySelectorAll('.cs-hero-video iframe[data-src]').forEach(f => {
-        const inActive = f.closest('section') && f.closest('section').id === id;
+      // hero background videos: active slide plays (muted by default); the rest are paused + muted
+      heroFigs.forEach(fig => {
+        const f = fig.querySelector('iframe[data-src]');
+        if(!f) return;
+        const inActive = fig.closest('section') && fig.closest('section').id === id;
         if(inActive){
           if(f.getAttribute('src') !== f.dataset.src){
             f.setAttribute('src', f.dataset.src);
@@ -718,9 +566,14 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
             };
             setTimeout(killCC, 700);
           }
+          applyMute(fig, true);   // muted by default (autoplay requirement)
+          playHero(fig, true);    // resume if it was paused on a previous visit
+        } else if(f.getAttribute('src')){
+          applyMute(fig, true);   // force mute
+          playHero(fig, false);   // pause unfocused slides
         }
-        else if(f.getAttribute('src')){ f.setAttribute('src',''); }
       });
+      syncHeroMuteBtn();
       window.scrollTo(0,0);
       if(updateHash) history.replaceState(null,'','#'+id);
       requestAnimationFrame(() => main.classList.remove('page-fade'));
@@ -770,7 +623,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
     ['Baxter House','Pepsi - Debut: KATSEYE','https://www.youtube.com/embed/NFljoiSqLVg?autoplay=1&rel=0'],
     ['Baxter House','Top Gun: Maverick - I Ain\'t Worried','https://www.youtube.com/embed/x9DtI1q55HM?autoplay=1&rel=0'],
     ['Baxter House','Degree - FIFA World Cup 2026','https://www.youtube.com/embed/EwbobNQahpw?autoplay=1&rel=0'],
-    ['Baxter House','Virgin Cruises - The Voyage','https://www.youtube.com/embed/fvKjueGQR0o?autoplay=1&rel=0'],
+    ['','',''],
     ['Baxter House','BMW - SSE','https://www.youtube.com/embed/l_XnqdDtFj0?autoplay=1&rel=0'],
     ['Baxter House','Chick-fil-A - Jalapeño Ranch','https://www.youtube.com/embed/SMlOCuUbl2c?autoplay=1&rel=0'],['','','',''],['','','',''],['','','',''],['','','',''],['','','',''],['','','',''],
     ['The House','Outdoor Patio','assets/house/01-baxter-chill-zone-2b.jpg','image'],
@@ -793,37 +646,6 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
     ['The House','Studio S','assets/house/20-studio-s.jpg','image'],
     ['Track record','King Princess - Fantastic','https://www.youtube.com/embed/t9mpyRzipww?autoplay=1&rel=0'],
     ['',''],
-    ['Virgin Voyages','Karma Chameleon — The Voyage Edition','assets/case-studies/virgin-voyages/karma-chameleon-cover.jpg','image'],
-    ['Virgin Voyages','Music Video — Drew Love','assets/case-studies/virgin-voyages/music-video-still.jpg','image'],
-    ['Virgin Voyages','Filmed Aboard Virgin Voyages','assets/case-studies/virgin-voyages/ship-sunset.jpg','image'],
-    ['Virgin Voyages','The Voyage','assets/case-studies/virgin-voyages/the-voyage-title.jpg','image'],
-    ['Virgin Voyages','Drew Love','assets/case-studies/virgin-voyages/drew-love-portrait.jpg','image'],
-    ['Virgin Voyages','Live Performance','assets/case-studies/virgin-voyages/drew-love-ship-deck.jpg','image'],
-    ['Virgin Voyages','Billboard Adult Contemporary — Charted #18','assets/case-studies/virgin-voyages/billboard-chart.jpg','image'],
-    ['Virgin Voyages','DSP Release & Playlisting','assets/case-studies/virgin-voyages/dsp-playlists.jpg','image'],
-    ['Smirnoff','We Do We — Campaign Key Art','assets/case-studies/smirnoff/we-do-we-hero.jpg','image'],
-    ['Smirnoff','See You — ft. Leila Dey','assets/case-studies/smirnoff/song-see-you-leila.jpg','image'],
-    ['Smirnoff','Day One — ft. Isaac Zale','assets/case-studies/smirnoff/song-day-one-isaac.jpg','image'],
-    ['Smirnoff','Leila Dey','assets/case-studies/smirnoff/leila-dey-portrait.jpg','image'],
-    ['Smirnoff','Live at Toronto Pride','assets/case-studies/smirnoff/pride-performance.jpg','image'],
-    ['Smirnoff','Smirnoff Pride Float','assets/case-studies/smirnoff/float-truck.jpg','image'],
-    ['Smirnoff','Toronto Pride','assets/case-studies/smirnoff/pride-banner.jpg','image'],
-    ['Smirnoff','We Do We — Activation','assets/case-studies/smirnoff/we-do-we-circle.jpg','image'],
-    ['Optimum Online','Away We Go — ROZES | Allister X','assets/case-studies/optimum/away-we-go-cover.jpg','image'],
-    ['Optimum Online','Music Video','assets/case-studies/optimum/music-video-still.jpg','image'],
-    ['Optimum Online','ROZES','assets/case-studies/optimum/rozes-portrait.jpg','image'],
-    ['Optimum Online','Allister X','assets/case-studies/optimum/allister-x-portrait.jpg','image'],
-    ['Optimum Online','In the Studio','assets/case-studies/optimum/rozes-studio.jpg','image'],
-    ['Optimum Online','Live Performance — The Stickmen Project','assets/case-studies/optimum/stickmen-live.jpg','image'],
-    ['Optimum Online','Away We Go — The Stickmen Project Remix','assets/case-studies/optimum/away-we-go-remix.jpg','image'],
-    ['Optimum Online','DSP Release & Playlisting','assets/case-studies/optimum/dsp-playlists.jpg','image'],
-    ['Optimum Online','Optimum Rebrand','assets/case-studies/optimum/optimum-logo.jpg','image'],
-    ['Remixes','2K24 Official Launch — Kickstart My Heart (Mötley Crüe, NOIRCEUR Remix)','assets/remixes/2k24-motley-crue.jpg','image'],
-    ['Remixes','Gatorade — FUN! (Vince Staples, Martin Wave Remix)','assets/remixes/gatorade-vince-staples.jpg','image'],
-    ['Remixes','Google Year In Search — Back In My Body (Maggie Rogers, Bettina Bergström Remix)','assets/remixes/google-maggie-rogers.jpg','image'],
-    ['Remixes','Accenture — Thrown Around (James Blake, R-CANE Remix)','assets/remixes/accenture-james-blake.jpg','image'],
-    ['Remixes','Essentia Hydro Boost — Goomba Boomba (Yma Sumac, Martin Wave Remix)','assets/remixes/essentia-yma-sumac.jpg','image'],
-    ['Remixes','Honda — Edge of the Edge (Panda Bear, Sonic Boom, Allister X Remix)','assets/remixes/honda-panda-bear.jpg','image'],
     ['Friends & Family','Brands We Love & Who Love Us','assets/brands/logos.png','image'],
   ].map(([kicker,title,src,type]) => ({
     kicker, title,
@@ -843,6 +665,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
     document.getElementById('modalBody').innerHTML = it.bodyHtml || '';
     const groupPos = modalGroup.indexOf(current);
     document.getElementById('modalCount').textContent = groupPos >= 0 ? `${groupPos + 1} of ${modalGroup.length}` : '';
+    muteAllHeroes(); // modal videos carry their own audio — never let a hero bleed under them
     modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
   }
   function moveModal(delta){
@@ -866,29 +689,6 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   document.getElementById('modalNext').addEventListener('click', () => moveModal(1));
   document.getElementById('modalClose').addEventListener('click', close);
   modal.addEventListener('click', e => { if(e.target === modal) close(); });
-
-  /* ---------- VIRGIN ALT A: scrollytelling captions ---------- */
-  document.querySelectorAll('.vv-scrolly').forEach(scrolly => {
-    const cap = scrolly.querySelector('.vv-caption');
-    const groups = Array.from(scrolly.querySelectorAll('.vv-group'));
-    if(!cap || !groups.length) return;
-    let currentText = null;
-    const setCap = (t) => {
-      if(t === currentText) return;
-      currentText = t;
-      cap.classList.remove('in');
-      setTimeout(() => { cap.textContent = t; cap.classList.add('in'); }, 180);
-    };
-    setCap(groups[0].dataset.text);
-    const ratios = new Map();
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => ratios.set(e.target, e.intersectionRatio));
-      let best = null, bestR = -1;
-      groups.forEach(g => { const r = ratios.get(g) || 0; if(r > bestR){ bestR = r; best = g; } });
-      if(best && bestR > 0) setCap(best.dataset.text);
-    }, { threshold:[0,0.2,0.4,0.6,0.8,1], rootMargin:'-15% 0px -15% 0px' });
-    groups.forEach(g => io.observe(g));
-  });
 
   /* ---------- KEYBOARD (modal takes precedence over deck) ---------- */
   document.addEventListener('keydown', e => {
