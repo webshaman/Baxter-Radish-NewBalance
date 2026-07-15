@@ -116,10 +116,10 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 .track-card b{display:block;font-size:13px;line-height:1.1}.track-card em{display:block;font-style:normal;font-size:11px;opacity:.82;margin-top:3px}
 
 /* ---- HOW WE WORK (quad) ---- */
-#how-we-work .grid{gap:20px}
-#how-we-work .card{min-height:236px;padding:28px 32px;grid-column:span 6}
-#how-we-work .card h3{font-size:23px;letter-spacing:.03em;text-transform:uppercase;margin-bottom:14px}
-#how-we-work .card p{font-size:16px;line-height:1.52;color:rgba(255,255,255,.86)}
+.who-pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:16px}
+.pillar{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px;padding:30px 16px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.05)}
+.pillar svg{width:38px;height:38px;color:#fff}
+.pillar span{color:#fff;font-size:18px;font-weight:700;letter-spacing:.01em;line-height:1.2}
 
 /* ---- CASE STUDIES ---- */
 .cs-layout{display:grid;grid-template-columns:minmax(300px,1fr) minmax(320px,1.15fr);gap:26px;align-items:start}
@@ -200,7 +200,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   main{margin-left:0;padding:16px}
   body:after{left:0}
   .span-3,.span-4,.span-6,.span-8{grid-column:span 12}
-  #how-we-work .card{grid-column:span 12}
+  .who-pillars{grid-template-columns:repeat(2,1fr)}
   .video-grid{grid-template-columns:repeat(2,1fr)}
   .track-grid{grid-template-columns:1fr}
   .remix-grid{grid-template-columns:1fr}
@@ -229,7 +229,6 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   <div class="nav-group">Introduction</div>
   <a href="#cover">Cover</a>
   <a href="#who">Who Is Baxter House?</a>
-  <a href="#how-we-work">How We Work</a>
 
   <div class="nav-group">Track Record</div>
   <a href="#track-record">Chart-Topping Hits</a>
@@ -285,21 +284,16 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
       <div class="card span-6"><h3>Cultural Entities</h3><p>We see our artists as enduring cultural entities, not one-dimensional acts.</p></div>
       <div class="card span-6"><h3>Collaboration &amp; Trust</h3><p>Our model is built on collaboration, trust, shared creative ambition, and the power of real-world, IRL presentation.</p></div>
     </div>
+    <div class="who-pillars">
+      <div class="pillar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><span>Customs</span></div>
+      <div class="pillar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Artist / Brand Partnerships</span></div>
+      <div class="pillar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg><span>Creative Licensing</span></div>
+      <div class="pillar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg><span>Remixes</span></div>
+    </div>
     </div>
   </section>
 
-  <!-- 3 - HOW WE WORK (quad) -->
-  <section id="how-we-work">
-    <div class="section-head"><div><div class="slide-kicker">Baxter House</div><h2>How We Work</h2></div></div>
-    <div class="grid">
-      <div class="card"><h3>Customs</h3><p>Our diverse set of producers &amp; songwriters are seasoned at crafting the highest level of work, specific to your next campaign. Whether your task is topping that Imagine Dragons song your client won't stop bringing up or pushing the creative needle with a track worthy of Charli XCX's Boiler Room set, we got you covered.</p></div>
-      <div class="card"><h3>Artist / Brand Partnerships</h3><p>We know and have smoked cigars with that cool kid artist your kids are obsessed with, and they told us that they are absolutely living to be a part of your next campaign. Just saying.</p></div>
-      <div class="card"><h3>Creative Licensing</h3><p>We represent real artists — from all corners of the world — with quality creative and headache-free licensing.</p></div>
-      <div class="card"><h3>Remixes</h3><p>Our roster of 100+ producers located all over the globe are experts in perfectly fitting any song to fit all your greatest creative dreams and desires.</p></div>
-    </div>
-  </section>
-
-  <!-- 4 - MUSIC TRACK RECORD -->
+  <!-- 3 - MUSIC TRACK RECORD -->
   <section id="track-record">
     <div class="section-head"><div><div class="slide-kicker">Baxter House</div><h2>Chart-Topping Hits</h2></div></div>
     <div class="track-grid">
