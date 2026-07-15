@@ -142,7 +142,12 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 /* fixed, dimmed video background — content scrolls over it */
 /* sticky hero: normal hero at top, pins as you scroll, content rises over it */
 .cs-hero.cs-hero-sticky{position:sticky;top:5px;z-index:0}
-.cs-body{position:relative;z-index:1;background:rgba(0,0,0,.9);min-height:100vh;margin:0 -16px;padding:0 16px}
+/* content sits in a band over the sticky hero; the trailing space lets the band
+   scroll up off-screen and re-reveal the pinned video/image in place */
+.cs-body{position:relative;z-index:1;background:rgba(0,0,0,.9);margin:0 -16px;padding:0 16px 72px}
+/* in-flow spacer (extends the sticky content box so the hero stays pinned
+   as the content band clears the top, re-revealing the video/image in place) */
+section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
 /* case-study title: flush under hero, no sticky bar / blur */
 .cs-body .section-head{position:static;margin:0;padding:22px 0 0;border-bottom:none}
 .cs-body .section-head:before,
@@ -206,6 +211,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   .cs-media{columns:2}
   .cs-hero{margin:-16px -16px 0;height:auto}
   .cs-hero img{width:100%;max-height:none}
+  section:has(> .cs-hero-sticky)::after{height:60vh}
   .section-head:before{top:-16px}
   .hero{margin:-16px -16px 24px;padding:56px 32px}
   h1.big,h2{font-size:36px}
