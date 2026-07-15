@@ -147,6 +147,23 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 .cs-media img{width:100%;height:auto;display:block;border:1px solid rgba(255,255,255,.2);background:#000}
 .cs-media figcaption{color:rgba(255,255,255,.72);font-size:12.5px;margin-top:7px;line-height:1.35}
 .cs-media figcaption b{display:block;color:#fff;font-weight:700;font-size:13px}
+
+/* ---- VIRGIN ALT A: scrollytelling ---- */
+.cs-body--plain{background:none;min-height:0}
+.vv-lead{font-size:20px;line-height:1.5;color:rgba(255,255,255,.9);max-width:780px;margin:22px 0 0;font-weight:300}
+.vv-lead b{display:block;text-transform:uppercase;letter-spacing:.16em;font-size:13px;font-weight:800;color:rgba(255,255,255,.7);margin-bottom:10px}
+.vv-scrolly{display:grid;grid-template-columns:1.05fr .95fr;gap:54px;align-items:start;margin-top:40px}
+.vv-media{display:flex;flex-direction:column;gap:22px}
+.vv-group{display:flex;flex-direction:column;gap:22px}
+.vv-media img{width:100%;height:auto;display:block;border:1px solid rgba(255,255,255,.2);background:#000}
+.vv-group-text{display:none}
+.vv-sticky{position:sticky;top:5px;height:calc(100vh - 5px);display:flex;align-items:center}
+.vv-caption{font-size:34px;line-height:1.34;color:#fff;font-weight:300;max-width:520px;opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s ease}
+.vv-caption.in{opacity:1;transform:none}
+
+/* ---- VIRGIN ALT B: lines as boxes ---- */
+.cs-did-boxes{display:grid;gap:12px}
+.cs-box{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.28);padding:17px 20px;font-size:18px;line-height:1.4;color:rgba(255,255,255,.92)}
 .cs-pending{border:1px dashed rgba(255,255,255,.4);background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;text-align:center;color:rgba(255,255,255,.55);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;min-height:150px;padding:24px;margin-top:26px}
 .cs-note{color:rgba(255,255,255,.55);font-size:13px;font-style:italic;margin-top:10px}
 .cs-ask.pending p{color:rgba(255,255,255,.6);font-style:italic;font-weight:400;font-size:19px}
@@ -206,6 +223,9 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   .remix-grid{grid-template-columns:1fr}
   .cs-layout{grid-template-columns:1fr}
   .cs-media{columns:2}
+  .vv-scrolly{grid-template-columns:1fr;gap:22px}
+  .vv-sticky{display:none}
+  .vv-group-text{display:block;font-size:23px;line-height:1.35;color:#fff;font-weight:300;margin:0 0 2px}
   .cs-hero{margin:-16px -16px 0;height:auto}
   .cs-hero img{width:100%;max-height:none}
   .section-head:before{top:-16px}
@@ -250,6 +270,10 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 
   <div class="nav-group">Friends &amp; Family</div>
   <a href="#brands">Brands We Love</a>
+
+  <div class="nav-group">Exploration</div>
+  <a href="#cs-virgin-a">Virgin — Alt A (Scroll)</a>
+  <a href="#cs-virgin-b">Virgin — Alt B (Boxes)</a>
 
   <div class="nav-group">Next Steps</div>
   <a href="#closing">Let's Build Something Together</a>
@@ -553,6 +577,77 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
     <img class="brands-wall openable" src="assets/brands/brands-wall.jpg" alt="Brands We Love & Who Love Us" data-item="77">
   </section>
 
+  <!-- CS: VIRGIN VOYAGES — ALT A (scrollytelling) -->
+  <section id="cs-virgin-a">
+    <figure class="cs-hero cs-hero-video"><iframe src="" data-src="https://www.youtube-nocookie.com/embed/vd2GFfa8Rso?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=vd2GFfa8Rso&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3&amp;cc_load_policy=0&amp;enablejsapi=1&amp;fs=0&amp;hd=1&amp;vq=hd1080" title="Virgin Voyages — The Voyage (Karma Chameleon) Music Video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></figure>
+    <div class="cs-body cs-body--plain">
+    <div class="section-head"><div><div class="slide-kicker">Case Study · Alt A</div><h2>Virgin Voyages</h2></div></div>
+    <div class="vv-lead"><b>The Ask</b>Find an artist to cover Culture Club's &ldquo;Karma Chameleon&rdquo; and star in a music video filmed on a Virgin Voyages cruise alongside Richard Branson.</div>
+    <div class="vv-scrolly">
+      <div class="vv-media">
+        <div class="vv-group" data-text="Produced a custom cover of &ldquo;Karma Chameleon&rdquo; featuring Drew Love.">
+          <p class="vv-group-text">Produced a custom cover of &ldquo;Karma Chameleon&rdquo; featuring Drew Love.</p>
+          <img src="assets/case-studies/virgin-voyages/karma-chameleon-cover.jpg" alt="Karma Chameleon — The Voyage Edition">
+          <img src="assets/case-studies/virgin-voyages/drew-love-portrait.jpg" alt="Drew Love">
+        </div>
+        <div class="vv-group" data-text="Coordinated Drew Love's on-camera appearance with Richard Branson aboard a Virgin Voyages ship for a full-length music video.">
+          <p class="vv-group-text">Coordinated Drew Love's on-camera appearance with Richard Branson aboard a Virgin Voyages ship for a full-length music video.</p>
+          <img src="assets/case-studies/virgin-voyages/the-voyage-title.jpg" alt="The Voyage">
+          <img src="assets/case-studies/virgin-voyages/ship-sunset.jpg" alt="Aboard a Virgin Voyages ship">
+          <img src="assets/case-studies/virgin-voyages/drew-love-ship-deck.jpg" alt="Live performance on deck">
+        </div>
+        <div class="vv-group" data-text="Aired during the Super Bowl and the Grammys, reaching 220M+ viewers.">
+          <p class="vv-group-text">Aired during the Super Bowl and the Grammys, reaching 220M+ viewers.</p>
+          <img src="assets/case-studies/virgin-voyages/music-video-still.jpg" alt="Music video still">
+        </div>
+        <div class="vv-group" data-text="Extended the campaign with a DSP release, playlisting, and an official Austin Millz remix.">
+          <p class="vv-group-text">Extended the campaign with a DSP release, playlisting, and an official Austin Millz remix.</p>
+          <img src="assets/case-studies/virgin-voyages/dsp-playlists.jpg" alt="DSP playlisting">
+        </div>
+        <div class="vv-group" data-text="Peaked at No. 16 on the Billboard Adult Contemporary chart.">
+          <p class="vv-group-text">Peaked at No. 16 on the Billboard Adult Contemporary chart.</p>
+          <img src="assets/case-studies/virgin-voyages/billboard-chart.jpg" alt="Billboard Adult Contemporary — No. 16">
+        </div>
+      </div>
+      <div class="vv-sticky"><p class="vv-caption"></p></div>
+    </div>
+    </div>
+  </section>
+
+  <!-- CS: VIRGIN VOYAGES — ALT B (lines as boxes) -->
+  <section id="cs-virgin-b">
+    <figure class="cs-hero cs-hero-video cs-hero-sticky"><iframe src="" data-src="https://www.youtube-nocookie.com/embed/vd2GFfa8Rso?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=vd2GFfa8Rso&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3&amp;cc_load_policy=0&amp;enablejsapi=1&amp;fs=0&amp;hd=1&amp;vq=hd1080" title="Virgin Voyages — The Voyage (Karma Chameleon) Music Video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></figure>
+    <div class="cs-body">
+    <div class="section-head"><div><div class="slide-kicker">Case Study · Alt B</div><h2>Virgin Voyages</h2></div></div>
+    <div class="cs-layout">
+      <div class="cs-ask">
+        <div class="cs-label">The Ask</div>
+        <p>Find an artist to cover Culture Club's &ldquo;Karma Chameleon&rdquo; and star in a music video filmed on a Virgin Voyages cruise alongside Richard Branson.</p>
+      </div>
+      <div class="cs-did">
+        <div class="cs-label">What We Delivered</div>
+        <div class="cs-did-boxes">
+          <div class="cs-box">Produced a custom cover of &ldquo;Karma Chameleon&rdquo; featuring Drew Love.</div>
+          <div class="cs-box">Coordinated Drew Love's on-camera appearance with Richard Branson aboard a Virgin Voyages ship for a full-length music video.</div>
+          <div class="cs-box">Campaign aired during the Super Bowl and Grammys (220M+ viewers).</div>
+          <div class="cs-box">Extended the campaign with a DSP release, Billboard charting, and an official Austin Millz remix.</div>
+          <div class="cs-box">The song peaked at No. 16 on the Billboard Adult Contemporary chart.</div>
+        </div>
+      </div>
+    </div>
+    <div class="cs-media">
+      <figure><img src="assets/case-studies/virgin-voyages/karma-chameleon-cover.jpg" alt="Karma Chameleon — The Voyage Edition"><figcaption><b>Karma Chameleon</b>The Voyage Edition, feat. Drew Love</figcaption></figure>
+      <figure><img src="assets/case-studies/virgin-voyages/music-video-still.jpg" alt="Music video still — Drew Love"><figcaption><b>Music Video</b>Aired during the Super Bowl &amp; Grammys — 220M+ viewers</figcaption></figure>
+      <figure><img src="assets/case-studies/virgin-voyages/drew-love-portrait.jpg" alt="Drew Love"><figcaption><b>Drew Love</b>Direct-to-fans marketing on Instagram</figcaption></figure>
+      <figure><img src="assets/case-studies/virgin-voyages/drew-love-ship-deck.jpg" alt="Live performance on deck"><figcaption><b>Official Austin Millz Remix</b>+ live performance aboard ship</figcaption></figure>
+      <figure><img src="assets/case-studies/virgin-voyages/billboard-chart.jpg" alt="Billboard Adult Contemporary chart"><figcaption><b>Billboard Adult Contemporary</b>Peaked at No. 16</figcaption></figure>
+      <figure><img src="assets/case-studies/virgin-voyages/dsp-playlists.jpg" alt="DSP playlisting"><figcaption><b>DSP Release</b>Released on all platforms + playlisting strategy</figcaption></figure>
+      <figure><img src="assets/case-studies/virgin-voyages/ship-sunset.jpg" alt="Aboard a Virgin Voyages ship"><figcaption><b>Filmed Aboard Virgin Voyages</b></figcaption></figure>
+      <figure><img src="assets/case-studies/virgin-voyages/the-voyage-title.jpg" alt="The Voyage title card"><figcaption><b>The Voyage</b></figcaption></figure>
+    </div>
+    </div>
+  </section>
+
   <!-- CLOSING -->
   <section id="closing">
     <div class="section-head"><div><h2>Let's Build Something Together</h2></div></div>
@@ -772,6 +867,29 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   document.getElementById('modalNext').addEventListener('click', () => moveModal(1));
   document.getElementById('modalClose').addEventListener('click', close);
   modal.addEventListener('click', e => { if(e.target === modal) close(); });
+
+  /* ---------- VIRGIN ALT A: scrollytelling captions ---------- */
+  document.querySelectorAll('.vv-scrolly').forEach(scrolly => {
+    const cap = scrolly.querySelector('.vv-caption');
+    const groups = Array.from(scrolly.querySelectorAll('.vv-group'));
+    if(!cap || !groups.length) return;
+    let currentText = null;
+    const setCap = (t) => {
+      if(t === currentText) return;
+      currentText = t;
+      cap.classList.remove('in');
+      setTimeout(() => { cap.textContent = t; cap.classList.add('in'); }, 180);
+    };
+    setCap(groups[0].dataset.text);
+    const ratios = new Map();
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => ratios.set(e.target, e.intersectionRatio));
+      let best = null, bestR = -1;
+      groups.forEach(g => { const r = ratios.get(g) || 0; if(r > bestR){ bestR = r; best = g; } });
+      if(best && bestR > 0) setCap(best.dataset.text);
+    }, { threshold:[0,0.2,0.4,0.6,0.8,1], rootMargin:'-15% 0px -15% 0px' });
+    groups.forEach(g => io.observe(g));
+  });
 
   /* ---------- KEYBOARD (modal takes precedence over deck) ---------- */
   document.addEventListener('keydown', e => {
