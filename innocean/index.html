@@ -176,7 +176,9 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 .remix-grid .track-card:before{content:none}
 
 /* ---- BRANDS WALL ---- */
-.brands-wall{width:100%;height:auto;display:block;border:1px solid rgba(255,255,255,.18);margin-top:76px;cursor:zoom-in}
+.who-brands{margin-top:64px;padding-top:40px;border-top:1px solid rgba(255,255,255,.14)}
+.who-brands h3{margin:6px 0 0}
+.brands-wall{width:100%;height:auto;display:block;margin-top:28px;cursor:zoom-in}
 
 .closing-stack{display:grid;gap:54px;max-width:760px;min-height:55vh;align-content:center}
 .section-head + .closing-stack{margin-top:76px}
@@ -270,9 +272,6 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   <div class="nav-group">The Studio</div>
   <a href="#the-house">The House</a>
 
-  <div class="nav-group">Friends &amp; Family</div>
-  <a href="#brands">Brands We Love</a>
-
   <div class="nav-group">Exploration</div>
   <a href="#cs-virgin-a">Virgin — Alt A (Scroll)</a>
   <a href="#cs-virgin-b">Virgin — Alt B (Boxes)</a>
@@ -315,6 +314,12 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
       <div class="pillar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Artist / Brand Partnerships</span></div>
       <div class="pillar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg><span>Creative Licensing</span></div>
       <div class="pillar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg><span>Remixes</span></div>
+    </div>
+    <div class="who-brands">
+      <div class="slide-kicker">Friends &amp; Family</div>
+      <h3>Brands We Love &amp; Who Love Us</h3>
+      <div class="hint">A concise overview of the brands already in the Baxter House circle — so you know you're in good hands.</div>
+      <img class="brands-wall openable" src="assets/brands/logos.png" alt="Brands We Love & Who Love Us" data-item="77">
     </div>
     </div>
   </section>
@@ -573,12 +578,6 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
     </div>
   </section>
 
-  <!-- BRANDS WE LOVE -->
-  <section id="brands">
-    <div class="section-head"><div><div class="slide-kicker">Friends &amp; Family</div><h2>Brands We Love &amp; Who Love Us</h2><div class="hint">A concise overview of the brands already in the Baxter House circle — so you know you're in good hands.</div></div></div>
-    <img class="brands-wall openable" src="assets/brands/brands-wall.jpg" alt="Brands We Love & Who Love Us" data-item="77">
-  </section>
-
   <!-- CS: VIRGIN VOYAGES — ALT A (scrollytelling) -->
   <section id="cs-virgin-a">
     <figure class="cs-hero cs-hero-video cs-hero-sticky"><iframe src="" data-src="https://www.youtube-nocookie.com/embed/vd2GFfa8Rso?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=vd2GFfa8Rso&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3&amp;cc_load_policy=0&amp;enablejsapi=1&amp;fs=0&amp;hd=1&amp;vq=hd1080" title="Virgin Voyages — The Voyage (Karma Chameleon) Music Video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></figure>
@@ -828,7 +827,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
     ['Remixes','Accenture — Thrown Around (James Blake, R-CANE Remix)','assets/remixes/accenture-james-blake.jpg','image'],
     ['Remixes','Essentia Hydro Boost — Goomba Boomba (Yma Sumac, Martin Wave Remix)','assets/remixes/essentia-yma-sumac.jpg','image'],
     ['Remixes','Honda — Edge of the Edge (Panda Bear, Sonic Boom, Allister X Remix)','assets/remixes/honda-panda-bear.jpg','image'],
-    ['Friends & Family','Brands We Love & Who Love Us','assets/brands/brands-wall.jpg','image'],
+    ['Friends & Family','Brands We Love & Who Love Us','assets/brands/logos.png','image'],
   ].map(([kicker,title,src,type]) => ({
     kicker, title,
     bodyHtml: type === 'image'
