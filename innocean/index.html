@@ -211,8 +211,10 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
 .who-brands-title{text-align:center}
 .brands-wall{width:100%;height:auto;display:block;margin-top:28px;cursor:zoom-in}
 
-#closing .closing-house{margin-top:76px;aspect-ratio:1349/1000;display:flex;flex-direction:column;justify-content:center;background:url("assets/house/17-studio-a.jpg") center/contain no-repeat #0d0d0f;background-origin:border-box}
-#closing .closing-house .grid{align-items:stretch}
+#closing .closing-house{margin-top:76px;aspect-ratio:4/3;overflow:hidden;display:flex;flex-direction:column;justify-content:center;background:#0d0d0f}
+#closing .closing-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;z-index:0;transition:opacity .6s ease;pointer-events:none}
+#closing .closing-slide.is-active{opacity:1}
+#closing .closing-house .grid{position:relative;z-index:2;align-items:stretch}
 #closing .closing-house .card{flex-direction:column;gap:16px;min-height:220px;padding:34px;background:rgba(0,0,0,0.11);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
 #closing .closing-house .card h3{font-size:30px;line-height:1.12}
 #closing .closing-house .card p{margin:0;font-size:20px;line-height:1.45;color:rgba(255,255,255,.92)}
@@ -504,6 +506,10 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
   <section id="closing">
     <div class="section-head"><div><h2>Let's Build Something Together</h2></div></div>
     <div class="who-house closing-house">
+      <img class="closing-slide is-active" src="assets/house/17-studio-a.jpg" alt="" aria-hidden="true">
+      <img class="closing-slide" src="assets/house/18-studio-b.jpg" alt="" aria-hidden="true">
+      <img class="closing-slide" src="assets/house/19-studio-k.jpg" alt="" aria-hidden="true">
+      <img class="closing-slide" src="assets/house/20-studio-s.jpg" alt="" aria-hidden="true">
       <div class="grid">
         <div class="card span-4"><h3>360&deg; Music Partnership</h3><p>A single creative partner across search, custom composition, and artist collaboration.</p></div>
         <div class="card span-4"><h3>Creative Partnership</h3><p>A collaborative, brand-first approach rooted in trust and shared ambition.</p></div>
@@ -781,6 +787,23 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
     if(['ArrowRight','ArrowDown','PageDown'].includes(e.key)){ e.preventDefault(); moveSection(1); }
     if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){ e.preventDefault(); moveSection(-1); }
   });
+})();
+
+/* ---------- CLOSING STUDIO SLIDESHOW (crossfade every ~3s) ---------- */
+(function(){
+  const slides = Array.from(document.querySelectorAll('#closing .closing-slide'));
+  if(slides.length < 2) return;
+  // Respect reduced-motion: leave the first studio static, no cycling.
+  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let i = 0;
+  setInterval(() => {
+    const next = (i + 1) % slides.length, prev = i;
+    slides.forEach(s => { s.style.zIndex = '0'; });
+    slides[next].style.zIndex = '1';       // incoming fades in on top of the outgoing
+    slides[next].classList.add('is-active');
+    setTimeout(() => slides[prev].classList.remove('is-active'), 650);
+    i = next;
+  }, 3000);
 })();
 </script>
 </body>
