@@ -146,6 +146,14 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 .video-card:hover img{transform:scale(1.045);filter:saturate(1.05) contrast(1.08) brightness(1.04)}
 .video-card:before{content:"▶";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:26px;text-shadow:0 2px 9px rgba(0,0,0,.75);z-index:1}
 .video-card span{position:absolute;left:0;right:0;bottom:0;padding:28px 9px 8px;font-size:11px;font-weight:700;background:linear-gradient(transparent,rgba(0,0,0,.82));z-index:2}
+/* Camps: sticky hero video (two films sequenced) with copy band over it */
+.camps-intro{display:grid;grid-template-columns:minmax(300px,1fr) minmax(320px,1fr);gap:26px;align-items:start;margin-top:24px}
+.camps-intro .section-head{margin:0;padding:0}
+.camps-list{list-style:none;margin:0;padding:0;display:grid;gap:13px;max-width:900px}
+.camps-list li{position:relative;padding-left:34px;font-size:22px;line-height:1.34;color:#fff;font-weight:600}
+.camps-list li:before{content:"";position:absolute;left:2px;top:.62em;width:13px;height:8px;border-left:2.5px solid #fff;border-bottom:2.5px solid #fff;transform:rotate(-45deg)}
+.camps-trusted{max-width:1050px;margin-top:22px;font-size:15px;line-height:1.6}
+.camps-trusted span{display:block;text-transform:uppercase;letter-spacing:.16em;font-size:12px;font-weight:800;color:rgba(255,255,255,.6);margin-bottom:5px}
 .track-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
 .track-card{position:relative;display:block;aspect-ratio:16/10;overflow:hidden;background:#111;border:1px solid rgba(255,255,255,.28);color:#fff;text-decoration:none}
 .track-card img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.78);transition:.25s ease}
@@ -265,6 +273,7 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
   .video-grid{grid-template-columns:repeat(2,1fr)}
   .track-grid{grid-template-columns:1fr}
   .cs-layout{grid-template-columns:1fr}
+  .camps-intro{grid-template-columns:1fr;gap:16px}
   .cs-media{columns:2}
   .cs-hero{margin:-16px -16px 0;height:auto}
   .cs-hero img{width:100%;max-height:none}
@@ -304,6 +313,7 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
   <div class="nav-group">The Studio</div>
   <a href="#artists">Artists</a>
   <a href="#the-house">The House</a>
+  <a href="#camps">Camps</a>
 
   <div class="nav-group">Next Steps</div>
   <a href="#closing">Let's Build Something Together</a>
@@ -501,6 +511,36 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
     </div>
   </section>
 
+  <!-- CAMPS -->
+  <section id="camps">
+    <figure class="cs-hero cs-hero-video cs-hero-sticky camps-hero" data-seq="SwHDxFsKwfo,1P5cPL482Ms"><iframe src="" data-src="https://www.youtube-nocookie.com/embed/SwHDxFsKwfo?autoplay=1&amp;mute=1&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3&amp;cc_load_policy=0&amp;enablejsapi=1&amp;fs=0&amp;hd=1&amp;vq=hd1080" title="Baxter House Writing Camps" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></figure>
+    <div class="cs-body">
+    <div class="camps-intro">
+      <div class="section-head"><div><div class="slide-kicker">Baxter House</div><h2>Writing Camps</h2></div></div>
+      <ul class="camps-list">
+        <li>Curated teams built around every brief</li>
+        <li>Elite writers, producers &amp; artists</li>
+        <li>Real-time collaboration &amp; feedback</li>
+        <li>Faster turnarounds, fewer revisions</li>
+        <li>Higher win rate for custom music</li>
+      </ul>
+    </div>
+    <div class="cs-media camps-media">
+      <figure><img src="assets/camps/01-resin-sync-camp.png" alt="RESIN × Baxter House Sync Camp" loading="lazy"></figure>
+      <figure><img src="assets/camps/02-peloton-sync-camp.png" alt="Baxter House Music × Peloton Sync Camp" loading="lazy"></figure>
+      <figure><img src="assets/camps/04-hallmark-channel.png" alt="Baxter House Music × Hallmark Channel" loading="lazy"></figure>
+      <figure><img src="assets/camps/05-songbird-prescription-collage.png" alt="Songbird × Baxter House × Prescription Songs camp" loading="lazy"></figure>
+      <figure><img src="assets/camps/06-songbird-camp-table.png" alt="Songbird × Baxter House camp table" loading="lazy"></figure>
+      <figure><img src="assets/camps/07-covers-camp.png" alt="Baxter House Music Covers Camp" loading="lazy"></figure>
+      <figure><img src="assets/camps/08-big-machine-sync-camp.png" alt="Baxter House × Prescription Songs × Big Machine Sync Camps" loading="lazy"></figure>
+      <figure><img src="assets/camps/09-all-american.png" alt="Baxter House Music × All American" loading="lazy"></figure>
+      <figure><img src="assets/camps/10-found.png" alt="Baxter House Music × Found" loading="lazy"></figure>
+      <figure><img src="assets/camps/11-greys-anatomy.png" alt="Baxter House Music × Grey's Anatomy" loading="lazy"></figure>
+    </div>
+    <p class="footnote camps-trusted"><span>Trusted by</span> Peloton &middot; Marvel &middot; Paramount &middot; HBO Max &middot; Riot Games &middot; Deutsch LA &middot; Droga5 &middot; Saatchi &amp; Saatchi &middot; VML</p>
+    </div>
+  </section>
+
 
   <!-- CLOSING -->
   <section id="closing">
@@ -611,6 +651,51 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
     });
   }
 
+  /* ---------- SEQUENCED HERO (Camps): play video A, then swap to B, then loop ---------- */
+  // Same background-hero treatment as the other slides, but each clip is NOT looped so it
+  // can fire an "ended" event; on end we swap the iframe src to the next id in data-seq.
+  const SEQ_PARAMS = 'autoplay=1&controls=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&iv_load_policy=3&cc_load_policy=0&enablejsapi=1&fs=0&hd=1&vq=hd1080';
+  const seqFigs = Array.from(document.querySelectorAll('.camps-hero'));
+  seqFigs.forEach(fig => { fig.dataset.seqIndex = fig.dataset.seqIndex || '0'; });
+  function seqEmbedUrl(id, muted){
+    return 'https://www.youtube-nocookie.com/embed/' + id + '?' + SEQ_PARAMS + '&mute=' + (muted ? 1 : 0);
+  }
+  // Nudge the player into emitting state events (needs the 'listening' handshake).
+  function seqStartListening(f){
+    let tries = 0;
+    const ping = () => {
+      if(tries++ > 20 || !f.getAttribute('src')) return;
+      try { f.contentWindow.postMessage(JSON.stringify({event:'listening'}), '*'); } catch(e){}
+      setTimeout(ping, 400);
+    };
+    ping();
+  }
+  function seqAdvance(fig){
+    if(fig._seqBusy) return;              // ignore the duplicate end events YT sends
+    const ids = (fig.dataset.seq || '').split(',').map(s => s.trim()).filter(Boolean);
+    if(ids.length < 2) return;
+    fig._seqBusy = true;
+    const f = fig.querySelector('iframe');
+    const next = (parseInt(fig.dataset.seqIndex || '0', 10) + 1) % ids.length;
+    const url = seqEmbedUrl(ids[next], fig.dataset.muted !== '0'); // keep current mute state across the swap
+    fig.dataset.seqIndex = String(next);
+    f.dataset.src = url;                  // keep data-src in sync so showSection stays consistent
+    f.setAttribute('src', url);
+    seqStartListening(f);
+    setTimeout(() => { fig._seqBusy = false; }, 1500);
+  }
+  window.addEventListener('message', e => {
+    if(!seqFigs.length) return;
+    let data = e.data;
+    if(typeof data === 'string'){ try { data = JSON.parse(data); } catch(_){ return; } }
+    if(!data || typeof data !== 'object') return;
+    const ended = (data.event === 'onStateChange' && data.info === 0) ||
+                  (data.event === 'infoDelivery' && data.info && data.info.playerState === 0);
+    if(!ended) return;
+    const fig = seqFigs.find(fg => { const f = fg.querySelector('iframe'); return f && f.contentWindow === e.source; });
+    if(fig) seqAdvance(fig);
+  });
+
   function showSection(id, updateHash=true){
     const target = document.getElementById(id);
     if(!target) return;
@@ -641,6 +726,7 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
               setTimeout(killCC, 600);
             };
             setTimeout(killCC, 700);
+            if(fig.classList.contains('camps-hero')) seqStartListening(f); // sequence: begin end-of-video watch
           }
           applyMute(fig, true);   // muted by default (autoplay requirement)
           playHero(fig, true);    // resume if it was paused on a previous visit
