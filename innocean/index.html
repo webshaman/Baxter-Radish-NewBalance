@@ -153,6 +153,12 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 .track-card:before{content:"▶";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:26px;text-shadow:0 2px 8px #000;z-index:1}
 #the-house .track-card:before{content:none}
 #the-house .track-card{aspect-ratio:16/8.8}
+#artists .track-card:before{content:none}
+#artists .track-card{aspect-ratio:3/4;cursor:default}
+#artists .track-card img{filter:brightness(.92);object-position:center 22%}
+#artists .track-card:hover img{transform:none;filter:brightness(1)}
+#artists .track-card b{font-size:17px;line-height:1.15}
+#artists .track-card em{font-size:12px;margin-top:4px}
 .track-card .track-meta{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:32px 10px 10px;background:linear-gradient(transparent,rgba(0,0,0,.88))}
 .track-card b{display:block;font-size:13px;line-height:1.1}.track-card em{display:block;font-style:normal;font-size:11px;opacity:.82;margin-top:3px}
 
@@ -292,6 +298,7 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
   <a href="#cs-novartis">Novartis</a>
 
   <div class="nav-group">The Studio</div>
+  <a href="#artists">Artists</a>
   <a href="#the-house">The House</a>
 
   <div class="nav-group">Next Steps</div>
@@ -444,6 +451,23 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
           <li>Delivered under an accelerated production timeline.</li>
         </ul>
       </div>
+    </div>
+    </div>
+  </section>
+
+  <!-- ARTISTS -->
+  <section id="artists">
+    <figure class="cs-hero cs-hero-video cs-hero-sticky"><iframe src="" data-src="https://www.youtube-nocookie.com/embed/gX7qh_BOYuA?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=gX7qh_BOYuA&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3&amp;cc_load_policy=0&amp;enablejsapi=1&amp;fs=0&amp;hd=1&amp;vq=hd1080" title="Baxter House Music Artist Reel" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></figure>
+    <div class="cs-body">
+    <div class="section-head"><div><div class="slide-kicker">Baxter House</div><h2>Artists</h2></div></div>
+    <div class="track-grid">
+      <div class="track-card"><img src="assets/artists/nomi.jpg" alt="nomi."><span class="track-meta"><b>nomi.</b><em>Sweet Talk</em></span></div>
+      <div class="track-card"><img src="assets/artists/adore.jpg" alt="ADORE"><span class="track-meta"><b>ADORE</b><em>Feel It All Again</em></span></div>
+      <div class="track-card"><img src="assets/artists/suki-waterhouse.jpg" alt="Suki Waterhouse"><span class="track-meta"><b>Suki Waterhouse</b><em>Back In Love</em></span></div>
+      <div class="track-card"><img src="assets/artists/blondish.jpg" alt="BLOND:ISH"><span class="track-meta"><b>BLOND:ISH</b><em>Lovers On The Dancefloor</em></span></div>
+      <div class="track-card"><img src="assets/artists/hayden-james.jpg" alt="Hayden James &amp; Bipolar Sunshine"><span class="track-meta"><b>Hayden James &amp; Bipolar Sunshine</b><em>For The Girls</em></span></div>
+      <div class="track-card"><img src="assets/artists/lamb.jpg" alt="Lamb"><span class="track-meta"><b>Lamb</b><em>Overkill</em></span></div>
+      <div class="track-card"><img src="assets/artists/goldie-boutilier.jpg" alt="Goldie Boutilier"><span class="track-meta"><b>Goldie Boutilier</b><em>How To Be A Lover</em></span></div>
     </div>
     </div>
   </section>
