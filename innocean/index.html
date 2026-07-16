@@ -205,9 +205,10 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
 .who-brands-title{text-align:center}
 .brands-wall{width:100%;height:auto;display:block;margin-top:28px;cursor:zoom-in}
 
-.closing-stack{display:grid;gap:54px;max-width:760px;min-height:55vh;align-content:center}
-.section-head + .closing-stack{margin-top:76px}
-.closing-item h3{font-size:34px;line-height:1.1;margin:0 0 10px;color:#fff}.closing-item p{font-size:22px;line-height:1.42;margin:0;color:rgba(255,255,255,.86)}
+#closing .closing-house{margin-top:76px}
+#closing .closing-house .card{flex-direction:column;gap:16px;min-height:300px;padding:44px 34px;background:rgba(0,0,0,.5);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+#closing .closing-house .card h3{font-size:30px;line-height:1.12}
+#closing .closing-house .card p{margin:0;font-size:20px;line-height:1.45;color:rgba(255,255,255,.92)}
 #who .grid{gap:34px}
 #who .card{min-height:290px;padding:38px 44px}
 #who .card h3{font-size:34px;line-height:1.15;margin-bottom:24px}
@@ -477,11 +478,12 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
   <!-- CLOSING -->
   <section id="closing">
     <div class="section-head"><div><h2>Let's Build Something Together</h2></div></div>
-    <div class="closing-stack">
-      <div class="closing-item"><h3>360&deg; Music Partnership</h3><p>A single creative partner across search, supervision, custom composition, and artist collaboration.</p></div>
-      <div class="closing-item"><h3>Creative Partnership</h3><p>A collaborative, brand-first approach rooted in trust and shared ambition.</p></div>
-      <div class="closing-item"><h3>Music Supervision</h3><p>Full-service creative strategy and licensing for your campaign.</p></div>
-      <div class="closing-item"><h3>Original Composition</h3><p>Bespoke music crafted to picture, built to resonate in culture.</p></div>
+    <div class="who-house closing-house">
+      <div class="grid">
+        <div class="card span-4"><h3>360&deg; Music Partnership</h3><p>A single creative partner across search, custom composition, and artist collaboration.</p></div>
+        <div class="card span-4"><h3>Creative Partnership</h3><p>A collaborative, brand-first approach rooted in trust and shared ambition.</p></div>
+        <div class="card span-4"><h3>Original Composition</h3><p>Bespoke music crafted to picture, built to resonate in culture.</p></div>
+      </div>
     </div>
   </section>
 </main>
