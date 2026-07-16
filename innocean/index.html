@@ -187,12 +187,16 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 .cs-hero img{display:block;width:100%;height:auto;max-height:calc(100vh - 5px);object-fit:contain}
 .cs-hero-video{position:relative;aspect-ratio:16/9;overflow:hidden}
 .cs-hero-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none}
-/* Camps: portrait clip gets a zoomed-in copy of itself behind, filling the pillar space */
-.camps-hero{--camps-portrait-ar:3 / 4;--camps-bg-zoom:2.7}
+/* Camps: portrait clip gets a zoomed-in copy of itself behind, filling the pillar space.
+   The foreground iframe stays full-size (YouTube renders the portrait clip full-height,
+   pillarboxed) and is clip-pathed to just the center video column, so YouTube's own black
+   side bars are cut away and the blurred background shows through them.
+   --camps-portrait-clip = (1 - videoAR/heroAR) / 2 = (1 - (3/4)/(16/9)) / 2 ≈ 28.9% */
+.camps-hero{--camps-portrait-clip:28.9%;--camps-bg-zoom:2.7}
 .camps-hero-bg{z-index:0;background:#000}
 .camps-hero > iframe:not(.camps-hero-bg){z-index:1}
 .camps-hero.is-portrait .camps-hero-bg{transform:scale(var(--camps-bg-zoom));filter:blur(34px) brightness(.5) saturate(1.15)}
-.camps-hero.is-portrait > iframe:not(.camps-hero-bg){left:50%;right:auto;top:0;bottom:0;width:auto;height:100%;aspect-ratio:var(--camps-portrait-ar);transform:translateX(-50%)}
+.camps-hero.is-portrait > iframe:not(.camps-hero-bg){clip-path:inset(0 var(--camps-portrait-clip))}
 .section-controls .hero-mute-btn{border:2px solid #fff;background:var(--nav-bg);color:#fff;width:34px;height:34px;border-radius:50%;
   margin-right:12px;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;
   box-shadow:0 4px 12px rgba(0,0,0,.18);transition:background .18s ease}
