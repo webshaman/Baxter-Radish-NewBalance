@@ -147,8 +147,9 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 .video-card:before{content:"▶";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:26px;text-shadow:0 2px 9px rgba(0,0,0,.75);z-index:1}
 .video-card span{position:absolute;left:0;right:0;bottom:0;padding:28px 9px 8px;font-size:11px;font-weight:700;background:linear-gradient(transparent,rgba(0,0,0,.82));z-index:2}
 /* Camps: sticky hero video (two films sequenced) with copy band over it */
-.cs-body .section-head + .camps-list{margin-top:24px}
-.camps-list{list-style:none;margin:0 0 26px;padding:0;display:grid;gap:13px;max-width:900px}
+.camps-intro{display:grid;grid-template-columns:minmax(300px,1fr) minmax(320px,1fr);gap:26px;align-items:start;margin-top:24px}
+.camps-intro .section-head{margin:0;padding:0}
+.camps-list{list-style:none;margin:0;padding:0;display:grid;gap:13px;max-width:900px}
 .camps-list li{position:relative;padding-left:34px;font-size:22px;line-height:1.34;color:#fff;font-weight:600}
 .camps-list li:before{content:"";position:absolute;left:2px;top:.62em;width:13px;height:8px;border-left:2.5px solid #fff;border-bottom:2.5px solid #fff;transform:rotate(-45deg)}
 .camps-trusted{max-width:1050px;margin-top:22px;font-size:15px;line-height:1.6}
@@ -263,6 +264,7 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
   .video-grid{grid-template-columns:repeat(2,1fr)}
   .track-grid{grid-template-columns:1fr}
   .cs-layout{grid-template-columns:1fr}
+  .camps-intro{grid-template-columns:1fr;gap:16px}
   .cs-media{columns:2}
   .cs-hero{margin:-16px -16px 0;height:auto}
   .cs-hero img{width:100%;max-height:none}
@@ -486,18 +488,19 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
   <section id="camps">
     <figure class="cs-hero cs-hero-video cs-hero-sticky camps-hero" data-seq="SwHDxFsKwfo,1P5cPL482Ms"><iframe src="" data-src="https://www.youtube-nocookie.com/embed/SwHDxFsKwfo?autoplay=1&amp;mute=1&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3&amp;cc_load_policy=0&amp;enablejsapi=1&amp;fs=0&amp;hd=1&amp;vq=hd1080" title="Baxter House Writing Camps" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></figure>
     <div class="cs-body">
-    <div class="section-head"><div><div class="slide-kicker">Baxter House</div><h2>Writing Camps</h2></div></div>
-    <ul class="camps-list">
-      <li>Curated teams built around every brief</li>
-      <li>Elite writers, producers &amp; artists</li>
-      <li>Real-time collaboration &amp; feedback</li>
-      <li>Faster turnarounds, fewer revisions</li>
-      <li>Higher win rate for custom music</li>
-    </ul>
+    <div class="camps-intro">
+      <div class="section-head"><div><div class="slide-kicker">Baxter House</div><h2>Writing Camps</h2></div></div>
+      <ul class="camps-list">
+        <li>Curated teams built around every brief</li>
+        <li>Elite writers, producers &amp; artists</li>
+        <li>Real-time collaboration &amp; feedback</li>
+        <li>Faster turnarounds, fewer revisions</li>
+        <li>Higher win rate for custom music</li>
+      </ul>
+    </div>
     <div class="cs-media camps-media">
       <figure><img src="assets/camps/01-resin-sync-camp.png" alt="RESIN × Baxter House Sync Camp" loading="lazy"></figure>
       <figure><img src="assets/camps/02-peloton-sync-camp.png" alt="Baxter House Music × Peloton Sync Camp" loading="lazy"></figure>
-      <figure><img src="assets/camps/03-prescription-songbird-dinner.png" alt="Prescription Songs × Songbird camp dinner" loading="lazy"></figure>
       <figure><img src="assets/camps/04-hallmark-channel.png" alt="Baxter House Music × Hallmark Channel" loading="lazy"></figure>
       <figure><img src="assets/camps/05-songbird-prescription-collage.png" alt="Songbird × Baxter House × Prescription Songs camp" loading="lazy"></figure>
       <figure><img src="assets/camps/06-songbird-camp-table.png" alt="Songbird × Baxter House camp table" loading="lazy"></figure>
