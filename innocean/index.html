@@ -187,6 +187,12 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 .cs-hero img{display:block;width:100%;height:auto;max-height:calc(100vh - 5px);object-fit:contain}
 .cs-hero-video{position:relative;aspect-ratio:16/9;overflow:hidden}
 .cs-hero-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none}
+/* Camps: portrait clip gets a zoomed-in copy of itself behind, filling the pillar space */
+.camps-hero{--camps-portrait-ar:3 / 4;--camps-bg-zoom:2.7}
+.camps-hero-bg{z-index:0;background:#000}
+.camps-hero > iframe:not(.camps-hero-bg){z-index:1}
+.camps-hero.is-portrait .camps-hero-bg{transform:scale(var(--camps-bg-zoom));filter:blur(34px) brightness(.5) saturate(1.15)}
+.camps-hero.is-portrait > iframe:not(.camps-hero-bg){left:50%;right:auto;top:0;bottom:0;width:auto;height:100%;aspect-ratio:var(--camps-portrait-ar);transform:translateX(-50%)}
 .section-controls .hero-mute-btn{border:2px solid #fff;background:var(--nav-bg);color:#fff;width:34px;height:34px;border-radius:50%;
   margin-right:12px;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;
   box-shadow:0 4px 12px rgba(0,0,0,.18);transition:background .18s ease}
@@ -513,7 +519,7 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
 
   <!-- CAMPS -->
   <section id="camps">
-    <figure class="cs-hero cs-hero-video cs-hero-sticky camps-hero" data-seq="SwHDxFsKwfo,1P5cPL482Ms"><iframe src="" data-src="https://www.youtube-nocookie.com/embed/SwHDxFsKwfo?autoplay=1&amp;mute=1&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3&amp;cc_load_policy=0&amp;enablejsapi=1&amp;fs=0&amp;hd=1&amp;vq=hd1080" title="Baxter House Writing Camps" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></figure>
+    <figure class="cs-hero cs-hero-video cs-hero-sticky camps-hero" data-seq="SwHDxFsKwfo,1P5cPL482Ms" data-portrait="1P5cPL482Ms"><iframe src="" data-src="https://www.youtube-nocookie.com/embed/SwHDxFsKwfo?autoplay=1&amp;mute=1&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3&amp;cc_load_policy=0&amp;enablejsapi=1&amp;fs=0&amp;hd=1&amp;vq=hd1080" title="Baxter House Writing Camps" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe><iframe class="camps-hero-bg" src="" title="" aria-hidden="true" tabindex="-1" allow="autoplay; encrypted-media"></iframe></figure>
     <div class="cs-body">
     <div class="camps-intro">
       <div class="section-head"><div><h2>Writing Camps</h2></div></div>
@@ -660,6 +666,29 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
   function seqEmbedUrl(id, muted){
     return 'https://www.youtube-nocookie.com/embed/' + id + '?' + SEQ_PARAMS + '&mute=' + (muted ? 1 : 0);
   }
+  // Portrait clips get a zoomed, blurred copy of themselves behind the foreground to fill the
+  // pillarbox (side) space. The bg loops on its own (muted) and is re-pointed whenever the
+  // sequence advances; landscape clips fill the frame already, so the bg is cleared for them.
+  function campsBgUrl(id){
+    return 'https://www.youtube-nocookie.com/embed/' + id + '?' + SEQ_PARAMS + '&mute=1&loop=1&playlist=' + id;
+  }
+  function campsSync(fig, id){
+    const bg = fig.querySelector('.camps-hero-bg');
+    const isPortrait = id && id === fig.dataset.portrait;
+    fig.classList.toggle('is-portrait', !!isPortrait);
+    if(!bg) return;
+    if(isPortrait){
+      const url = campsBgUrl(id);
+      if(bg.getAttribute('src') !== url) bg.setAttribute('src', url);
+    } else if(bg.getAttribute('src')){
+      bg.removeAttribute('src');
+    }
+  }
+  function campsStopBg(fig){
+    fig.classList.remove('is-portrait');
+    const bg = fig.querySelector('.camps-hero-bg');
+    if(bg && bg.getAttribute('src')) bg.removeAttribute('src');
+  }
   // Nudge the player into emitting state events (needs the 'listening' handshake).
   function seqStartListening(f){
     let tries = 0;
@@ -681,6 +710,7 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
     fig.dataset.seqIndex = String(next);
     f.dataset.src = url;                  // keep data-src in sync so showSection stays consistent
     f.setAttribute('src', url);
+    campsSync(fig, ids[next]);            // point the pillar-fill bg at the new clip (or clear it)
     seqStartListening(f);
     setTimeout(() => { fig._seqBusy = false; }, 1500);
   }
@@ -728,11 +758,16 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
             setTimeout(killCC, 700);
             if(fig.classList.contains('camps-hero')) seqStartListening(f); // sequence: begin end-of-video watch
           }
+          if(fig.classList.contains('camps-hero')){
+            const ids = (fig.dataset.seq || '').split(',').map(s => s.trim()).filter(Boolean);
+            campsSync(fig, ids[parseInt(fig.dataset.seqIndex || '0', 10)] || ids[0]);
+          }
           applyMute(fig, true);   // muted by default (autoplay requirement)
           playHero(fig, true);    // resume if it was paused on a previous visit
         } else if(f.getAttribute('src')){
           applyMute(fig, true);   // force mute
           playHero(fig, false);   // pause unfocused slides
+          if(fig.classList.contains('camps-hero')) campsStopBg(fig); // stop the pillar-fill bg off-screen
         }
       });
       syncHeroMuteBtn();
