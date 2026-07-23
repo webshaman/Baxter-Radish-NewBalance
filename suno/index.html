@@ -232,14 +232,14 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
   background:rgba(0,0,0,.72);padding:3px 7px;border:1px solid rgba(255,255,255,.3)}
 .spectrum-caption{margin-top:12px;font-size:14px;color:rgba(255,255,255,.72);line-height:1.45}
 
-/* ---------- ARTIST SLATE (overview of the 5) ---------- */
-.artist-slate{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
-.slate-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.26);padding:0 0 16px;
-  color:#fff;text-decoration:none;display:flex;flex-direction:column;transition:.2s ease}
+/* ---------- ARTIST SLATE (overview of the 7) ---------- */
+.artist-slate{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.slate-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.26);padding:20px 12px 18px;
+  color:#fff;text-decoration:none;display:flex;flex-direction:column;align-items:center;text-align:center;transition:.2s ease}
 .slate-card:hover{background:rgba(255,255,255,.11);transform:translateY(-3px)}
-.slate-card .photo-placeholder{aspect-ratio:4/5;margin-bottom:14px}
-.slate-card .slate-photo{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center 30%;margin-bottom:14px;display:block}
-.slate-card .who{padding:0 16px}
+.slate-card .photo-placeholder{width:76%;aspect-ratio:1/1;border-radius:50%;margin-bottom:14px}
+.slate-card .slate-photo{width:76%;aspect-ratio:1/1;object-fit:cover;object-position:center 28%;border-radius:50%;background:#101012;margin-bottom:14px;display:block}
+.slate-card .who{padding:0 4px}
 .slate-card .who b{display:block;font-size:17px;line-height:1.12}
 .slate-card .who em{display:block;font-style:normal;font-size:12.5px;color:rgba(255,255,255,.7);margin-top:5px;line-height:1.35}
 .slate-spectrum{margin-top:44px}
@@ -330,15 +330,16 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
 .budget-list li:before{content:"\2014";position:absolute;left:0;color:rgba(255,255,255,.5)}
 
 /* ---------- ARTIST PAGE (simplified) ---------- */
-.artist-simple{max-width:720px;margin:44px auto 0;display:flex;flex-direction:column;align-items:center;text-align:center;gap:24px}
-.artist-photo{width:190px;height:190px;border-radius:50%;object-fit:cover;background:#101012}
+.artist-simple{max-width:1060px;margin:48px 0 0;display:flex;flex-direction:row;align-items:center;text-align:left;gap:52px}
+.artist-photo{width:300px;height:300px;flex-shrink:0;border-radius:50%;object-fit:cover;background:#101012}
 .artist-ph{width:190px;height:190px;border-radius:50%;border:1px dashed rgba(255,255,255,.32);
   background:repeating-linear-gradient(135deg,rgba(255,255,255,.04) 0 12px,rgba(255,255,255,.07) 12px 24px);
   display:flex;align-items:center;justify-content:center;text-align:center;color:rgba(255,255,255,.5);
   font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;padding:16px}
-.artist-bio{margin:0;font-size:17.5px;line-height:1.62;color:rgba(255,255,255,.88)}
+.artist-bio{margin:0;font-size:clamp(17.5px,0.5vw + 13.2px,21.5px);line-height:1.6;color:rgba(255,255,255,.88)}
 .artist-bio p{margin:0 0 16px}
 .artist-bio p:last-child{margin-bottom:0}
+.artist-bio .bio-name{font-weight:700;font-size:1.13em;color:#fff}
 .artist-bio em{font-style:italic;color:#fff}
 .artist-bio.is-ph{color:rgba(255,255,255,.5)}
 
@@ -421,7 +422,8 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
   .deliv-table{font-size:14px}
   .artist-slate{grid-template-columns:repeat(2,1fr)}
   .reel-grid{grid-template-columns:repeat(2,1fr)}
-  .artist-simple{margin-top:28px}
+  .artist-simple{flex-direction:column;align-items:center;gap:26px;margin-top:28px}
+  .artist-photo{width:220px;height:220px}
   .budget{grid-template-columns:1fr}
   .section-head:before{top:-16px}
   .hero{margin:-16px -16px 24px;padding:56px 32px}
@@ -460,11 +462,13 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
 
   <div class="nav-group">The Shortlist</div>
   <a href="#shortlist">The Shortlist — Overview</a>
-  <a href="#artist-1">Martin Wave</a>
-  <a href="#artist-2">Khushi</a>
-  <a href="#artist-3">Artist 03</a>
-  <a href="#artist-4">Artist 04</a>
-  <a href="#artist-5">Artist 05</a>
+  <a href="#artist-1">David Sitek</a>
+  <a href="#artist-2">Illangelo</a>
+  <a href="#artist-3">Nosaj Thing</a>
+  <a href="#artist-4">Khushi</a>
+  <a href="#artist-5">Dot Da Genius</a>
+  <a href="#artist-6">Murda Beatz</a>
+  <a href="#artist-7">Martin Wave</a>
 
   <div class="nav-group">The Engagement</div>
   <a href="#budget">Budget</a>
@@ -664,85 +668,126 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
 
   <!-- 5 - THE SHORTLIST OVERVIEW -->
   <section id="shortlist">
-    <div class="section-head"><div><div class="slide-kicker">Proposed Shortlist</div><h2>Five for Suno</h2></div></div>
-    <p class="lead dim">Five composers / producers / artists, chosen so the slate <strong>collectively spans the organic-to-electronic spectrum</strong> — giving Suno real range to react to. Each has a full dossier on the following slides.</p>
+    <div class="section-head"><div><div class="slide-kicker">Proposed Shortlist</div><h2>Seven for Suno</h2></div></div>
+    <p class="lead dim">Seven composers / producers / artists, chosen so the slate <strong>collectively spans the organic-to-electronic spectrum</strong> — giving Suno real range to react to. Each has a full dossier on the following slides.</p>
     <div class="artist-slate">
-      <a class="slate-card" href="#artist-1"><img class="slate-photo" src="assets/artists/martin-wave.jpg" alt="Martin Wave"><div class="who"><b>Martin Wave</b><em>Swedish-born producer / composer, LA — cinematic scale meets pop instinct</em></div></a>
-      <a class="slate-card" href="#artist-2"><img class="slate-photo" src="assets/artists/khushi.jpg" alt="Khushi"><div class="who"><b>Khushi</b><em>British Grammy-nominated producer / artist — intimate, forward-thinking</em></div></a>
-      <a class="slate-card" href="#artist-3"><div class="photo-placeholder">Artist 03 photo</div><div class="who"><b>[Artist 03]</b><em>One-line positioning — center</em></div></a>
-      <a class="slate-card" href="#artist-4"><div class="photo-placeholder">Artist 04 photo</div><div class="who"><b>[Artist 04]</b><em>One-line positioning — electronic-leaning</em></div></a>
-      <a class="slate-card" href="#artist-5"><div class="photo-placeholder">Artist 05 photo</div><div class="who"><b>[Artist 05]</b><em>One-line positioning — electronic</em></div></a>
+      <a class="slate-card" href="#artist-1"><img class="slate-photo" src="assets/artists/david-sitek.jpg" alt="David Sitek"><div class="who"><b>David Sitek</b><em>TV on the Radio founder / producer — experimental indie-rock texturalist</em></div></a>
+      <a class="slate-card" href="#artist-2"><img class="slate-photo" src="assets/artists/illangelo.jpg" alt="Illangelo"><div class="who"><b>Illangelo</b><em>Canadian Grammy-winning producer — architect of The Weeknd&rsquo;s sound</em></div></a>
+      <a class="slate-card" href="#artist-3"><img class="slate-photo" src="assets/artists/nosaj-thing.jpg" alt="Nosaj Thing"><div class="who"><b>Nosaj Thing</b><em>LA electronic producer — intricate, emotive, experimental</em></div></a>
+      <a class="slate-card" href="#artist-4"><img class="slate-photo" src="assets/artists/khushi.jpg" alt="Khushi"><div class="who"><b>Khushi</b><em>British Grammy-nominated producer / artist — intimate, forward-thinking</em></div></a>
+      <a class="slate-card" href="#artist-5"><img class="slate-photo" src="assets/artists/dot-da-genius.jpg" alt="Dot Da Genius"><div class="who"><b>Dot Da Genius</b><em>Grammy-nominated producer — hip-hop meets alternative rock</em></div></a>
+      <a class="slate-card" href="#artist-6"><img class="slate-photo" src="assets/artists/murda-beatz.jpg" alt="Murda Beatz"><div class="who"><b>Murda Beatz</b><em>Grammy-nominated Canadian producer — trap architect, hits across hip-hop and pop</em></div></a>
+      <a class="slate-card" href="#artist-7"><img class="slate-photo" src="assets/artists/martin-wave.jpg" alt="Martin Wave"><div class="who"><b>Martin Wave</b><em>Swedish-born producer / composer, LA — cinematic scale meets pop instinct</em></div></a>
     </div>
     <div class="slate-spectrum">
       <div class="lead" style="font-size:16px;margin-bottom:20px">Where the slate sits on the tension the brief cares about most:</div>
       <div class="spectrum">
         <div class="spectrum-labels"><span>Organic soul/warmth</span><span>Electronic sheen</span></div>
         <div class="spectrum-track">
-          <span class="mk" data-label="01" style="left:22%"></span>
-          <span class="mk" data-label="02" style="left:41%"></span>
-          <span class="mk" data-label="03" style="left:52%"></span>
-          <span class="mk" data-label="04" style="left:68%"></span>
-          <span class="mk" data-label="05" style="left:83%"></span>
+          <span class="mk" data-label="01" style="left:14%"></span>
+          <span class="mk" data-label="02" style="left:27%"></span>
+          <span class="mk" data-label="03" style="left:40%"></span>
+          <span class="mk" data-label="04" style="left:52%"></span>
+          <span class="mk" data-label="05" style="left:64%"></span>
+          <span class="mk" data-label="06" style="left:77%"></span>
+          <span class="mk" data-label="07" style="left:88%"></span>
         </div>
         <div class="spectrum-caption">Placeholder positions — set each once artists are locked. Brief: &ldquo;neither should dominate,&rdquo; so the sweet spot clusters mid-track, with edges to give Suno directional choices.</div>
       </div>
     </div>  </section>
 
-  <!-- ============ ARTIST DOSSIER TEMPLATE (x5) ============
+  <!-- ============ ARTIST DOSSIER TEMPLATE (x7) ============
        Innocean case-study shell: sticky autoplaying REEL in the hero,
        content band rides over it. Fused with the Max Levin dossier +
        the bespoke Organic<->Electronic spectrum, re-pointed at Suno's
-       5 shortlist criteria. Each hero <iframe data-src> currently holds a
+       shortlist criteria. Each hero <iframe data-src> currently holds a
        clearly-ribboned PLACEHOLDER reel; swap the id for the real reel. -->
 
   <!-- ARTIST 01 -->
   <section id="artist-1">
-    <div class="section-head"><div><div class="slide-kicker">Shortlisted Artist — 01 / 05</div><h2>Martin Wave</h2></div></div>
+    <div class="section-head"><div><div class="slide-kicker">Shortlisted Artist — 01 / 07</div><h2>David Sitek</h2></div></div>
     <div class="artist-simple">
-      <img class="artist-photo" src="assets/artists/martin-wave.jpg" alt="Martin Wave">
+      <img class="artist-photo" src="assets/artists/david-sitek.jpg" alt="David Sitek">
       <div class="artist-bio">
-        <p>Martin Wave is a Swedish-born producer, composer, and artist based in Los Angeles. Over his 14-year career, he has worked with stars like Post Malone, Vince Staples, Dua Lipa, Suki Waterhouse, Kacey Musgraves and Paloma Faith. His accolades include contributions to NCT DREAM&rsquo;s global #1 album <em>Hot Sauce</em> and a Best Score win at Filmquest (2023).</p>
-        <p>His music has powered iconic campaigns for Apple, Marvel, Porsche, and Gatorade, as well as trailers for <em>Killers of the Flower Moon</em>, <em>Fast X</em>, <em>Civilization VII</em>, and <em>Fortnite</em>. With over 1.5 billion streams, 12 million Shazams, and 2.1 billion views, his work has achieved massive global reach.</p>
-        <p>Martin also co-founded PARASOL with his wife, Grace Hong. This creative community and label empowers purpose-driven artists to push boundaries and craft lasting, impactful work.</p>
+        <p><span class="bio-name">David Sitek</span> is an American producer, multi-instrumentalist, and founding member of the acclaimed band TV on the Radio, where his experimental, texture-rich production helped define a generation of indie rock. As a producer he has shaped landmark records for the Yeah Yeah Yeahs, including <em>Fever to Tell</em> and <em>It&rsquo;s Blitz!</em>, alongside albums for Foals, Liars, and Weezer.</p>
+        <p>His range spans indie, alternative, and pop, with credits reaching from Scarlett Johansson&rsquo;s <em>Anywhere I Lay My Head</em> to Beyonc&eacute; and Jay-Z. A painter and photographer as well, Sitek brings a restless, cross-disciplinary sensibility to everything he touches, and was once named number one on NME&rsquo;s Future 50.</p>
       </div>
     </div>
   </section>
 
   <!-- ARTIST 02 -->
   <section id="artist-2">
-    <div class="section-head"><div><div class="slide-kicker">Shortlisted Artist — 02 / 05</div><h2>Khushi</h2></div></div>
+    <div class="section-head"><div><div class="slide-kicker">Shortlisted Artist — 02 / 07</div><h2>Illangelo</h2></div></div>
     <div class="artist-simple">
-      <img class="artist-photo" src="assets/artists/khushi.jpg" alt="Khushi">
+      <img class="artist-photo" src="assets/artists/illangelo.jpg" alt="Illangelo">
       <div class="artist-bio">
-        <p>Khushi is a British Grammy-nominated producer, artist, and songwriter known for his emotionally rich, forward-thinking production. A longtime collaborator of James Blake, Khushi co-produced Blake&rsquo;s acclaimed album <em>Assume Form</em>, which earned a Grammy nomination for Best Alternative Album.</p>
-        <p>In addition to his work with Blake, Khushi has contributed to projects by Travis Scott, Rosal&iacute;a, Andr&eacute; 3000, Metro Boomin, Monica Martin, and A$AP Rocky, bringing a distinct blend of intimacy and innovation to everything he touches. Khushi and Blake also collaborated extensively on Khushi&rsquo;s own debut album, <em>Strange Seasons</em>, a critically regarded artist project that further showcased his signature sound.</p>
+        <p><span class="bio-name">Illangelo</span>, born Carlo Montagnese, is a Canadian producer, songwriter, and engineer best known as the architect of The Weeknd&rsquo;s early sound. He executive-produced the mixtapes compiled as <em>Trilogy</em> and shaped the Grammy-winning <em>Beauty Behind the Madness</em>, helping define modern alternative R&amp;B.</p>
+        <p>His credits extend to Post Malone, Drake, Alicia Keys, Wiz Khalifa, and Fall Out Boy, moving fluidly across R&amp;B, electronica, and trip hop. A Grammy winner for Best Urban Contemporary Album and an Album of the Year nominee, Illangelo pairs atmospheric detail with sharp pop instinct.</p>
       </div>
     </div>
   </section>
 
   <!-- ARTIST 03 -->
   <section id="artist-3">
-    <div class="section-head"><div><div class="slide-kicker">Shortlisted Artist — 03 / 05</div><h2>[Artist 03 Name]</h2></div></div>
+    <div class="section-head"><div><div class="slide-kicker">Shortlisted Artist — 03 / 07</div><h2>Nosaj Thing</h2></div></div>
     <div class="artist-simple">
-      <div class="artist-ph">Artist 03 photo</div>
-      <p class="artist-bio is-ph">[Bio to come. Confirm artist, then drop a short two-paragraph bio here in the same voice as Martin Wave and Khushi.]</p>
-    </div>  </section>
+      <img class="artist-photo" src="assets/artists/nosaj-thing.jpg" alt="Nosaj Thing">
+      <div class="artist-bio">
+        <p><span class="bio-name">Nosaj Thing</span>, born Jason Chung, is an American electronic producer and DJ from Los Angeles, known for intricate, emotionally charged soundscapes that blur electronic, ambient, and hip-hop. He emerged from LA&rsquo;s underground scene alongside Flying Lotus, releasing acclaimed albums including <em>Drift</em>, <em>Home</em>, and <em>Continua</em>.</p>
+        <p>Beyond his own catalog, he has produced for Kendrick Lamar, Chance the Rapper, and Kid Cudi, and remixed everyone from Flying Lotus to Philip Glass. Renowned for live audiovisual shows built on real-time graphics, Nosaj Thing extends his work into film scores, fashion, and multimedia installation.</p>
+      </div>
+    </div>
+  </section>
 
   <!-- ARTIST 04 -->
   <section id="artist-4">
-    <div class="section-head"><div><div class="slide-kicker">Shortlisted Artist — 04 / 05</div><h2>[Artist 04 Name]</h2></div></div>
+    <div class="section-head"><div><div class="slide-kicker">Shortlisted Artist — 04 / 07</div><h2>Khushi</h2></div></div>
     <div class="artist-simple">
-      <div class="artist-ph">Artist 04 photo</div>
-      <p class="artist-bio is-ph">[Bio to come. Confirm artist, then drop a short two-paragraph bio here in the same voice as Martin Wave and Khushi.]</p>
-    </div>  </section>
+      <img class="artist-photo" src="assets/artists/khushi.jpg" alt="Khushi">
+      <div class="artist-bio">
+        <p><span class="bio-name">Khushi</span> is a British Grammy-nominated producer, artist, and songwriter known for his emotionally rich, forward-thinking production. A longtime collaborator of James Blake, Khushi co-produced Blake&rsquo;s acclaimed album <em>Assume Form</em>, which earned a Grammy nomination for Best Alternative Album.</p>
+        <p>In addition to his work with Blake, Khushi has contributed to projects by Travis Scott, Rosal&iacute;a, Andr&eacute; 3000, Metro Boomin, Monica Martin, and A$AP Rocky, bringing a distinct blend of intimacy and innovation to everything he touches. Khushi and Blake also collaborated extensively on Khushi&rsquo;s own debut album, <em>Strange Seasons</em>, a critically regarded artist project that further showcased his signature sound.</p>
+      </div>
+    </div>
+  </section>
 
   <!-- ARTIST 05 -->
   <section id="artist-5">
-    <div class="section-head"><div><div class="slide-kicker">Shortlisted Artist — 05 / 05</div><h2>[Artist 05 Name]</h2></div></div>
+    <div class="section-head"><div><div class="slide-kicker">Shortlisted Artist — 05 / 07</div><h2>Dot Da Genius</h2></div></div>
     <div class="artist-simple">
-      <div class="artist-ph">Artist 05 photo</div>
-      <p class="artist-bio is-ph">[Bio to come. Confirm artist, then drop a short two-paragraph bio here in the same voice as Martin Wave and Khushi.]</p>
-    </div>  </section>
+      <img class="artist-photo" src="assets/artists/dot-da-genius.jpg" alt="Dot Da Genius">
+      <div class="artist-bio">
+        <p><span class="bio-name">Dot da Genius</span>, born Oladipo Omishore, is a Grammy-nominated producer and engineer who broke through as co-producer of Kid Cudi&rsquo;s generation-defining <em>Day &rsquo;n&rsquo; Nite</em>. A longtime creative partner to Cudi, he co-founded the alternative rock project WZRD and helped forge a sound that bridged hip-hop and rock.</p>
+        <p>His production credits include Lil Nas X&rsquo;s <em>Panini</em> and the number-one single <em>The Scotts</em>, with further work for Nas, Kanye West, Eminem, JID, and Jhen&eacute; Aiko. Recognized across the Grammys, BET, and MTV, he also founded the multimedia venture HeadBanga Muzik Group.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARTIST 06 -->
+  <section id="artist-6">
+    <div class="section-head"><div><div class="slide-kicker">Shortlisted Artist — 06 / 07</div><h2>Murda Beatz</h2></div></div>
+    <div class="artist-simple">
+      <img class="artist-photo" src="assets/artists/murda-beatz.jpg" alt="Murda Beatz">
+      <div class="artist-bio">
+        <p>When <span class="bio-name">Murda Beatz</span> says music is a young man&rsquo;s game, believe him. The self-taught 29-year-old Canadian trap prodigy has pictures of himself banging on drums when he was four years old. Now a Grammy-nominated force in hip-hop and trap, he&rsquo;s become one of the genre&rsquo;s most consistent and recognizable producers.</p>
+        <p>Over the years, Murda has worked on nine Grammy-nominated albums, including Ariana Grande&rsquo;s <em>Positions</em>, nominated for Best Pop Vocal Album, and contributed to more than 25 Billboard #1 albums. He&rsquo;s also been recognized as one of the top five writers on the Billboard Songwriters Chart.</p>
+        <p>Alongside his work with major artists, Murda has released several solo projects, including <em>Keep God First</em>, <em>Bless Yo Trap</em> with Smokepurpp, and two volumes of <em>Memory Lane</em> with Shordie Shordie. His latest single, &ldquo;On You,&rdquo; continues that collaboration and showcases his signature style.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARTIST 07 -->
+  <section id="artist-7">
+    <div class="section-head"><div><div class="slide-kicker">Shortlisted Artist — 07 / 07</div><h2>Martin Wave</h2></div></div>
+    <div class="artist-simple">
+      <img class="artist-photo" src="assets/artists/martin-wave.jpg" alt="Martin Wave">
+      <div class="artist-bio">
+        <p><span class="bio-name">Martin Wave</span> is a Swedish-born producer, composer, and artist based in Los Angeles. Over his 14-year career, he has worked with stars like Post Malone, Vince Staples, Dua Lipa, Suki Waterhouse, Kacey Musgraves and Paloma Faith. His accolades include contributions to NCT DREAM&rsquo;s global #1 album <em>Hot Sauce</em> and a Best Score win at Filmquest (2023).</p>
+        <p>His music has powered iconic campaigns for Apple, Marvel, Porsche, and Gatorade, as well as trailers for <em>Killers of the Flower Moon</em>, <em>Fast X</em>, <em>Civilization VII</em>, and <em>Fortnite</em>. With over 1.5 billion streams, 12 million Shazams, and 2.1 billion views, his work has achieved massive global reach.</p>
+        <p>Martin also co-founded PARASOL with his wife, Grace Hong. This creative community and label empowers purpose-driven artists to push boundaries and craft lasting, impactful work.</p>
+      </div>
+    </div>
+  </section>
 
   <!-- 11 - BUDGET -->
   <section id="budget">
@@ -869,7 +914,7 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
       <img class="closing-slide" src="assets/house/20-studio-s.jpg" alt="" aria-hidden="true">
       <div class="grid">
         <div class="card span-4"><h3>A signature, not a jingle</h3><p>An identity that hits like a Tu-dum — organic soul and electronic sheen in tension, legible from keynote to phone speaker.</p></div>
-        <div class="card span-4"><h3>The right artist for the brief</h3><p>Five reels spanning the spectrum, each scored against exactly what Suno asked for.</p></div>
+        <div class="card span-4"><h3>The right artist for the brief</h3><p>Seven reels spanning the spectrum, each scored against exactly what Suno asked for.</p></div>
         <div class="card span-4"><h3>A partner through delivery</h3><p>Discovery to final stems, in step with Porto Rocha and the brand relaunch.</p></div>
       </div>
     </div>  </section>
