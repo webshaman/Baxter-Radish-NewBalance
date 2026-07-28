@@ -249,6 +249,8 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
 .prod-copy p{font-size:18px;line-height:1.56;color:rgba(255,255,255,.86);margin:0 0 15px;max-width:900px}
 .prod-copy p:last-child{margin-bottom:0}
 .prod-copy em{font-style:italic;color:#fff}
+.prod-photo{margin:0 0 26px;aspect-ratio:4/5;overflow:hidden;background:#111;border:1px solid rgba(255,255,255,.28)}
+.prod-photo img{width:100%;height:100%;object-fit:cover;object-position:center 22%;display:block}
 .prod-side{border-left:1px solid rgba(255,255,255,.22);padding-left:34px}
 .prod-side + .prod-side{margin-top:30px}
 .prod-side .cs-label{text-transform:uppercase;letter-spacing:.16em;font-size:13px;font-weight:800;color:rgba(255,255,255,.7);margin-bottom:14px}
@@ -260,6 +262,7 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
 @media(max-width:1050px){
   .prod-layout{grid-template-columns:1fr;gap:26px}
   .prod-side{border-left:none;border-top:1px solid rgba(255,255,255,.22);padding-left:0;padding-top:24px}
+  .prod-photo{max-width:340px}
   .prod-lead{font-size:20px}
 }
 .span-3{grid-column:span 3}.span-4{grid-column:span 4}.span-6{grid-column:span 6}
@@ -595,6 +598,7 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
           <p>Beyond composition and production, Dan has partnered with global brand teams to develop sonic branding systems and UX sound libraries for companies including CoreLogic and Thermo Fisher Scientific.</p>
         </div>
         <div>
+          <figure class="prod-photo"><img src="assets/producers/dan-mufson.jpg" alt="Dan Mufson" loading="lazy" style="object-position:center 20%"></figure>
           <div class="prod-side">
             <div class="cs-label">Selected Brands</div>
             <div class="prod-chips">
@@ -622,6 +626,7 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
           <p>To make it all the more impressive, everything the self-driven Barbera has accomplished to date has been done on her own terms as an independent artist.</p>
         </div>
         <div>
+          <figure class="prod-photo"><img src="assets/producers/sam-barbera.jpg" alt="Sam Barbera" loading="lazy" style="object-position:65% 22%"></figure>
           <div class="prod-side">
             <div class="cs-label">Selected Brands</div>
             <div class="prod-chips">
@@ -648,6 +653,7 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
           <p>She is also a top player in the sync licensing world, acquiring hundreds of syncs with some of the world's biggest brands.</p>
         </div>
         <div>
+          <figure class="prod-photo"><img src="assets/producers/paige-blue.jpg" alt="Paige Blue" loading="lazy" style="object-position:center 25%"></figure>
           <div class="prod-side">
             <div class="cs-label">Selected Brands</div>
             <div class="prod-chips">
@@ -675,6 +681,7 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
           <p>As a vocal coach and producer, she has worked with actors such as Bette Midler, Will Ferrell, Rebel Wilson, Liam Hemsworth, Anna Faris, and Chris Evans, and top-40 recording artists like Daft Punk, Sean Paul, Kesha, and Miley Cyrus.</p>
         </div>
         <div>
+          <figure class="prod-photo"><img src="assets/producers/alana-da-fonseca.jpg" alt="Alana Da Fonseca" loading="lazy" style="object-position:center 20%"></figure>
           <div class="prod-side">
             <div class="cs-label">Selected Work</div>
             <div class="prod-chips">
@@ -700,6 +707,7 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
           <p>With roots as a touring musician and music director, Max has honed his craft across rhythmic, pop, and world genres. He was recently tapped for New Balance's 2026 Global Campaign, creating music arrangements across the various hero spots.</p>
         </div>
         <div>
+          <figure class="prod-photo"><img src="assets/producers/max-levin.jpg" alt="Max Levin" loading="lazy" style="object-position:center 15%"></figure>
           <div class="prod-side">
             <div class="cs-label">Selected Brands</div>
             <div class="prod-chips">
@@ -727,6 +735,7 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
           <p>Known for his versatility and instinct for storytelling, Schultz blends cinematic scale with modern production, consistently delivering music that connects with audiences across genres and platforms.</p>
         </div>
         <div>
+          <figure class="prod-photo"><img src="assets/producers/caleb-schultz.jpg" alt="Caleb Schultz" loading="lazy" style="object-position:78% 30%"></figure>
           <div class="prod-side">
             <div class="cs-label">Selected Brands</div>
             <div class="prod-chips">
@@ -752,6 +761,7 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
           <p>Mike's trailer work includes scoring for high-profile projects like Dune: Part Two, Bodies Bodies Bodies, King Richard, and HBO's Euphoria Season 2 and Winning Time. His ability to blend emotional depth with commercial appeal has made him a sought-after composer across industries.</p>
         </div>
         <div>
+          <figure class="prod-photo"><img src="assets/producers/allister-x.jpg" alt="Allister X" loading="lazy" style="object-position:center 28%"></figure>
           <div class="prod-side">
             <div class="cs-label">Selected Brands</div>
             <div class="prod-chips">
@@ -778,6 +788,7 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
           <p>Martin also co-founded PARASOL with his wife, Grace Hong. This creative community and label empowers purpose-driven artists to push boundaries and craft lasting, impactful work.</p>
         </div>
         <div>
+          <figure class="prod-photo"><img src="assets/producers/martin-wave.jpg" alt="Martin Wave" loading="lazy" style="object-position:center 25%"></figure>
           <div class="prod-side">
             <div class="cs-label">Selected Brands</div>
             <div class="prod-chips">
@@ -803,6 +814,7 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
           <p>His slate is stacked with major motion picture and television spots rolling out his collaborations and originals.</p>
         </div>
         <div>
+          <figure class="prod-photo"><img src="assets/producers/steve-wilmot.jpg" alt="Steve Wilmot" loading="lazy" style="object-position:center 20%"></figure>
           <div class="prod-side">
             <div class="cs-label">Selected Collaborations</div>
             <div class="prod-chips">
@@ -826,6 +838,7 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
           <p>Bitten by the music bug at the tender age of 12, Knives At Sea is a multi-instrumentalist playing guitar, bass, keys, vocals, and drums, and has remained a lifelong music addict.</p>
         </div>
         <div>
+          <figure class="prod-photo"><img src="assets/producers/knives-at-sea.jpg" alt="Knives At Sea" loading="lazy" style="object-position:center 18%"></figure>
           <div class="prod-side">
             <div class="cs-label">Selected Brands</div>
             <div class="prod-chips">
@@ -848,6 +861,7 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
           <p>Their mission is to push beyond mere sound to elevate visions and craft moments that leave an emotional legacy.</p>
         </div>
         <div>
+          <figure class="prod-photo"><img src="assets/producers/dream-radio.jpg" alt="Dream Radio" loading="lazy" style="object-position:center center"></figure>
           <div class="prod-side">
             <div class="cs-label">Selected Brands</div>
             <div class="prod-chips">
