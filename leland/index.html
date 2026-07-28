@@ -244,14 +244,16 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
 .who-house .card h3{margin:0}
 /* ---- PRODUCERS / COMPOSERS ---- */
 .prod-body{max-width:1180px}
-.prod-layout{display:grid;grid-template-columns:minmax(300px,1.55fr) minmax(260px,1fr);gap:44px;align-items:start}
+.prod-layout{display:grid;grid-template-columns:minmax(260px,1fr) minmax(300px,1.55fr);gap:44px;align-items:start}
+.prod-copy{order:2}
+.prod-layout>div:not(.prod-copy){order:1}
 .prod-lead{font-size:25px;line-height:1.5;color:#fff;font-weight:300;margin:0 0 22px;max-width:900px}
 .prod-copy p{font-size:18px;line-height:1.56;color:rgba(255,255,255,.86);margin:0 0 15px;max-width:900px}
 .prod-copy p:last-child{margin-bottom:0}
 .prod-copy em{font-style:italic;color:#fff}
 .prod-photo{margin:0 0 26px;aspect-ratio:4/5;overflow:hidden;background:#111;border:1px solid rgba(255,255,255,.28)}
 .prod-photo img{width:100%;height:100%;object-fit:cover;object-position:center 22%;display:block}
-.prod-side{border-left:1px solid rgba(255,255,255,.22);padding-left:34px}
+.prod-side{border-right:1px solid rgba(255,255,255,.22);padding-right:34px}
 .prod-side + .prod-side{margin-top:30px}
 .prod-side .cs-label{text-transform:uppercase;letter-spacing:.16em;font-size:13px;font-weight:800;color:rgba(255,255,255,.7);margin-bottom:14px}
 .prod-chips{display:flex;flex-wrap:wrap;gap:8px}
@@ -261,7 +263,7 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
 .prod-stat span{display:block;font-size:13px;color:rgba(255,255,255,.72);margin-top:6px;line-height:1.35}
 @media(max-width:1050px){
   .prod-layout{grid-template-columns:1fr;gap:26px}
-  .prod-side{border-left:none;border-top:1px solid rgba(255,255,255,.22);padding-left:0;padding-top:24px}
+  .prod-side{border-right:none;border-top:1px solid rgba(255,255,255,.22);padding-right:0;padding-top:24px}
   .prod-photo{max-width:340px}
   .prod-lead{font-size:20px}
 }
