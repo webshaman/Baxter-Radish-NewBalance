@@ -82,6 +82,9 @@ h1.big{font-size:64px;line-height:1.02;margin:0 0 28px;letter-spacing:-1.4px;fon
 .meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
 .tag{border:1px solid rgba(255,255,255,.55);padding:8px 11px;color:#fff;font-size:13px;
   background:rgba(255,255,255,.10);font-weight:600}
+.hero .cover-sub{font-size:34px;max-width:990px;margin:0;color:#fff;font-weight:300}
+.hero-confidential{position:absolute;left:72px;bottom:40px;text-transform:uppercase;
+  letter-spacing:.18em;font-size:13px;font-weight:800;color:rgba(255,255,255,.55)}
 
 .section-head{position:sticky;top:0;z-index:55;display:flex;align-items:flex-end;justify-content:space-between;gap:22px;margin:10px 0 16px;
   border-bottom:1px solid rgba(255,255,255,.24);padding:10px 0 12px;background:transparent;isolation:isolate}
@@ -239,6 +242,7 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   .cs-hero img{width:100%;max-height:none}
   .section-head:before{top:-16px}
   .hero{margin:-16px -16px 24px;padding:56px 32px}
+  .hero-confidential{left:32px;bottom:24px}
   h1.big,h2{font-size:36px}
   .slide-kicker{font-size:18px}
   .hero p{font-size:24px}
@@ -253,6 +257,8 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 <!-- ===================== SIDEBAR NAV ===================== -->
 <nav id="sideNav" aria-label="Section navigation">
   <h1>360 Campaigns</h1>
+  <div class="nav-group">Introduction</div>
+  <a href="#cover">Cover</a>
   <div class="nav-group">Case Studies</div>
   <a href="#cs-virgin">Virgin Voyages</a>
   <a href="#cs-optimum">Optimum Online</a>
@@ -267,6 +273,14 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 </div>
 
 <main>
+  <!-- COVER (hero shows only on this first slide) -->
+  <div class="hero">
+    <h1 class="big">360 Campaigns</h1>
+    <p class="cover-sub">Baxter House Music</p>
+    <div class="hero-confidential">Private &amp; Confidential</div>
+  </div>
+  <section id="cover"></section>
+
   <!-- CS: VIRGIN VOYAGES (live) -->
   <section id="cs-virgin">
     <figure class="cs-hero cs-hero-video cs-hero-sticky"><iframe src="" data-src="https://www.youtube-nocookie.com/embed/vd2GFfa8Rso?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=vd2GFfa8Rso&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3&amp;cc_load_policy=0&amp;enablejsapi=1&amp;fs=0&amp;hd=1&amp;vq=hd1080" title="Virgin Voyages — The Voyage (Karma Chameleon) Music Video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></figure>
