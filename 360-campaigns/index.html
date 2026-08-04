@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Private Virgin Voyages</title>
+<title>360 Campaigns</title>
 <link rel="icon" href="favicon-32.jpg" sizes="32x32">
 <link rel="icon" href="favicon-192.jpg" sizes="192x192">
 <link rel="apple-touch-icon" href="apple-touch-icon.jpg">
@@ -45,7 +45,7 @@ nav{position:fixed;top:5px;bottom:0;left:0;width:var(--nav-w);overflow:auto;
   background:var(--nav-bg);color:var(--nav-fg);padding:28px 24px}
 nav h1{margin:0 0 24px;color:#fff;font-size:19px;line-height:1.15;font-weight:700;
   padding-bottom:18px;border-bottom:2px solid var(--accent)}
-nav h1:before{content:"FOR INNOCEAN";display:block;color:var(--nav-fg-dim);font-size:11px;
+nav h1:before{content:"BAXTER HOUSE";display:block;color:var(--nav-fg-dim);font-size:11px;
   letter-spacing:.16em;text-transform:uppercase;margin-bottom:8px;font-weight:700}
 .nav-group{margin:20px 0 5px;color:var(--nav-fg-dim);font-size:11px;letter-spacing:.14em;
   text-transform:uppercase;font-weight:800;border-bottom:1px solid var(--nav-line);padding-bottom:5px}
@@ -244,27 +244,26 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
   .hero p{font-size:24px}
   .eyebrow{font-size:9px}
 }
-
-/* ---- Private single-case-study page: hide deck chrome, full-bleed ---- */
-:root{ --nav-w:0px; }
-#sideNav, #navToggle{ display:none !important; }
-#sectionPrev, #sectionNext{ display:none !important; }
 </style>
 </head>
 <body>
 
-<!-- Hidden nav retained so the deck's showSection() derives the section id and autoplays the hero video -->
-<nav id="sideNav" aria-label="Section navigation" style="display:none">
-  <h1>Private Virgin Voyages</h1>
-  <div class="nav-group">Case Study</div>
+<button type="button" id="navToggle" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
+
+<!-- ===================== SIDEBAR NAV ===================== -->
+<nav id="sideNav" aria-label="Section navigation">
+  <h1>360 Campaigns</h1>
+  <div class="nav-group">Case Studies</div>
   <a href="#cs-virgin">Virgin Voyages</a>
+  <a href="#cs-optimum">Optimum Online</a>
+  <a href="#cs-smirnoff">Smirnoff</a>
 </nav>
 
-<!-- Only the unmute control is meaningful on a single slide; prev/next hidden -->
+<!-- ===================== SECTION CONTROLS ===================== -->
 <div class="section-controls" aria-label="Slide navigation">
   <button type="button" id="heroMute" class="hero-mute-btn" aria-label="Unmute video" title="Unmute" style="display:none"></button>
-  <button type="button" id="sectionPrev" title="Previous slide - Left arrow" style="display:none">&#8249;</button>
-  <button type="button" id="sectionNext" title="Next slide - Right arrow" style="display:none">&#8250;</button>
+  <button type="button" id="sectionPrev" title="Previous slide - Left arrow">&#8249;</button>
+  <button type="button" id="sectionNext" title="Next slide - Right arrow">&#8250;</button>
 </div>
 
 <main>
@@ -298,6 +297,76 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
       <figure><img src="assets/case-studies/virgin-voyages/dsp-playlists.jpg" alt="DSP playlisting"><figcaption><b>DSP Release</b>Released on all platforms + playlisting strategy</figcaption></figure>
       <figure><img src="assets/case-studies/virgin-voyages/ship-sunset.jpg" alt="Aboard a Virgin Voyages ship"><figcaption><b>Filmed Aboard Virgin Voyages</b></figcaption></figure>
       <figure><img src="assets/case-studies/virgin-voyages/the-voyage-title.jpg" alt="The Voyage title card"><figcaption><b>The Voyage</b></figcaption></figure>
+    </div>
+    </div>
+  </section>
+
+  <!-- CS: OPTIMUM ONLINE -->
+  <section id="cs-optimum">
+    <figure class="cs-hero cs-hero-sticky"><img src="assets/case-studies/optimum/optimum-logo.jpg" alt="Optimum"></figure>
+    <div class="cs-body">
+    <div class="section-head"><div><div class="slide-kicker">Case Study</div><h2>Optimum Online</h2></div></div>
+    <div class="cs-layout">
+      <div class="cs-ask">
+        <div class="cs-label">The Ask</div>
+        <p>Bring together an artist and producer through our network to create an original track that supports Optimum's brand transformation.</p>
+      </div>
+      <div class="cs-did">
+        <div class="cs-label">What We Delivered</div>
+        <ul>
+          <li>Paired artist ROZES with producer Allister X to create an original song for the Optimum rebrand.</li>
+          <li>Released the song across all Digital Streaming Platforms.</li>
+          <li>Created an official The Stickmen Project remix, plus a live performance.</li>
+          <li>Interviewed the artist and producer, spotlighting their partnership with the Optimum brand.</li>
+          <li>Released the Stickmen Project remix on all DSPs with a playlisting strategy.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="cs-media">
+      <figure><img src="assets/case-studies/optimum/away-we-go-cover.jpg" alt="Away We Go — ROZES | Allister X"><figcaption><b>Away We Go</b>ROZES | Allister X — original song</figcaption></figure>
+      <figure><img src="assets/case-studies/optimum/music-video-still.jpg" alt="Music video still"><figcaption><b>Music Video</b></figcaption></figure>
+      <figure><img src="assets/case-studies/optimum/rozes-portrait.jpg" alt="ROZES"><figcaption><b>ROZES</b>Artist</figcaption></figure>
+      <figure><img src="assets/case-studies/optimum/allister-x-portrait.jpg" alt="Allister X"><figcaption><b>Allister X</b>Producer</figcaption></figure>
+      <figure><img src="assets/case-studies/optimum/rozes-studio.jpg" alt="ROZES in the studio"><figcaption><b>In the Studio</b>Interviewed on the Optimum partnership</figcaption></figure>
+      <figure><img src="assets/case-studies/optimum/stickmen-live.jpg" alt="The Stickmen Project live"><figcaption><b>Live Performance</b>The Stickmen Project</figcaption></figure>
+      <figure><img src="assets/case-studies/optimum/away-we-go-remix.jpg" alt="Away We Go — The Stickmen Project Remix"><figcaption><b>Away We Go</b>The Stickmen Project Remix</figcaption></figure>
+      <figure><img src="assets/case-studies/optimum/dsp-playlists.jpg" alt="DSP playlisting"><figcaption><b>DSP Release</b>All platforms + playlisting strategy</figcaption></figure>
+    </div>
+    </div>
+  </section>
+
+  <!-- CS: SMIRNOFF -->
+  <section id="cs-smirnoff">
+    <figure class="cs-hero cs-hero-sticky"><img src="assets/case-studies/smirnoff/we-do-we-hero.jpg" alt="Smirnoff — We Do We"></figure>
+    <div class="cs-body">
+    <div class="section-head"><div><div class="slide-kicker">Case Study</div><h2>Smirnoff — Sound of We</h2></div></div>
+    <div class="cs-layout">
+      <div class="cs-ask">
+        <div class="cs-label">The Ask</div>
+        <p>Collaborate with two Canadian artists to develop four original tracks featuring Smirnoff product sounds as a core creative element.</p>
+      </div>
+      <div class="cs-did">
+        <div class="cs-label">What We Delivered</div>
+        <ul>
+          <li>Brought Canadian artists Leila Dey and Isaac Zale together.</li>
+          <li>Produced original music inspired by custom Smirnoff creator kits.</li>
+          <li>Released music across DSPs and amplified through social content.</li>
+          <li>Culminated in live performances at Toronto Pride.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="cs-media">
+      <figure><img src="assets/case-studies/smirnoff/leila-dey-portrait.jpg" alt="Leila Dey"><figcaption><b>Leila Dey</b>Canadian artist</figcaption></figure>
+      <figure><img src="assets/case-studies/smirnoff/isaac-zale-portrait.jpg" alt="Isaac Zale"><figcaption><b>Isaac Zale</b>Canadian artist</figcaption></figure>
+      <figure><img src="assets/case-studies/smirnoff/song-see-you-leila.jpg" alt="See You — ft. Leila Dey"><figcaption><b>See You</b>ft. Leila Dey</figcaption></figure>
+      <figure><img src="assets/case-studies/smirnoff/song-see-you-isaac.jpg" alt="See You — ft. Isaac Zale"><figcaption><b>See You</b>ft. Isaac Zale</figcaption></figure>
+      <figure><img src="assets/case-studies/smirnoff/song-day-one-leila.jpg" alt="Day One — ft. Leila Dey"><figcaption><b>Day One</b>ft. Leila Dey</figcaption></figure>
+      <figure><img src="assets/case-studies/smirnoff/song-day-one-isaac.jpg" alt="Day One — ft. Isaac Zale"><figcaption><b>Day One</b>ft. Isaac Zale</figcaption></figure>
+      <figure><img src="assets/case-studies/smirnoff/pride-performance.jpg" alt="Live at Toronto Pride"><figcaption><b>Live at Toronto Pride</b>Leila Dey on the Smirnoff float</figcaption></figure>
+      <figure><img src="assets/case-studies/smirnoff/float-truck.jpg" alt="Smirnoff Pride float"><figcaption><b>Smirnoff Pride Float</b>Toronto Pride Parade</figcaption></figure>
+      <figure><img src="assets/case-studies/smirnoff/social-1.jpg" alt="Social process content"><figcaption><b>Social Content</b>Documented the creation process</figcaption></figure>
+      <figure><img src="assets/case-studies/smirnoff/social-2.jpg" alt="Social process content"><figcaption><b>Social Content</b>Isaac Zale — Vancouver</figcaption></figure>
+      <figure><img src="assets/case-studies/smirnoff/we-do-we-circle.jpg" alt="We Do We activation"><figcaption><b>We Do We</b>Activation</figcaption></figure>
     </div>
     </div>
   </section>
