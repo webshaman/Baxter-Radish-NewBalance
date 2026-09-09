@@ -140,6 +140,15 @@ h2{font-size:64px;line-height:1.02;color:#fff;margin:0;letter-spacing:-1.4px;fon
 .card h3{margin:0 0 9px;color:#fff;font-size:19px;line-height:1.22;font-weight:700}
 .card p{margin:0;color:rgba(255,255,255,.82)}
 .pill{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.28);padding:14px 18px;font-weight:700;color:#fff}
+
+/* ---- THE PARTNERSHIP ---- */
+.partner-stack{display:grid;gap:46px;margin-top:28px;max-width:1180px;min-height:55vh;align-content:center}
+.section-head + .partner-stack{margin-top:76px}
+.partner-row{display:grid;grid-template-columns:320px minmax(420px,680px);gap:54px;align-items:center}
+.partner-logo-wrap{display:flex;align-items:center;justify-content:center;width:320px}
+.partner-copy{color:#fff;text-align:left}
+.partner-copy p{font-size:28px;line-height:1.38;color:rgba(255,255,255,.88);margin:0;max-width:680px}
+.partner-logo{height:208px;max-width:300px;object-fit:contain;object-position:center center;display:block}
 .video-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
 .video-card{position:relative;display:block;aspect-ratio:16/9;overflow:hidden;background:#000;color:#fff;text-decoration:none;border:1px solid rgba(0,0,0,.18)}
 .video-card img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.92) contrast(1.03);transition:transform .25s ease,filter .25s ease}
@@ -267,6 +276,7 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
 .video-embed iframe{width:100%;height:100%;border:0;display:block}
 
 @media(max-width:1050px){
+  .partner-row{grid-template-columns:1fr;gap:18px}.partner-logo-wrap{width:100%;justify-content:flex-start}.partner-copy p{font-size:23px}
   .nav-toggle{display:flex;opacity:1;visibility:visible;pointer-events:auto;transition:none;top:auto;bottom:14px;left:14px;width:55px;height:55px;font-size:31px}
   .nav-close{display:none}
   .section-controls{top:auto;bottom:14px;right:14px}
@@ -309,11 +319,9 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
 
   <div class="nav-group">Introduction</div>
   <a href="#cover">Cover</a>
+  <a href="#partnership">The Partnership</a>
   <a href="#who">Who Is Baxter House?</a>
   <a href="#mike-boris">Who Is Mike Boris Music?</a>
-
-  <div class="nav-group">The Partnership</div>
-  <a href="#partnership">Baxter House × Mike Boris Music</a>
 
   <div class="nav-group">Track Record</div>
   <a href="#track-record">Chart-Topping Hits</a>
@@ -352,6 +360,21 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
   <!-- 1 - COVER -->
   <section id="cover"></section>
 
+  <!-- THE PARTNERSHIP -->
+  <section id="partnership">
+    <div class="section-head"><h2>The Partnership</h2></div>
+    <div class="partner-stack">
+      <div class="partner-row">
+        <div class="partner-logo-wrap"><img class="partner-logo" src="assets/baxter-house-logo.png" alt="Baxter House Music logo"></div>
+        <div class="partner-copy"><p>A culture-driven music company curating and championing some of today's most compelling new voices.</p></div>
+      </div>
+      <div class="partner-row">
+        <div class="partner-logo-wrap"><img class="partner-logo" src="assets/mike-boris-music-logo.png" alt="Mike Boris Music logo"></div>
+        <div class="partner-copy"><p>A creative music supervision company with strategy at its core.</p></div>
+      </div>
+    </div>
+  </section>
+
   <!-- 2 - WHO IS BAXTER HOUSE -->
   <section id="who">
     <figure class="cs-hero cs-hero-video cs-hero-sticky"><iframe src="" data-src="https://www.youtube-nocookie.com/embed/VO7hxIdJYfU?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=VO7hxIdJYfU&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3&amp;cc_load_policy=0&amp;enablejsapi=1&amp;fs=0&amp;hd=1&amp;vq=hd1080" title="Baxter House 2026 Sync Reel" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></figure>
@@ -384,18 +407,6 @@ section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
     <div class="lead">Armed with decades of award-winning experience, Mike Boris seamlessly turns music into a superpower helping brands connect, inspire and stand out. Known for his collaborative spirit and ability to connect brands with unforgettable music, Mike is one of the most trusted figures in the industry.</div>
     <div class="lead">He built renowned soundtracks for global brands, led music production and strategy at top agencies, and created iconic work. Now he brings it all together under Mike Boris Music! A boutique shop for synch, sonic branding, original music and creative music solutions.</div>
     <div class="lead">Mike came up in the agency world and has a rare 360&deg; view of the music business from all angles. He and his team know your pain points, how to be your partner and make your life easy.</div>
-  </section>
-
-  <!-- THE PARTNERSHIP -->
-  <section id="partnership">
-    <div class="section-head"><div><h2>Baxter House &times; Mike Boris Music</h2></div></div>
-    <div class="lead">A songwriting camp built around your brand. Baxter House brings the artists, the producers, and six working studios. Mike Boris Music brings the agency-side translation &mdash; turning a brief into direction the room can build from, and carrying it through rights, budgets, and delivery. Your team sits in on the process, not just the result.</div>
-    <div class="grid">
-      <div class="card span-6"><h3>The Studio</h3><p>Baxter House's artists, producers, and six working studios.</p></div>
-      <div class="card span-6"><h3>The Bridge</h3><p>Mike Boris Music turns the brief into direction agencies can greenlight.</p></div>
-      <div class="card span-6"><h3>The Process</h3><p>Real-time collaboration, with your brand in the room as the song comes together.</p></div>
-      <div class="card span-6"><h3>The Result</h3><p>Music that's culturally credible and campaign-ready at once.</p></div>
-    </div>
   </section>
 
   <!-- 3 - MUSIC TRACK RECORD -->
