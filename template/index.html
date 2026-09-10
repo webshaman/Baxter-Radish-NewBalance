@@ -1,0 +1,1876 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Template — Baxter House Page Types</title>
+<link rel="icon" href="favicon-32.jpg" sizes="32x32">
+<link rel="icon" href="favicon-192.jpg" sizes="192x192">
+<link rel="apple-touch-icon" href="apple-touch-icon.jpg">
+<style>
+/* ============================================================================
+   BAXTER HOUSE DECK TEMPLATE — every page type built to date, in one deck.
+
+   HOW TO USE
+   1. Copy this folder to /your-deck/.
+   2. Delete the slides you don't need (a slide = one <section> + its nav link).
+   3. Rebrand: the token block below, nav h1 + its :before eyebrow, <title>.
+   4. Swap assets under assets/ and the YouTube ids in each data-src / ITEMS.
+
+   Slide order comes from the NAV LINKS, not the DOM. Reorder the nav to
+   reorder the deck. Every yellow chip on a slide is a .scaffold-note —
+   delete them all before sending anything to a client.
+============================================================================ */
+
+/* ----------------------------------------------------------------------------
+   COLOR / BRAND TOKENS - edit ONLY these to rebrand.
+---------------------------------------------------------------------------- */
+:root{
+  --nav-bg:#1a1a1a;
+  --nav-fg:#e8e8e8;
+  --nav-fg-dim:#9aa0a6;
+  --nav-line:rgba(255,255,255,.10);
+  --accent:#000000;          /* black */
+  --accent-2:#2a2a2a;        /* charcoal */
+  --ink:#161616;
+  --muted:#5a5a5a;
+  --paper:#ffffff;
+  --bg:#f7f4ef;
+  --soft:#f1ece4;
+  --line:#e0e0e0;
+  --shadow:0 10px 24px rgba(0,0,0,.08);
+  --nav-w:300px;
+  --fade-ms:170ms;
+  --slide-dur:.42s;
+  --ease-open:cubic-bezier(.22,1,.36,1);   /* decelerate in */
+  --ease-close:cubic-bezier(.55,.06,.68,.19); /* accelerate out */
+  --open-delay:.12s;   /* wait for hamburger to fade before easing in */
+  --close-delay:.06s;  /* slight stagger after the X starts fading */
+  --warm:#d8a24a;   /* organic soul  (spectrum left)  */
+  --cool:#5ec8f2;   /* electronic sheen (spectrum right) */
+}
+
+/* ----------------------------------------------------------------------------
+   LAYOUT + INTERACTION - shared engine. Leave as-is.
+---------------------------------------------------------------------------- */
+*{box-sizing:border-box}
+html{scroll-behavior:auto}
+body{margin:0;background:var(--accent);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;line-height:1.48}
+
+body:before{content:"";position:fixed;top:0;left:0;right:0;height:5px;background:var(--accent);z-index:20}
+body:after{content:"";position:fixed;left:var(--nav-w);right:0;bottom:0;height:60px;background:linear-gradient(to top,#000 0%,rgba(0,0,0,.82) 28%,rgba(0,0,0,0) 100%);z-index:60;pointer-events:none;
+  transition:left var(--slide-dur) var(--ease-open) var(--open-delay)}
+
+nav{position:fixed;top:5px;bottom:0;left:0;width:var(--nav-w);overflow:auto;
+  background:var(--nav-bg);color:var(--nav-fg);padding:28px 24px;
+  transition:transform var(--slide-dur) var(--ease-open) var(--open-delay)}
+nav h1{margin:0 0 24px;color:#fff;font-size:19px;line-height:1.15;font-weight:700;
+  padding-bottom:18px;border-bottom:2px solid var(--accent)}
+nav h1:before{content:"PAGE TYPE LIBRARY";display:block;color:var(--nav-fg-dim);font-size:11px;
+  letter-spacing:.16em;text-transform:uppercase;margin-bottom:8px;font-weight:700}
+.nav-group{margin:20px 0 5px;color:var(--nav-fg-dim);font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;font-weight:800;border-bottom:1px solid var(--nav-line);padding-bottom:5px}
+.nav-group:first-of-type{margin-top:0}
+nav a{display:block;color:var(--nav-fg);text-decoration:none;padding:8px 0;
+  border-bottom:1px solid var(--nav-line);font-size:13px;font-weight:600}
+nav a:hover{color:#fff;padding-left:4px;transition:.2s ease}
+a:focus,button:focus{outline:none}
+nav a.active-nav{color:#fff;padding-left:4px;border-bottom-color:var(--accent-2)}
+nav a.subnav{font-size:12px;color:var(--nav-fg-dim);padding-left:12px;font-weight:500}
+/* Hamburger + X share the arrow-box look (same size + border). Both are fixed
+   to the viewport (outside the nav) so the nav can slide independently of them. */
+.nav-toggle{position:fixed;top:18px;left:18px;z-index:95;width:34px;height:34px;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid #fff;background:var(--nav-bg);color:#fff;font-size:18px;font-weight:800;line-height:1;
+  cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.18);
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .15s ease, visibility 0s linear .15s}
+.nav-close{position:fixed;top:18px;left:calc(var(--nav-w) - 44px);z-index:96;width:34px;height:34px;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid #fff;background:var(--nav-bg);color:#fff;font-size:15px;font-weight:800;line-height:1;
+  cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.18);opacity:1;transform:scale(1);
+  transition:opacity .26s ease .5s, transform .3s cubic-bezier(.34,1.56,.64,1) .5s}
+.nav-toggle:hover,.nav-close:hover{background:var(--accent)}
+
+@media(min-width:1051px){
+  /* --- CLOSING (X clicked): X fades immediately, nav slides out, hamburger fades in last --- */
+  body.nav-collapsed .nav-close{opacity:0;transform:scale(.6);pointer-events:none;
+    transition:opacity .14s ease, transform .14s ease}
+  body.nav-collapsed nav{transform:translateX(-105%);
+    transition:transform var(--slide-dur) var(--ease-close) var(--close-delay)}
+  body.nav-collapsed main{margin-left:0;
+    transition:opacity var(--fade-ms) ease, margin-left var(--slide-dur) var(--ease-close) var(--close-delay)}
+  body.nav-collapsed:after{left:0;transition:left var(--slide-dur) var(--ease-close) var(--close-delay)}
+  body.nav-collapsed .nav-toggle{opacity:1;visibility:visible;pointer-events:auto;
+    transition:opacity .22s ease .5s, visibility 0s linear .5s}
+}
+@media(prefers-reduced-motion:reduce){
+  nav,main,body:after,.nav-close,.nav-toggle,
+  body.nav-collapsed nav,body.nav-collapsed main,body.nav-collapsed:after,
+  body.nav-collapsed .nav-close,body.nav-collapsed .nav-toggle{transition:none}
+}
+
+main{position:relative;margin-left:var(--nav-w);padding:34px 16px 84px;max-width:none;min-height:100vh;background:var(--accent);
+  opacity:1;transition:opacity var(--fade-ms) ease, margin-left var(--slide-dur) var(--ease-open) var(--open-delay)}
+main.page-fade{opacity:.18}
+@media(prefers-reduced-motion:reduce){main{transition:none}main.page-fade{opacity:1}}
+
+.section-controls{position:fixed;top:18px;right:22px;z-index:90;display:flex;gap:6px}
+.section-controls button{border:1px solid #fff;background:var(--nav-bg);color:#fff;width:34px;height:34px;
+  font-size:18px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.18)}
+.section-controls button:hover{background:var(--accent)}
+
+section{margin:32px 0;scroll-margin-top:28px}
+main > section{display:none;position:relative;z-index:1;margin:0}
+main > section.active-section{display:block}
+.hero.is-hidden{display:none}
+
+/* ---- COVER HERO ---- */
+.hero{position:relative;overflow:hidden;background:var(--accent);color:#fff;padding:86px 72px;
+  box-shadow:none;margin:-34px -16px -84px;min-height:calc(100vh - 5px);display:flex;flex-direction:column;justify-content:center}
+.hero>*{position:relative;z-index:1}
+.eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:18px;font-weight:800;opacity:.85;margin-bottom:18px}
+h1.big{font-size:64px;line-height:1.02;margin:0 0 28px;letter-spacing:-1.4px;font-weight:800;color:#fff;max-width:1050px}
+.hero p{font-size:34px;max-width:990px;margin:0;color:#fff;font-weight:300}
+.hero .cover-sub{font-size:34px;max-width:990px;margin:0;color:#fff;font-weight:300}
+/* optional cover chips (Suno) */
+.hero .hero-words{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}
+.hero .hero-words span{border:1px solid rgba(255,255,255,.5);padding:8px 15px;font-size:15px;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;background:rgba(255,255,255,.08)}
+/* optional confidentiality stamp (360 Campaigns) */
+.hero-confidential{position:absolute;left:72px;bottom:40px;text-transform:uppercase;
+  letter-spacing:.18em;font-size:13px;font-weight:800;color:rgba(255,255,255,.55)}
+.meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.tag{border:1px solid rgba(255,255,255,.55);padding:8px 11px;color:#fff;font-size:13px;
+  background:rgba(255,255,255,.10);font-weight:600}
+
+/* ---- SLIDE HEAD + SHARED TYPE ---- */
+.section-head{position:sticky;top:0;z-index:55;display:flex;align-items:flex-end;justify-content:space-between;gap:22px;margin:10px 0 16px;
+  border-bottom:1px solid rgba(255,255,255,.24);padding:10px 0 12px;background:transparent;isolation:isolate}
+.section-head:before{content:"";position:absolute;left:-16px;right:-16px;top:-34px;bottom:0;background:rgba(0,0,0,.76);backdrop-filter:blur(8px);z-index:-1;pointer-events:none}
+.section-head:after{content:"";position:absolute;left:-16px;right:-16px;bottom:-60px;height:60px;background:linear-gradient(to bottom,rgba(0,0,0,.76) 0%,rgba(0,0,0,.54) 28%,rgba(0,0,0,0) 100%);pointer-events:none}
+.section-head + .grid,.section-head + .lead,.section-head + .track-grid,.section-head + .video-grid,
+.section-head + .prod-body,.section-head + .remix-grid,.section-head + .partner-stack,
+.section-head + .ask-grid,.section-head + .artist-slate,.section-head + .gantt-wrap,
+.section-head + .budget,.section-head + .closing-stack,.section-head + .brands-wall,
+.section-head + .feeling-grid,.section-head + .texture-statement,.section-head + .deliv-wrap{margin-top:76px}
+h2{font-size:56px;line-height:1.03;color:#fff;margin:0;letter-spacing:-1.2px;font-weight:800;max-width:1050px}
+.hint{color:rgba(255,255,255,.78);font-size:15px;max-width:650px}
+.house-head .hint{margin-top:4px;max-width:760px}
+.slide-kicker{color:rgba(255,255,255,.7);font-size:22px;text-transform:uppercase;letter-spacing:.16em;font-weight:800;margin-bottom:8px}
+.lead{font-size:20px;color:#fff;max-width:920px;margin:0 0 18px;font-weight:400;line-height:1.5}
+.lead.dim{color:rgba(255,255,255,.82)}
+.footnote{color:rgba(255,255,255,.72);font-size:14px;margin-top:18px;max-width:940px}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.card{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.28);padding:20px 21px;box-shadow:0 2px 8px rgba(0,0,0,.08);color:#fff}
+.card h3{margin:0 0 9px;color:#fff;font-size:19px;line-height:1.22;font-weight:700}
+.card p{margin:0;color:rgba(255,255,255,.82)}
+.pill{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.28);padding:14px 18px;font-weight:700;color:#fff}
+.span-3{grid-column:span 3}.span-4{grid-column:span 4}.span-6{grid-column:span 6}
+.span-8{grid-column:span 8}.span-12{grid-column:span 12}
+
+/* build-time annotation chip — DELETE before sending to a client */
+.scaffold-note{margin-top:14px;display:inline-block;font-size:12px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:#111;background:#e9c86a;padding:6px 12px}
+
+/* ---- COMPACT VIDEO GRID (3-up tiles, original New Balance reel) ---- */
+.video-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.video-card{position:relative;display:block;aspect-ratio:16/9;overflow:hidden;background:#000;color:#fff;text-decoration:none;border:1px solid rgba(0,0,0,.18)}
+.video-card img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.92) contrast(1.03);transition:transform .25s ease,filter .25s ease}
+.video-card:hover img{transform:scale(1.045);filter:saturate(1.05) contrast(1.08) brightness(1.04)}
+.video-card:before{content:"\25B6";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:26px;text-shadow:0 2px 9px rgba(0,0,0,.75);z-index:1}
+.video-card span{position:absolute;left:0;right:0;bottom:0;padding:28px 9px 8px;font-size:11px;font-weight:700;background:linear-gradient(transparent,rgba(0,0,0,.82));z-index:2}
+
+/* ---- TRACK GRID (2-up, the workhorse) ---- */
+.track-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.track-card{position:relative;display:block;aspect-ratio:16/10;overflow:hidden;background:#111;border:1px solid rgba(255,255,255,.28);color:#fff;text-decoration:none}
+.track-card img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.78);transition:.25s ease}
+.track-card:hover img{transform:scale(1.04);filter:brightness(.96)}
+.track-card:before{content:"\25B6";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:26px;text-shadow:0 2px 8px #000;z-index:1}
+.track-card .track-meta{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:32px 10px 10px;background:linear-gradient(transparent,rgba(0,0,0,.88))}
+.track-card b{display:block;font-size:13px;line-height:1.1}.track-card em{display:block;font-style:normal;font-size:11px;opacity:.82;margin-top:3px}
+/* photo grids (no play glyph) */
+#the-house .track-card:before{content:none}
+#the-house .track-card{aspect-ratio:16/8.8}
+#artists-roster .track-card:before{content:none}
+#artists-roster .track-card{aspect-ratio:3/4;cursor:default}
+#artists-roster .track-card img{filter:brightness(.92);object-position:center 22%}
+#artists-roster .track-card:hover img{transform:none;filter:brightness(1)}
+#artists-roster .track-card b{font-size:17px;line-height:1.15}
+#artists-roster .track-card em{font-size:12px;margin-top:4px}
+
+/* ---- REMIXES (3-up, no play glyph) ---- */
+.remix-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.remix-grid .track-card{aspect-ratio:16/9}
+.remix-grid .track-card:before{content:none}
+
+/* ---- HOW WE WORK (pillar quad) ---- */
+.who-pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:34px;margin-top:34px}
+.pillar{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px;padding:30px 16px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.05)}
+.pillar svg{width:38px;height:38px;color:#fff}
+.pillar span{color:#fff;font-size:18px;font-weight:700;letter-spacing:.01em;line-height:1.2}
+
+/* ---- PARTNERSHIP (logo + statement rows) ---- */
+.partner-stack{display:grid;gap:46px;margin-top:28px;max-width:1180px;min-height:55vh;align-content:center}
+.partner-row{display:grid;grid-template-columns:320px minmax(420px,680px);gap:54px;align-items:center}
+.partner-logo-wrap{display:flex;align-items:center;justify-content:center;width:320px}
+.partner-copy{color:#fff;text-align:left}
+.partner-copy p{font-size:28px;line-height:1.38;color:rgba(255,255,255,.88);margin:0;max-width:680px}
+.partner-logo{height:208px;max-width:300px;object-fit:contain;object-position:center center;display:block;
+  background:rgba(255,255,255,.9);padding:18px}
+
+/* ---- CASE STUDIES / STICKY HERO ---- */
+.cs-layout{display:grid;grid-template-columns:minmax(300px,1fr) minmax(320px,1.15fr);gap:26px;align-items:start}
+.section-head + .cs-layout,.section-head + .dossier,.section-head + .cs-media{margin-top:76px}
+.cs-ask{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.30);padding:26px 28px}
+.cs-label{text-transform:uppercase;letter-spacing:.16em;font-size:13px;font-weight:800;color:rgba(255,255,255,.7);margin-bottom:12px}
+.cs-ask p{font-size:23px;line-height:1.4;color:#fff;margin:0;font-weight:300}
+.cs-did ul{margin:0;padding-left:20px;display:grid;gap:13px}
+.cs-did li{font-size:18px;line-height:1.42;color:rgba(255,255,255,.9)}
+.cs-hero{margin:-34px -16px 0;background:#000;font-size:0;line-height:0}
+.cs-hero img{display:block;width:100%;height:auto;max-height:calc(100vh - 5px);object-fit:contain}
+.cs-hero-video{position:relative;aspect-ratio:16/9;overflow:hidden}
+.cs-hero-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none}
+/* sticky hero: normal hero at top, pins as you scroll, content rises over it */
+.cs-hero.cs-hero-sticky{position:sticky;top:5px;z-index:0}
+/* content sits in a band over the sticky hero; the trailing space lets the band
+   scroll up off-screen and re-reveal the pinned video/image in place */
+.cs-body{position:relative;z-index:1;background:rgba(0,0,0,.9);margin:0 -16px;padding:0 16px 72px}
+/* in-flow spacer (extends the sticky content box so the hero stays pinned
+   as the content band clears the top, re-revealing the video/image in place) */
+section:has(> .cs-hero-sticky)::after{content:"";display:block;height:110vh}
+/* case-study title: flush under hero, no sticky bar / blur */
+.cs-body .section-head{position:static;margin:0;padding:22px 0 0;border-bottom:none}
+.cs-body .section-head:before,
+.cs-body .section-head:after{display:none}
+.cs-body .section-head + .cs-layout,.cs-body .section-head + .grid,
+.cs-body .section-head + .dossier,.cs-body .section-head + .lead,
+.cs-body .section-head + .track-grid{margin-top:24px}
+.cs-media{columns:3;column-gap:16px;margin-top:26px}
+.cs-media figure{break-inside:avoid;margin:0 0 16px}
+.cs-media img{width:100%;height:auto;display:block;border:1px solid rgba(255,255,255,.2);background:#000}
+.cs-media figcaption{color:rgba(255,255,255,.72);font-size:12.5px;margin-top:7px;line-height:1.35}
+.cs-media figcaption b{display:block;color:#fff;font-weight:700;font-size:13px}
+/* case-study variant B: delivered lines as boxes, plus the pending-asset stub */
+.cs-did-boxes{display:grid;gap:12px}
+.cs-box{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.28);padding:17px 20px;font-size:18px;line-height:1.4;color:rgba(255,255,255,.92)}
+.cs-pending{border:1px dashed rgba(255,255,255,.4);background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;text-align:center;color:rgba(255,255,255,.55);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;min-height:150px;padding:24px;margin-top:26px}
+.cs-note{color:rgba(255,255,255,.55);font-size:13px;font-style:italic;margin-top:10px}
+.cs-ask.pending p{color:rgba(255,255,255,.6);font-style:italic;font-weight:400;font-size:19px}
+
+/* ---- CASE STUDY VARIANT A: SCROLLYTELLING ---- */
+.cs-body--plain{background:none;min-height:0}
+.vv-lead{font-size:20px;line-height:1.5;color:rgba(255,255,255,.9);max-width:780px;margin:22px 0 0;font-weight:300}
+.vv-lead b{display:block;text-transform:uppercase;letter-spacing:.16em;font-size:13px;font-weight:800;color:rgba(255,255,255,.7);margin-bottom:10px}
+.vv-scrolly{display:grid;grid-template-columns:1.05fr .95fr;gap:54px;align-items:start;margin-top:40px}
+.vv-media{display:flex;flex-direction:column;gap:22px}
+.vv-group{display:flex;flex-direction:column;gap:22px}
+.vv-media img{width:100%;height:auto;display:block;border:1px solid rgba(255,255,255,.2);background:#000}
+.vv-group-text{display:none}
+.vv-sticky{position:sticky;top:5px;height:calc(100vh - 5px);display:flex;align-items:center}
+.vv-caption{font-size:34px;line-height:1.34;color:#fff;font-weight:300;max-width:520px;opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s ease}
+.vv-caption.in{opacity:1;transform:none}
+.vv-reveal{height:110vh}
+@media(max-width:1050px){.vv-reveal{height:60vh}}
+
+/* ---- CAMPS: sequenced hero video + copy band ---- */
+.camps-intro{display:grid;grid-template-columns:minmax(300px,1fr) minmax(320px,1fr);gap:26px;align-items:start;margin-top:24px}
+.camps-intro .section-head{margin:0;padding:0}
+.camps-list{margin:44px 0 0;padding-left:20px;display:grid;gap:13px;max-width:900px}
+.camps-list li{font-size:18px;line-height:1.42;color:rgba(255,255,255,.9)}
+.camps-trusted{max-width:1050px;margin-top:22px;font-size:15px;line-height:1.6}
+.camps-trusted span{display:block;text-transform:uppercase;letter-spacing:.16em;font-size:12px;font-weight:800;color:rgba(255,255,255,.6);margin-bottom:5px}
+/* Portrait clip gets a zoomed-in copy of itself behind, filling the pillar space.
+   The foreground iframe stays full-size (YouTube renders the portrait clip
+   full-height, pillarboxed) and is clip-pathed to just the center video column,
+   so YouTube's own black side bars are cut away and the blurred bg shows through.
+   --camps-portrait-clip = (1 - videoAR/heroAR) / 2 = (1 - (3/4)/(16/9)) / 2 ≈ 28.9% */
+.camps-hero{--camps-portrait-clip:28.9%;--camps-bg-zoom:2.7}
+.camps-hero-bg{z-index:0;background:#000}
+.camps-hero > iframe:not(.camps-hero-bg){z-index:1}
+.camps-hero.is-portrait .camps-hero-bg{transform:scale(var(--camps-bg-zoom));filter:blur(34px) brightness(.5) saturate(1.15)}
+.camps-hero.is-portrait > iframe:not(.camps-hero-bg){clip-path:inset(0 var(--camps-portrait-clip))}
+.section-controls .hero-mute-btn{border:2px solid #fff;background:var(--nav-bg);color:#fff;width:34px;height:34px;border-radius:50%;
+  margin-right:12px;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 12px rgba(0,0,0,.18);transition:background .18s ease}
+.section-controls .hero-mute-btn:hover{background:#000}
+.section-controls .hero-mute-btn.is-on{background:#fff;color:#111;border-color:#fff}
+.hero-mute-btn svg{display:block}
+
+/* ---- WHO IS / BRANDS WALL / CLOSING ---- */
+.who-brands{margin-top:64px}
+.who-brands-title{text-align:center}
+.brands-wall{width:100%;height:auto;display:block;margin-top:28px;cursor:zoom-in;border:1px solid rgba(255,255,255,.18)}
+#who-cards .grid,#who-partner .grid{gap:34px}
+#who-cards .card,#who-partner .card{min-height:290px;padding:38px 44px}
+#who-cards .card h3,#who-partner .card h3{font-size:34px;line-height:1.15;margin-bottom:24px}
+#who-cards .card p,#who-partner .card p{font-size:27px;line-height:1.55}
+#who-video .card{min-height:270px;padding:34px 40px}
+#who-video .card h3{font-size:30px;line-height:1.15;margin-bottom:18px}
+#who-video .card p{font-size:22px;line-height:1.5}
+.who-house{position:relative;margin-top:24px;padding:48px;background:url("assets/who/house.png") center/cover no-repeat;border:1px solid rgba(255,255,255,.18)}
+.who-house .card{min-height:210px;display:flex;align-items:center;justify-content:center;text-align:center;background:rgba(0,0,0,0.14);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.who-house .card h3{margin:0}
+.closing-house{margin-top:76px;aspect-ratio:4/3;overflow:hidden;display:flex;flex-direction:column;justify-content:center;background:#0d0d0f}
+.closing-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;z-index:0;transition:opacity .6s ease;pointer-events:none}
+.closing-slide.is-active{opacity:1}
+.closing-house .grid{position:relative;z-index:2;align-items:stretch}
+.closing-house .card{flex-direction:column;gap:16px;min-height:220px;padding:34px;background:rgba(0,0,0,0.11);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.closing-house .card h3{font-size:30px;line-height:1.12}
+.closing-house .card p{margin:0;font-size:20px;line-height:1.45;color:rgba(255,255,255,.92)}
+/* closing variant B: stacked statements, no imagery */
+.closing-stack{display:grid;gap:44px;max-width:820px;min-height:52vh;align-content:center}
+.closing-item h3{font-size:32px;line-height:1.1;margin:0 0 10px;color:#fff}
+.closing-item p{font-size:21px;line-height:1.42;margin:0;color:rgba(255,255,255,.86)}
+
+/* ---- PRODUCERS / COMPOSERS ---- */
+.prod-body{max-width:1180px}
+.prod-layout{display:grid;grid-template-columns:minmax(260px,1fr) minmax(300px,1.55fr);gap:44px;align-items:start}
+.prod-copy{order:2}
+.prod-layout>div:not(.prod-copy){order:1}
+.prod-lead{font-size:25px;line-height:1.5;color:#fff;font-weight:300;margin:0 0 22px;max-width:900px}
+.prod-copy p{font-size:18px;line-height:1.56;color:rgba(255,255,255,.86);margin:0 0 15px;max-width:900px}
+.prod-copy p:last-child{margin-bottom:0}
+.prod-copy em{font-style:italic;color:#fff}
+.prod-photo{margin:0 0 26px;aspect-ratio:4/5;overflow:hidden;background:#111;border:1px solid rgba(255,255,255,.28)}
+.prod-photo img{width:100%;height:100%;object-fit:cover;object-position:center 22%;display:block}
+.prod-side{border-right:1px solid rgba(255,255,255,.22);padding-right:34px}
+.prod-side + .prod-side{margin-top:30px}
+.prod-side .cs-label{margin-bottom:14px}
+.prod-chips{display:flex;flex-wrap:wrap;gap:8px}
+.prod-chip{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.08);padding:8px 12px;font-size:13px;font-weight:600;color:#fff}
+.prod-chip.is-featured{border-color:rgba(255,255,255,.85);background:rgba(255,255,255,.2);font-weight:800}
+.prod-stats{display:flex;flex-direction:column;gap:20px}
+.prod-stat b{display:block;font-size:34px;line-height:1;font-weight:800;color:#fff;letter-spacing:-.5px}
+.prod-stat span{display:block;font-size:13px;color:rgba(255,255,255,.72);margin-top:6px;line-height:1.35}
+
+/* ---- FEATURED PERSON (big photo + callouts) ---- */
+.max-hero{display:grid;grid-template-columns:50% 1fr;gap:34px;align-items:start;margin:0;background:#000}
+.max-photo{width:100%;height:auto;object-fit:contain;display:block;border:1px solid rgba(255,255,255,.28)}
+.max-callouts{display:grid;grid-template-columns:1fr;gap:26px;padding:8px 0 0}
+.max-callout{color:#fff;text-shadow:none}
+.max-callout h3{font-size:34px;line-height:1.1;margin:0 0 10px;color:#fff}
+.max-callout p{font-size:22px;line-height:1.42;margin:0;color:rgba(255,255,255,.86)}
+
+/* ---- ARTIST SLATE (shortlist overview) ---- */
+.artist-slate{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:1180px}
+.slate-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.26);padding:20px 12px 18px;
+  color:#fff;text-decoration:none;display:flex;flex-direction:column;align-items:center;text-align:center;transition:.2s ease}
+.slate-card:hover{background:rgba(255,255,255,.11);transform:translateY(-3px)}
+.slate-card .photo-placeholder{width:76%;aspect-ratio:1/1;border-radius:50%;margin-bottom:14px}
+.slate-card .slate-photo{width:76%;aspect-ratio:1/1;object-fit:cover;object-position:center 28%;border-radius:50%;background:#101012;margin-bottom:14px;display:block}
+.slate-card .who{padding:0 4px}
+.slate-card .who b{display:block;font-size:17px;line-height:1.12}
+.slate-card .who em{display:block;font-style:normal;font-size:12.5px;color:rgba(255,255,255,.7);margin-top:5px;line-height:1.35}
+.slate-spectrum{margin-top:44px}
+
+/* ---- ORGANIC <-> ELECTRONIC SPECTRUM (bespoke meter) ---- */
+.spectrum{margin:0}
+.spectrum-labels{display:flex;justify-content:space-between;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;font-weight:800;color:rgba(255,255,255,.62);margin-bottom:9px}
+.spectrum-track{position:relative;height:10px;border-radius:99px;
+  background:linear-gradient(90deg,var(--warm),#b9b06e 48%,var(--cool));overflow:visible}
+.spectrum-track .mk{position:absolute;top:50%;width:20px;height:20px;border-radius:50%;
+  background:#fff;border:3px solid #111;transform:translate(-50%,-50%);box-shadow:0 3px 10px rgba(0,0,0,.55);z-index:2}
+.spectrum-track .mk[data-label]:after{content:attr(data-label);position:absolute;top:-30px;left:50%;
+  transform:translateX(-50%);font-size:11px;font-weight:800;color:#fff;white-space:nowrap;
+  background:rgba(0,0,0,.72);padding:3px 7px;border:1px solid rgba(255,255,255,.3)}
+.spectrum-track .sweet{position:absolute;top:-5px;bottom:-5px;left:33%;right:33%;border-left:2px dashed rgba(255,255,255,.65);border-right:2px dashed rgba(255,255,255,.65)}
+.spectrum-caption{margin-top:12px;font-size:14px;color:rgba(255,255,255,.72);line-height:1.45}
+
+/* ---- ARTIST DOSSIER (full) ---- */
+.dossier{display:grid;grid-template-columns:minmax(300px,1fr) minmax(320px,1.05fr);gap:34px;align-items:start}
+.dossier-left{display:flex;flex-direction:column;gap:24px}
+.dossier-positioning{font-size:24px;line-height:1.34;color:#fff;font-weight:300;margin:0}
+.trait-row{display:flex;gap:8px;flex-wrap:wrap}
+.trait-row span{border:1px solid rgba(255,255,255,.34);background:rgba(255,255,255,.07);
+  padding:6px 12px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff}
+.facts{display:flex;flex-wrap:wrap;gap:0;border-top:1px solid rgba(255,255,255,.18)}
+.fact{flex:1 1 50%;min-width:150px;padding:14px 16px 14px 0;border-bottom:1px solid rgba(255,255,255,.14)}
+.fact .k{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:rgba(255,255,255,.55);margin-bottom:5px}
+.fact .v{font-size:15px;color:#fff;font-weight:600;line-height:1.35}
+.reel-btn{align-self:flex-start;border:1px solid #fff;background:rgba(255,255,255,.10);color:#fff;
+  padding:12px 20px;font-size:14px;font-weight:700;letter-spacing:.04em;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:9px}
+.reel-btn:hover{background:#fff;color:#111}
+.reel-btn:before{content:"\25B6";font-size:12px}
+/* criteria-fit: maps each block to a shortlist criterion */
+.fit-grid{display:grid;grid-template-columns:repeat(1,1fr);gap:14px}
+.fit{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.24);padding:18px 20px;color:#fff}
+.fit .crit{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--cool);margin-bottom:8px}
+.fit p{margin:0;font-size:16px;line-height:1.42;color:rgba(255,255,255,.9)}
+/* selected work row of reel tiles */
+.reel-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:30px}
+.reel-tile{position:relative;aspect-ratio:1/1;background:#101012;border:1px solid rgba(255,255,255,.24);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;padding:14px}
+.reel-tile .fmt{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:rgba(255,255,255,.55)}
+.reel-tile .wave{display:flex;align-items:flex-end;gap:3px;height:34px;margin:12px 0}
+.reel-tile .wave i{width:3px;background:rgba(255,255,255,.5);display:block}
+.reel-tile b{font-size:13px;line-height:1.2}
+.reel-tile small{font-size:11px;color:rgba(255,255,255,.5);margin-top:6px}
+/* shared placeholder block (assets we don't have yet) */
+.photo-placeholder{position:relative;width:100%;border:1px dashed rgba(255,255,255,.32);
+  background:repeating-linear-gradient(135deg,rgba(255,255,255,.04) 0 12px,rgba(255,255,255,.07) 12px 24px);
+  display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.5);
+  font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;text-align:center;padding:16px}
+/* ribbon flagging a placeholder reel in a hero */
+.reel-ribbon{position:absolute;top:12px;left:12px;z-index:3;font-size:11px;font-weight:800;letter-spacing:.08em;
+  text-transform:uppercase;color:#111;background:#e9c86a;padding:5px 10px}
+
+/* ---- ARTIST PAGE (simplified: round photo + bio) ---- */
+.artist-simple{max-width:1060px;margin:48px 0 0;display:flex;flex-direction:row;align-items:center;text-align:left;gap:52px}
+.artist-photo{width:300px;height:300px;flex-shrink:0;border-radius:50%;object-fit:cover;background:#101012}
+.artist-ph{width:300px;height:300px;flex-shrink:0;border-radius:50%;border:1px dashed rgba(255,255,255,.32);
+  background:repeating-linear-gradient(135deg,rgba(255,255,255,.04) 0 12px,rgba(255,255,255,.07) 12px 24px);
+  display:flex;align-items:center;justify-content:center;text-align:center;color:rgba(255,255,255,.5);
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;padding:16px}
+.artist-bio{margin:0;font-size:clamp(17.5px,0.5vw + 13.2px,21.5px);line-height:1.6;color:rgba(255,255,255,.88)}
+.artist-bio p{margin:0 0 16px}
+.artist-bio p:last-child{margin-bottom:0}
+.artist-bio .bio-name{font-weight:700;font-size:1.13em;color:#fff}
+.artist-bio em{font-style:italic;color:#fff}
+.artist-bio .reel-btn{margin-top:10px}
+.artist-bio.is-ph{color:rgba(255,255,255,.5)}
+
+/* ---- THE ASK (numbered request cards) ---- */
+.ask-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.ask-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.30);padding:26px 26px;color:#fff;display:flex;flex-direction:column}
+.ask-card .num{font-size:13px;font-weight:800;letter-spacing:.16em;color:rgba(255,255,255,.55);margin-bottom:14px}
+.ask-card h3{margin:0 0 10px;font-size:24px;line-height:1.15}
+.ask-card p{margin:0;font-size:16px;color:rgba(255,255,255,.82);line-height:1.5}
+.ask-card .answer{margin-top:auto;padding-top:16px;font-size:13px;font-weight:700;color:var(--cool);letter-spacing:.02em}
+.ask-feeling{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap}
+.ask-feeling span{border:1px solid rgba(255,255,255,.34);background:rgba(255,255,255,.06);
+  padding:9px 14px;font-size:14px;color:#fff;font-weight:600}
+.ask-feeling span b{font-weight:800}
+
+/* ---- THE FEELING (2x2) ---- */
+.feeling-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.feel{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.28);padding:28px 30px;color:#fff;display:flex;flex-direction:column;gap:10px}
+.feel .fi{font-size:12px;font-weight:800;letter-spacing:.16em;color:rgba(255,255,255,.5)}
+.feel h3{margin:0;font-size:30px;line-height:1.1}
+.feel p{margin:0;font-size:18px;line-height:1.45;color:rgba(255,255,255,.85)}
+
+/* ---- SONIC TEXTURE + STEER AWAY ---- */
+.texture-statement{font-size:29px;line-height:1.36;color:#fff;font-weight:300;max-width:1020px;margin:0 0 34px}
+.texture-statement b{font-weight:700}
+.texture-split{display:grid;grid-template-columns:1.25fr 1fr;gap:26px;align-items:stretch}
+.texture-spectrum{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.22);padding:30px;display:flex;flex-direction:column;justify-content:center}
+.texture-spectrum .neither{margin-top:16px;font-size:14px;color:rgba(255,255,255,.72);text-align:center;font-weight:600}
+.avoid{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.22);padding:26px 28px;display:flex;flex-direction:column;gap:16px}
+.avoid-head{display:flex;align-items:center;gap:14px}
+.avoid-icon{width:44px;height:44px;color:#e9c86a;flex:none}
+.avoid ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:9px}
+.avoid li{border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.05);padding:8px 13px;font-size:14px;color:#fff;font-weight:600}
+
+/* ---- TECHNICAL REQUIREMENTS ---- */
+.tech-card .req{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:var(--cool);margin-bottom:10px}
+.tech-card h3{font-size:26px;line-height:1.12;margin:0 0 10px}
+.tech-card p{font-size:17px;line-height:1.5}
+.tech-card .addr{margin-top:14px;font-size:14.5px;color:rgba(255,255,255,.72);line-height:1.5}
+.tech-card .addr b{color:#fff;font-weight:700}
+
+/* ---- DELIVERABLES TABLE ---- */
+.deliv-wrap{overflow-x:auto}
+.deliv-table{width:100%;border-collapse:collapse;color:#fff;font-size:16px;min-width:640px}
+.deliv-table th,.deliv-table td{text-align:left;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.16);vertical-align:top}
+.deliv-table thead th{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);font-weight:800;border-bottom:1px solid rgba(255,255,255,.32)}
+.deliv-table td.d-name{font-weight:700}
+.deliv-table td.d-len{color:rgba(255,255,255,.8);white-space:nowrap;font-variant-numeric:tabular-nums}
+.deliv-table td.d-purpose{color:rgba(255,255,255,.82)}
+.deliv-table .d-new{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.1em;color:#111;background:#e9c86a;padding:2px 7px;margin-left:8px;vertical-align:middle}
+
+/* ---- BUDGET ---- */
+.budget{display:grid;grid-template-columns:minmax(320px,1fr) 1fr;gap:34px;align-items:start}
+.budget-figure{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.30);padding:34px}
+.budget-figure .k{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:rgba(255,255,255,.55);margin-bottom:14px}
+.budget-figure .range{font-size:44px;font-weight:800;color:#fff;line-height:1.05;letter-spacing:-1px}
+.budget-figure .range small{display:block;font-size:15px;font-weight:600;color:rgba(255,255,255,.6);margin-top:10px;letter-spacing:0;text-transform:none}
+.budget-list{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.budget-list li{color:#fff;font-size:17px;line-height:1.4;padding-left:22px;position:relative}
+.budget-list li:before{content:"\2014";position:absolute;left:0;color:rgba(255,255,255,.5)}
+
+/* ---- TIMELINE (gantt) ---- */
+.gantt-wrap{overflow-x:auto;padding-bottom:8px}
+.gantt{min-width:860px;color:#fff}
+.gantt-legend{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:20px;font-size:13px}
+.gantt-legend span{display:inline-flex;align-items:center;gap:8px;color:rgba(255,255,255,.82)}
+.gantt-legend i{width:16px;height:16px;display:inline-block;border:1px solid rgba(255,255,255,.4)}
+.sw-bax{background:rgba(94,200,242,.42)}
+.sw-client{background:rgba(233,200,106,.5)}
+.sw-para{background:repeating-linear-gradient(135deg,rgba(255,255,255,.28) 0 6px,rgba(255,255,255,.08) 6px 12px)}
+.sw-mile{background:#e9c86a;transform:rotate(45deg)}
+.gantt-months,.gantt-row{display:grid;grid-template-columns:220px repeat(16,1fr)}
+.gantt-months .mlabel{grid-row:1;text-align:center;font-size:12px;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(255,255,255,.7);padding:0 0 8px;border-bottom:1px solid rgba(255,255,255,.2)}
+.gantt-months .spacer{border-bottom:1px solid rgba(255,255,255,.2)}
+.gantt-row{align-items:center;min-height:46px;border-bottom:1px solid rgba(255,255,255,.09)}
+.gantt-row .rlabel{grid-column:1;font-size:14px;font-weight:600;color:#fff;padding:8px 14px 8px 0;line-height:1.25}
+.gantt-row .rlabel small{display:block;font-size:11.5px;color:rgba(255,255,255,.5);font-weight:500;margin-top:2px}
+.gantt-row .lane{grid-column:2 / -1;grid-row:1;height:100%;
+  background-image:linear-gradient(90deg,rgba(255,255,255,.10) 1px,transparent 1px);
+  background-size:calc(100%/16) 100%;pointer-events:none}
+.bar{grid-row:1;height:24px;border-radius:4px;display:flex;align-items:center;padding:0 10px;
+  font-size:12px;font-weight:700;color:#0a0a0a;white-space:nowrap;overflow:hidden}
+.bar.bax{background:linear-gradient(90deg,rgba(94,200,242,.85),rgba(94,200,242,.55));color:#04222e}
+.bar.client{background:linear-gradient(90deg,rgba(233,200,106,.95),rgba(233,200,106,.7));color:#2a2100}
+.bar.para{background:repeating-linear-gradient(135deg,rgba(255,255,255,.3) 0 7px,rgba(255,255,255,.1) 7px 14px);color:#fff;border:1px solid rgba(255,255,255,.35)}
+.milestone{grid-row:1;justify-self:center;align-self:center;width:15px;height:15px;background:#e9c86a;transform:rotate(45deg);border:1px solid #7a5f00}
+.gantt-caption{margin-top:22px;font-size:13px;color:rgba(255,255,255,.6);line-height:1.5;max-width:900px}
+
+.openable{cursor:pointer}
+.openable:hover{text-decoration:underline}
+
+/* ---- DETAIL MODAL ---- */
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.86);display:none;align-items:center;
+  justify-content:center;z-index:100;padding:18px}
+.modal-backdrop.open{display:flex}
+.modal{position:relative;background:#141416;width:min(98vw, calc((96vh - 74px) * 1.777));max-height:96vh;overflow:visible;border:1px solid #fff;
+  box-shadow:0 30px 80px rgba(0,0,0,.62)}
+.modal-head{position:sticky;top:0;z-index:2;background:#141416;border-bottom:1px solid rgba(255,255,255,.35);
+  display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:16px 20px}
+.modal-head h3{margin:0;color:#fff;font-size:22px}
+.modal-kicker{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.72);font-weight:800;margin-bottom:6px}
+.modal-actions{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end;max-width:86px}
+.modal-count{flex:0 0 74px;width:74px;text-align:center;color:rgba(255,255,255,.74);font-size:12px;font-weight:700;letter-spacing:.08em;margin-top:2px;margin-left:auto}
+.modal-actions button{border:0;background:var(--accent);color:#fff;font-size:18px;min-width:34px;height:34px;cursor:pointer;font-weight:800}
+.modal-actions .modal-close{position:absolute;right:-46px;top:0;background:var(--nav-bg);border:1px solid rgba(255,255,255,.45)}
+.modal-body{padding:18px 20px;color:#fff}
+.modal-body ul{padding-left:18px}
+.video-embed{aspect-ratio:16/9;background:#000;margin:-18px -20px 0}
+.video-embed iframe{width:100%;height:100%;border:0;display:block}
+
+@media(max-width:1050px){
+  .nav-toggle{display:flex;opacity:1;visibility:visible;pointer-events:auto;transition:none;top:auto;bottom:14px;left:14px;width:55px;height:55px;font-size:31px}
+  .nav-close{display:none}
+  .section-controls{top:auto;bottom:14px;right:14px}
+  .section-controls button{width:44px;height:44px;font-size:24px}
+  .section-controls .hero-mute-btn{width:44px;height:44px}
+  nav{position:fixed;top:0;bottom:0;left:0;width:min(320px,86vw);z-index:94;transform:translateX(-105%);transition:transform .22s ease;box-shadow:18px 0 50px rgba(0,0,0,.45);padding-top:72px}
+  nav.nav-open{transform:translateX(0)}
+  body.nav-is-open:before{content:"";position:fixed;inset:0;background:rgba(0,0,0,.52);z-index:93}
+  main{margin-left:0;padding:16px}
+  body:after{left:0}
+  .span-3,.span-4,.span-6,.span-8{grid-column:span 12}
+  .who-pillars{grid-template-columns:repeat(2,1fr)}
+  .video-grid{grid-template-columns:repeat(2,1fr)}
+  .track-grid{grid-template-columns:1fr}
+  .remix-grid{grid-template-columns:1fr}
+  .cs-layout,.dossier{grid-template-columns:1fr}
+  .camps-intro{grid-template-columns:1fr;gap:16px}
+  .camps-list{margin-top:0}
+  .cs-media{columns:2}
+  .cs-hero{margin:-16px -16px 0;height:auto}
+  .cs-hero img{width:100%;max-height:none}
+  section:has(> .cs-hero-sticky)::after{height:60vh}
+  .vv-scrolly{grid-template-columns:1fr;gap:22px}
+  .vv-sticky{display:none}
+  .vv-group-text{display:block;font-size:23px;line-height:1.35;color:#fff;font-weight:300;margin:0 0 2px}
+  .section-head:before{top:-16px}
+  .hero{margin:-16px -16px 24px;padding:56px 32px}
+  .hero-confidential{left:32px;bottom:24px}
+  .partner-row{grid-template-columns:1fr;gap:18px}
+  .partner-logo-wrap{width:100%;justify-content:flex-start}
+  .partner-copy p{font-size:23px}
+  .max-hero{grid-template-columns:1fr}
+  .max-callouts{grid-template-columns:1fr;padding:18px 0 0}
+  .prod-layout{grid-template-columns:1fr;gap:26px}
+  .prod-side{border-right:none;border-top:1px solid rgba(255,255,255,.22);padding-right:0;padding-top:24px}
+  .prod-photo{max-width:340px}
+  .prod-lead{font-size:20px}
+  .ask-grid{grid-template-columns:1fr}
+  .feeling-grid{grid-template-columns:1fr}
+  .texture-split{grid-template-columns:1fr}
+  .texture-statement{font-size:22px}
+  .deliv-table{font-size:14px}
+  .artist-slate{grid-template-columns:repeat(2,1fr)}
+  .reel-grid{grid-template-columns:repeat(2,1fr)}
+  .artist-simple{flex-direction:column;align-items:center;gap:26px;margin-top:28px}
+  .artist-photo,.artist-ph{width:220px;height:220px}
+  .budget{grid-template-columns:1fr}
+  h1.big,h2{font-size:34px}
+  .slide-kicker{font-size:16px}
+  .hero p,.hero .cover-sub{font-size:22px}
+  .dossier-positioning{font-size:20px}
+  .eyebrow{font-size:9px}
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV TOGGLES ===================== -->
+<button type="button" class="nav-toggle" id="navToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+<button type="button" class="nav-close" id="navClose" aria-label="Hide navigation">&#10005;</button>
+
+<!-- ===================== SIDEBAR NAV =====================
+     Slide ORDER comes from this list. Delete a link to drop a slide from the
+     deck (leaving its <section> in place is harmless but dead weight). -->
+<nav id="sideNav" aria-label="Section navigation">
+  <h1>Baxter House Music</h1>
+
+  <div class="nav-group">Cover</div>
+  <a href="#cover">Cover</a>
+
+  <div class="nav-group">Intro / Company</div>
+  <a href="#who-cards">Who Is Baxter House? (cards)</a>
+  <a href="#who-video">Who Is Baxter House? (video hero)</a>
+  <a href="#how-we-work">How We Work (pillars)</a>
+  <a href="#partnership">The Partnership</a>
+  <a href="#who-partner">Who Is [Partner]?</a>
+
+  <div class="nav-group">Track Record</div>
+  <a href="#track-record">Track Grid (2-up)</a>
+  <a href="#video-reel">Video Grid (3-up)</a>
+  <a href="#remixes">Remixes</a>
+  <a href="#brands">Brands Wall</a>
+
+  <div class="nav-group">Case Studies</div>
+  <a href="#cs-video">CS — Video Hero</a>
+  <a href="#cs-image">CS — Image Hero</a>
+  <a href="#cs-copy">CS — Copy Only</a>
+  <a href="#cs-scrolly">CS — Scrollytelling</a>
+  <a href="#cs-boxes">CS — Boxes + Pending</a>
+
+  <div class="nav-group">People</div>
+  <a href="#producer">Producer / Composer Bio</a>
+  <a href="#featured">Featured Person</a>
+  <a href="#shortlist">Artist Shortlist Slate</a>
+  <a href="#artist-simple">Artist Page (simple)</a>
+  <a href="#artist-dossier">Artist Dossier (full)</a>
+  <a href="#artists-roster">Artists Roster</a>
+
+  <div class="nav-group">Brief / Proposal</div>
+  <a href="#the-ask">The Ask</a>
+  <a href="#feeling">The Feeling</a>
+  <a href="#texture">Texture + Steer Away</a>
+  <a href="#technical">Technical Requirements</a>
+  <a href="#deliverables">Deliverables Table</a>
+  <a href="#budget">Budget</a>
+  <a href="#timeline">Process &amp; Timeline</a>
+  <a href="#credit">Two-Column Statement</a>
+
+  <div class="nav-group">The Studio</div>
+  <a href="#the-house">The House</a>
+  <a href="#camps">Writing Camps</a>
+
+  <div class="nav-group">Closing</div>
+  <a href="#closing-cards">Closing (cards over photo)</a>
+  <a href="#closing-stack">Closing (stacked)</a>
+</nav>
+
+<!-- ===================== SECTION CONTROLS ===================== -->
+<div class="section-controls" aria-label="Slide navigation">
+  <button type="button" id="heroMute" class="hero-mute-btn" aria-label="Unmute video" title="Unmute" style="display:none"></button>
+  <button type="button" id="sectionPrev" title="Previous slide - Left arrow">&#8249;</button>
+  <button type="button" id="sectionNext" title="Next slide - Right arrow">&#8250;</button>
+</div>
+
+<!-- ===================== MAIN SLIDE AREA ===================== -->
+<main>
+  <!-- ============================================================
+       PAGE TYPE 01 — COVER
+       The .hero lives OUTSIDE the sections and auto-shows on the first
+       slide only. Both optional extras are included below: delete the
+       .hero-words chips and/or the .hero-confidential stamp as needed.
+  ============================================================ -->
+  <div class="hero">
+    <div class="eyebrow">A music &amp; creative proposal for</div>
+    <h1 class="big">[Client Name]</h1>
+    <p class="cover-sub">Presented by Baxter House Music</p>
+    <div class="hero-words"><span>Confident</span><span>Curious</span><span>Evocative</span></div>
+    <div class="hero-confidential">Private &amp; Confidential</div>
+  </div>
+  <section id="cover"></section>
+
+  <!-- ============================================================
+       PAGE TYPE 02 — WHO IS BAXTER HOUSE? (flat card grid)
+       The simplest intro slide. Four big cards, no imagery.
+  ============================================================ -->
+  <section id="who-cards">
+    <div class="section-head"><div><h2>Who is Baxter House?</h2></div></div>
+    <div class="grid">
+      <div class="card span-6"><h3>Sound, Story &amp; Visual Context</h3><p>The moment music lands in culture is multifaceted; <strong>sound, story, and visual context.</strong></p></div>
+      <div class="card span-6"><h3>Music for Picture</h3><p>We develop music that translates seamlessly to picture and leaves a lasting imprint.</p></div>
+      <div class="card span-6"><h3>Cultural Entities</h3><p>We see our artists as enduring cultural entities, not one-dimensional acts.</p></div>
+      <div class="card span-6"><h3>Collaboration &amp; Trust</h3><p>Our model is built on collaboration, trust, shared creative ambition, and the power of real-world, IRL presentation.</p></div>
+    </div>
+    <span class="scaffold-note">Page type: intro card grid — .grid + .card.span-6</span>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 03 — WHO IS BAXTER HOUSE? (sticky video hero)
+       The richer intro: autoplaying sync reel pins behind the content
+       band, four labels over the house photo, brands wall underneath.
+  ============================================================ -->
+  <section id="who-video">
+    <figure class="cs-hero cs-hero-video cs-hero-sticky"><iframe src="" data-src="https://www.youtube-nocookie.com/embed/VO7hxIdJYfU?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=VO7hxIdJYfU&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3&amp;cc_load_policy=0&amp;enablejsapi=1&amp;fs=0&amp;hd=1&amp;vq=hd1080" title="Baxter House Sync Reel" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></figure>
+    <div class="cs-body">
+      <div class="section-head"><div><h2>Who is Baxter House?</h2></div></div>
+      <div class="who-house">
+        <div class="grid">
+          <div class="card span-6"><h3>Artist Partnerships + Customs</h3></div>
+          <div class="card span-6"><h3>Licensing</h3></div>
+          <div class="card span-6"><h3>Remixes and Covers</h3></div>
+          <div class="card span-6"><h3>The House</h3></div>
+        </div>
+      </div>
+      <div class="who-brands">
+        <div class="slide-kicker who-brands-title">Some of the brands we've delivered for</div>
+        <img class="brands-wall openable" src="assets/brands/brands-wall.jpg" alt="Some of the brands we've delivered for" data-item="18">
+      </div>
+      <span class="scaffold-note">Page type: sticky video hero + .who-house panel + brands wall</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 04 — HOW WE WORK (pillar quad)
+       Four icon pillars. Sits under a card grid or on its own.
+  ============================================================ -->
+  <section id="how-we-work">
+    <div class="section-head"><div><div class="slide-kicker">Our Model</div><h2>How we work</h2></div></div>
+    <div class="who-pillars">
+      <div class="pillar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><span>Customs</span></div>
+      <div class="pillar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Artist / Brand Partnerships</span></div>
+      <div class="pillar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg><span>Creative Licensing</span></div>
+      <div class="pillar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg><span>Remixes</span></div>
+    </div>
+    <span class="scaffold-note">Page type: pillar quad — .who-pillars + .pillar (inline SVG icons)</span>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 05 — THE PARTNERSHIP (logo + statement rows)
+       Use when two companies present together.
+  ============================================================ -->
+  <section id="partnership">
+    <div class="section-head"><div><h2>Baxter House is thrilled to be partnering with [Partner]</h2></div></div>
+    <div class="partner-stack">
+      <div class="partner-row">
+        <div class="partner-logo-wrap"><img class="partner-logo" src="assets/logos/baxter-house-logo.png" alt="Baxter House Music logo"></div>
+        <div class="partner-copy"><p>A culture-driven music company curating and championing some of today's most compelling new voices.</p></div>
+      </div>
+      <div class="partner-row">
+        <div class="partner-logo-wrap"><img class="partner-logo" src="assets/logos/radish-music-logo.png" alt="Partner logo"></div>
+        <div class="partner-copy"><p>[One line on the partner — what they do and why the pairing matters.]</p></div>
+      </div>
+    </div>
+    <span class="scaffold-note">Page type: partnership — .partner-stack / .partner-row / .partner-logo</span>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 06 — WHO IS [PARTNER]? (card grid, partner variant)
+  ============================================================ -->
+  <section id="who-partner">
+    <div class="section-head"><div><h2>Who is [Partner]?</h2></div></div>
+    <div class="grid">
+      <div class="card span-6"><h3>Full-service supervision</h3><p>[What they do, in one sentence.]</p></div>
+      <div class="card span-6"><h3>Impactful musical experiences</h3><p>[How they work with artists, directors, and brands.]</p></div>
+      <div class="card span-6"><h3>Award-winning pedigree</h3><p>[Awards and honours worth naming.]</p></div>
+      <div class="card span-6"><h3>Trusted on iconic work</h3><p>[Marquee campaigns.]</p></div>
+    </div>
+    <span class="scaffold-note">Page type: partner card grid — same markup as #who-cards</span>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 07 — TRACK GRID (2-up, opens the modal)
+       The workhorse. Every tile is .openable with a data-item index
+       into the ITEMS array at the bottom of this file.
+  ============================================================ -->
+  <section id="track-record">
+    <div class="section-head"><div><div class="slide-kicker">Bonafides</div><h2>Chart-Topping Hits</h2></div></div>
+    <div class="track-grid">
+      <a class="track-card openable" href="https://www.youtube.com/watch?v=Tw08lNebAjE" data-item="0"><img src="https://img.youtube.com/vi/Tw08lNebAjE/hqdefault.jpg" alt="Bad Bunny - DTMF"><span class="track-meta"><b>Bad Bunny</b><em>DTMF</em></span></a>
+      <a class="track-card openable" href="https://www.youtube.com/watch?v=bYg6aMDQ_TA" data-item="1"><img src="https://img.youtube.com/vi/bYg6aMDQ_TA/hqdefault.jpg" alt="KATSEYE - Debut"><span class="track-meta"><b>KATSEYE</b><em>Debut</em></span></a>
+      <a class="track-card openable" href="https://www.youtube.com/watch?v=dpvQqmX6SUI" data-item="2"><img src="https://img.youtube.com/vi/dpvQqmX6SUI/hqdefault.jpg" alt="Tate McRae - Just Keep Watching"><span class="track-meta"><b>Tate McRae</b><em>Just Keep Watching</em></span></a>
+      <a class="track-card openable" href="https://www.youtube.com/watch?v=mNEUkkoUoIA" data-item="3"><img src="https://img.youtube.com/vi/mNEUkkoUoIA/hqdefault.jpg" alt="OneRepublic - I Ain't Worried"><span class="track-meta"><b>OneRepublic</b><em>I Ain't Worried</em></span></a>
+      <a class="track-card openable" href="https://www.youtube.com/watch?v=NCmp7AV8O9s" data-item="4"><img src="https://img.youtube.com/vi/NCmp7AV8O9s/hqdefault.jpg" alt="Karol G - Contigo"><span class="track-meta"><b>Karol G</b><em>Contigo</em></span></a>
+      <a class="track-card openable" href="https://www.youtube.com/watch?v=i41qWJ6QjPI" data-item="5"><img src="https://img.youtube.com/vi/i41qWJ6QjPI/hqdefault.jpg" alt="Beyoncé - I Was Here"><span class="track-meta"><b>Beyoncé</b><em>I Was Here</em></span></a>
+    </div>
+    <span class="scaffold-note">Page type: 2-up track grid — .track-grid / .track-card.openable</span>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 08 — VIDEO GRID (3-up compact tiles)
+       Denser alternative to the track grid. From the original deck.
+  ============================================================ -->
+  <section id="video-reel">
+    <div class="section-head"><div><div class="slide-kicker">Baxter House</div><h2>Music Customization<br>&amp; Arrangements</h2></div></div>
+    <div class="video-grid">
+      <a class="video-card openable" href="https://www.youtube.com/watch?v=rH-YloK2Te4" data-item="6"><img src="https://img.youtube.com/vi/rH-YloK2Te4/hqdefault.jpg" alt="New Balance 2026"><span>New Balance — 2026</span></a>
+      <a class="video-card openable" href="https://www.youtube.com/watch?v=tvuCsOTQUeE" data-item="7"><img src="https://img.youtube.com/vi/tvuCsOTQUeE/hqdefault.jpg" alt="Olympics × Coke"><span>Olympics × Coke — Hello World</span></a>
+      <a class="video-card openable" href="https://www.youtube.com/watch?v=vVCU6sg8cjk" data-item="8"><img src="https://img.youtube.com/vi/vVCU6sg8cjk/hqdefault.jpg" alt="Novartis Super Bowl"><span>Novartis — Super Bowl</span></a>
+      <a class="video-card openable" href="https://www.youtube.com/watch?v=C5B22ONbFrc" data-item="9"><img src="https://img.youtube.com/vi/C5B22ONbFrc/hqdefault.jpg" alt="Meduza UEFA"><span>Meduza — Official UEFA 2024</span></a>
+      <a class="video-card openable" href="https://www.youtube.com/watch?v=NFljoiSqLVg" data-item="10"><img src="https://img.youtube.com/vi/NFljoiSqLVg/hqdefault.jpg" alt="Pepsi KATSEYE"><span>Pepsi — Debut, KATSEYE</span></a>
+      <a class="video-card openable" href="https://www.youtube.com/watch?v=x9DtI1q55HM" data-item="11"><img src="https://img.youtube.com/vi/x9DtI1q55HM/hqdefault.jpg" alt="Top Gun Maverick"><span>Top Gun: Maverick</span></a>
+    </div>
+    <span class="scaffold-note">Page type: 3-up video grid — .video-grid / .video-card.openable</span>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 09 — REMIXES (3-up 16:9, no play glyph)
+  ============================================================ -->
+  <section id="remixes">
+    <div class="section-head"><div><div class="slide-kicker">Baxter House</div><h2>Remixes</h2></div></div>
+    <div class="remix-grid">
+      <a class="track-card openable" href="https://www.youtube.com/watch?v=rH-YloK2Te4" data-item="12"><img src="https://img.youtube.com/vi/rH-YloK2Te4/hqdefault.jpg" alt="Remix 01"><span class="track-meta"><b>[Brand · Campaign]</b><em>[Track] — [Artist] ([Remixer] Remix)</em></span></a>
+      <a class="track-card openable" href="https://www.youtube.com/watch?v=tvuCsOTQUeE" data-item="13"><img src="https://img.youtube.com/vi/tvuCsOTQUeE/hqdefault.jpg" alt="Remix 02"><span class="track-meta"><b>[Brand · Campaign]</b><em>[Track] — [Artist] ([Remixer] Remix)</em></span></a>
+      <a class="track-card openable" href="https://www.youtube.com/watch?v=C5B22ONbFrc" data-item="14"><img src="https://img.youtube.com/vi/C5B22ONbFrc/hqdefault.jpg" alt="Remix 03"><span class="track-meta"><b>[Brand · Campaign]</b><em>[Track] — [Artist] ([Remixer] Remix)</em></span></a>
+      <a class="track-card openable" href="https://www.youtube.com/watch?v=NFljoiSqLVg" data-item="15"><img src="https://img.youtube.com/vi/NFljoiSqLVg/hqdefault.jpg" alt="Remix 04"><span class="track-meta"><b>[Brand · Campaign]</b><em>[Track] — [Artist] ([Remixer] Remix)</em></span></a>
+      <a class="track-card openable" href="https://www.youtube.com/watch?v=x9DtI1q55HM" data-item="16"><img src="https://img.youtube.com/vi/x9DtI1q55HM/hqdefault.jpg" alt="Remix 05"><span class="track-meta"><b>[Brand · Campaign]</b><em>[Track] — [Artist] ([Remixer] Remix)</em></span></a>
+      <a class="track-card openable" href="https://www.youtube.com/watch?v=vVCU6sg8cjk" data-item="17"><img src="https://img.youtube.com/vi/vVCU6sg8cjk/hqdefault.jpg" alt="Remix 06"><span class="track-meta"><b>[Brand · Campaign]</b><em>[Track] — [Artist] ([Remixer] Remix)</em></span></a>
+    </div>
+    <span class="scaffold-note">Page type: remix grid — .remix-grid (reuses .track-card, play glyph off)</span>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 10 — BRANDS WALL (full-slide logo wall)
+  ============================================================ -->
+  <section id="brands">
+    <div class="section-head"><div><div class="slide-kicker">Friends &amp; Family</div><h2>Brands We Love &amp; Who Love Us</h2><div class="hint">A concise overview of the brands already in the Baxter House circle — so you know you're in good hands.</div></div></div>
+    <img class="brands-wall openable" src="assets/brands/brands-wall.jpg" alt="Brands We Love & Who Love Us" data-item="19">
+    <span class="scaffold-note">Page type: standalone brands wall — .brands-wall.openable</span>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 11 — CASE STUDY, VIDEO HERO (the standard)
+       Sticky autoplaying spot + The Ask / What We Delivered + an
+       inline masonry gallery. Copy this one most often.
+  ============================================================ -->
+  <section id="cs-video">
+    <figure class="cs-hero cs-hero-video cs-hero-sticky"><iframe src="" data-src="https://www.youtube-nocookie.com/embed/rH-YloK2Te4?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=rH-YloK2Te4&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3&amp;cc_load_policy=0&amp;enablejsapi=1&amp;fs=0&amp;hd=1&amp;vq=hd1080" title="[Campaign] hero spot" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></figure>
+    <div class="cs-body">
+      <div class="section-head"><div><div class="slide-kicker">Case Study</div><h2>[Brand] — [Campaign]</h2></div></div>
+      <div class="cs-layout">
+        <div class="cs-ask">
+          <div class="cs-label">The Ask</div>
+          <p>[The brief in the client's own words — one or two sentences, no hedging.]</p>
+        </div>
+        <div class="cs-did">
+          <div class="cs-label">What We Delivered</div>
+          <ul>
+            <li>[What we actually did — lead with the decision, not the process.]</li>
+            <li>[The second thing, ideally with a number in it.]</li>
+            <li>[The outcome: charting, reach, awards, renewal.]</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cs-media">
+        <figure><img src="assets/case-studies/karma-chameleon-cover.jpg" alt="Key art"><figcaption><b>[Key Art]</b>[Caption line]</figcaption></figure>
+        <figure><img src="assets/case-studies/drew-love-portrait.jpg" alt="Artist portrait"><figcaption><b>[Artist]</b>[Role on the campaign]</figcaption></figure>
+        <figure><img src="assets/case-studies/billboard-chart.jpg" alt="Chart result"><figcaption><b>[Chart / Result]</b>[Where it landed]</figcaption></figure>
+        <figure><img src="assets/case-studies/dsp-playlists.jpg" alt="DSP release"><figcaption><b>[DSP Release]</b>[Playlisting strategy]</figcaption></figure>
+      </div>
+      <span class="scaffold-note">Page type: case study w/ video hero — .cs-hero-video.cs-hero-sticky + .cs-layout + .cs-media</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 12 — CASE STUDY, IMAGE HERO
+       Same shell, still image instead of a spot. Use when there's no
+       film, or the key art is stronger than the video.
+  ============================================================ -->
+  <section id="cs-image">
+    <figure class="cs-hero cs-hero-sticky"><img src="assets/case-studies/karma-chameleon-cover.jpg" alt="[Brand] key art"></figure>
+    <div class="cs-body">
+      <div class="section-head"><div><div class="slide-kicker">Case Study</div><h2>[Brand] — [Campaign]</h2></div></div>
+      <div class="cs-layout">
+        <div class="cs-ask">
+          <div class="cs-label">The Ask</div>
+          <p>[The brief.]</p>
+        </div>
+        <div class="cs-did">
+          <div class="cs-label">What We Delivered</div>
+          <ul>
+            <li>[Delivery one.]</li>
+            <li>[Delivery two.]</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cs-media">
+        <figure><img src="assets/case-studies/drew-love-portrait.jpg" alt="Portrait"><figcaption><b>[Artist]</b>[Caption]</figcaption></figure>
+        <figure><img src="assets/case-studies/dsp-playlists.jpg" alt="Release"><figcaption><b>[Release]</b>[Caption]</figcaption></figure>
+      </div>
+      <span class="scaffold-note">Page type: case study w/ image hero — .cs-hero.cs-hero-sticky &gt; img</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 13 — CASE STUDY, COPY ONLY
+       No gallery. For work where the assets aren't cleared or the
+       story carries itself.
+  ============================================================ -->
+  <section id="cs-copy">
+    <figure class="cs-hero cs-hero-video cs-hero-sticky"><iframe src="" data-src="https://www.youtube-nocookie.com/embed/SMlOCuUbl2c?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=SMlOCuUbl2c&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3&amp;cc_load_policy=0&amp;enablejsapi=1&amp;fs=0&amp;hd=1&amp;vq=hd1080" title="[Campaign] hero spot" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></figure>
+    <div class="cs-body">
+      <div class="section-head"><div><div class="slide-kicker">Case Study</div><h2>[Brand] — [Campaign]</h2></div></div>
+      <div class="cs-layout">
+        <div class="cs-ask">
+          <div class="cs-label">The Ask</div>
+          <p>[The brief.]</p>
+        </div>
+        <div class="cs-did">
+          <div class="cs-label">What We Delivered</div>
+          <ul>
+            <li>[Initially brought on for X.]</li>
+            <li>[Awarded Y.]</li>
+            <li>[Delivered N tracks, including Z.]</li>
+            <li>[Adapted as the creative direction evolved.]</li>
+          </ul>
+        </div>
+      </div>
+      <span class="scaffold-note">Page type: case study, copy only — same shell, no .cs-media</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 14 — CASE STUDY, SCROLLYTELLING
+       Images scroll on the left; the caption on the right swaps as
+       each .vv-group comes into view (IntersectionObserver below).
+       Each group's caption text lives in its data-text attribute.
+       On mobile the sticky caption is hidden and .vv-group-text shows.
+  ============================================================ -->
+  <section id="cs-scrolly">
+    <figure class="cs-hero cs-hero-video cs-hero-sticky"><iframe src="" data-src="https://www.youtube-nocookie.com/embed/vd2GFfa8Rso?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=vd2GFfa8Rso&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3&amp;cc_load_policy=0&amp;enablejsapi=1&amp;fs=0&amp;hd=1&amp;vq=hd1080" title="[Campaign] music video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></figure>
+    <div class="cs-body">
+      <div class="section-head"><div><div class="slide-kicker">Case Study · Scrollytelling</div><h2>[Brand]</h2></div></div>
+      <div class="vv-lead"><b>The Ask</b>[The brief, stated once at the top — the delivered lines become the scrolling captions instead of a bullet list.]</div>
+      <div class="vv-scrolly">
+        <div class="vv-media">
+          <div class="vv-group" data-text="[First thing we delivered — this text rides in the sticky column.]">
+            <p class="vv-group-text">[First thing we delivered — this text rides in the sticky column.]</p>
+            <img src="assets/case-studies/karma-chameleon-cover.jpg" alt="Key art">
+            <img src="assets/case-studies/drew-love-portrait.jpg" alt="Artist portrait">
+          </div>
+          <div class="vv-group" data-text="[Second beat of the story.]">
+            <p class="vv-group-text">[Second beat of the story.]</p>
+            <img src="assets/case-studies/dsp-playlists.jpg" alt="Release">
+          </div>
+          <div class="vv-group" data-text="[The result — charting, reach, or renewal.]">
+            <p class="vv-group-text">[The result — charting, reach, or renewal.]</p>
+            <img src="assets/case-studies/billboard-chart.jpg" alt="Chart result">
+          </div>
+        </div>
+        <div class="vv-sticky"><p class="vv-caption"></p></div>
+      </div>
+      <span class="scaffold-note">Page type: scrollytelling — .vv-scrolly / .vv-group[data-text] / .vv-sticky</span>
+    </div>
+    <div class="vv-reveal"></div>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 15 — CASE STUDY, BOXES + PENDING STUB
+       Delivered lines as boxes instead of bullets, plus the dashed
+       "assets to come" placeholder for work still being cleared.
+  ============================================================ -->
+  <section id="cs-boxes">
+    <figure class="cs-hero cs-hero-video cs-hero-sticky"><iframe src="" data-src="https://www.youtube-nocookie.com/embed/vd2GFfa8Rso?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=vd2GFfa8Rso&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3&amp;cc_load_policy=0&amp;enablejsapi=1&amp;fs=0&amp;hd=1&amp;vq=hd1080" title="[Campaign] music video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></figure>
+    <div class="cs-body">
+      <div class="section-head"><div><div class="slide-kicker">Case Study · Boxes</div><h2>[Brand]</h2></div></div>
+      <div class="cs-layout">
+        <div class="cs-ask pending">
+          <div class="cs-label">The Ask</div>
+          <p>The Ask to be added — awaiting client copy.</p>
+        </div>
+        <div class="cs-did">
+          <div class="cs-label">What We Delivered</div>
+          <div class="cs-did-boxes">
+            <div class="cs-box">[Delivered line one, as its own box.]</div>
+            <div class="cs-box">[Delivered line two.]</div>
+            <div class="cs-box">[Delivered line three.]</div>
+          </div>
+          <p class="cs-note">[Optional footnote — a caveat or a source note.]</p>
+        </div>
+      </div>
+      <div class="cs-pending">Image assets to come</div>
+      <span class="scaffold-note">Page type: boxes variant — .cs-did-boxes / .cs-box / .cs-ask.pending / .cs-pending</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 16 — PRODUCER / COMPOSER BIO
+       Long-form credit page: portrait + brand chips + headline stats
+       on the left rail, prose on the right.
+  ============================================================ -->
+  <section id="producer">
+    <div class="section-head"><div><div class="slide-kicker">Producer / Composer</div><h2>[Producer Name]</h2></div></div>
+    <div class="prod-body">
+      <div class="prod-layout">
+        <div class="prod-copy">
+          <p class="prod-lead">[One-sentence positioning — the thing they're known for.]</p>
+          <p>[Second paragraph: the credits that establish range — film, TV, artist projects.]</p>
+          <p>[Third paragraph: collaborations, named artists, notable records.]</p>
+          <p>[Fourth paragraph: anything brand- or sonic-branding-specific.]</p>
+        </div>
+        <div>
+          <figure class="prod-photo"><img src="assets/producers/allister-x.jpg" alt="[Producer Name]" loading="lazy" style="object-position:center 20%"></figure>
+          <div class="prod-side">
+            <div class="cs-label">Selected Brands</div>
+            <div class="prod-chips">
+              <span class="prod-chip is-featured">[Featured Brand]</span><span class="prod-chip">Apple</span><span class="prod-chip">Google</span><span class="prod-chip">Pepsi</span><span class="prod-chip">Lexus</span><span class="prod-chip">Walmart</span><span class="prod-chip">&amp; more</span>
+            </div>
+          </div>
+          <div class="prod-side">
+            <div class="prod-stats">
+              <div class="prod-stat"><b>4x</b><span>[Award, campaign]</span></div>
+              <div class="prod-stat"><b>50M+</b><span>[Streams / views]</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <span class="scaffold-note">Page type: producer bio — .prod-layout / .prod-photo / .prod-chips / .prod-stats</span>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 17 — FEATURED PERSON (big photo + callouts)
+       Half-slide cutout portrait beside stacked proof points.
+  ============================================================ -->
+  <section id="featured">
+    <div class="section-head"><div><h2>[Name], [Title]</h2></div></div>
+    <figure class="max-hero">
+      <img class="max-photo" src="assets/people/max-levin-cropped.png" alt="[Name]">
+      <div class="max-callouts">
+        <div class="max-callout"><h3>[A Proven Partner]</h3><p>[The most relevant credential for this specific client — lead with it.]</p></div>
+        <div class="max-callout"><h3>[Chart Result]</h3><p>[The number that lands.]</p></div>
+        <div class="max-callout"><h3>[Artist Collaborations]</h3><p>[Named artists, comma separated.]</p></div>
+        <div class="max-callout"><h3>[Background]</h3><p>[Where the craft comes from.]</p></div>
+      </div>
+    </figure>
+    <span class="scaffold-note">Page type: featured person — .max-hero / .max-photo / .max-callouts</span>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 18 — ARTIST SHORTLIST SLATE
+       Round-photo grid, each card links to that artist's own slide.
+       Optional .slate-spectrum plots the slate on a single axis.
+  ============================================================ -->
+  <section id="shortlist">
+    <div class="section-head"><div><div class="slide-kicker">Proposed Shortlist</div><h2>[N] for [Client]</h2></div></div>
+    <p class="lead dim">[Why these names, as a set — what the slate collectively spans.]</p>
+    <div class="artist-slate">
+      <a class="slate-card" href="#artist-simple"><img class="slate-photo" src="assets/artists/nomi.jpg" alt="[Artist 01]"><div class="who"><b>[Artist 01]</b><em>[One-line positioning — organic-leaning]</em></div></a>
+      <a class="slate-card" href="#artist-dossier"><img class="slate-photo" src="assets/artists/adore.jpg" alt="[Artist 02]"><div class="who"><b>[Artist 02]</b><em>[One-line positioning — balanced]</em></div></a>
+      <a class="slate-card" href="#artist-simple"><img class="slate-photo" src="assets/artists/blondish.jpg" alt="[Artist 03]"><div class="who"><b>[Artist 03]</b><em>[One-line positioning — centre]</em></div></a>
+      <a class="slate-card" href="#artist-dossier"><div class="photo-placeholder">Artist 04 photo</div><div class="who"><b>[Artist 04]</b><em>[One-line positioning — electronic-leaning]</em></div></a>
+    </div>
+    <div class="slate-spectrum">
+      <div class="lead" style="font-size:16px;margin-bottom:20px">Where the slate sits on the tension the brief cares about most:</div>
+      <div class="spectrum">
+        <div class="spectrum-labels"><span>Organic soul/warmth</span><span>Electronic sheen</span></div>
+        <div class="spectrum-track">
+          <span class="mk" data-label="01" style="left:22%"></span>
+          <span class="mk" data-label="02" style="left:41%"></span>
+          <span class="mk" data-label="03" style="left:58%"></span>
+          <span class="mk" data-label="04" style="left:81%"></span>
+        </div>
+        <div class="spectrum-caption">[Set each marker once the slate is locked. Relabel both ends for whatever axis the brief actually cares about.]</div>
+      </div>
+    </div>
+    <span class="scaffold-note">Page type: shortlist slate — .artist-slate / .slate-card (+ optional .slate-spectrum)</span>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 19 — ARTIST PAGE (simplified)
+       Round photo + prose bio + optional sampler link. The version
+       that shipped on GEMS and Suno.
+  ============================================================ -->
+  <section id="artist-simple">
+    <div class="section-head"><div><div class="slide-kicker">Shortlisted Artist — 01 / 04</div><h2>[Artist Name]</h2></div></div>
+    <div class="artist-simple">
+      <img class="artist-photo" src="assets/artists/nomi.jpg" alt="[Artist Name]">
+      <div class="artist-bio">
+        <p><span class="bio-name">[Artist Name]</span> is a [role] known for [the thing they're known for]. [Two or three sentences on the credits that matter for this brief, with <em>titles in italics</em>.]</p>
+        <p>[Second paragraph: range, awards, reach — the numbers that establish scale.]</p>
+        <p><a class="reel-btn" href="#" target="_blank" rel="noopener">Listen to sampler</a></p>
+      </div>
+    </div>
+    <span class="scaffold-note">Page type: simple artist page — .artist-simple / .artist-photo / .artist-bio (swap .artist-photo for .artist-ph when there's no photo yet)</span>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 20 — ARTIST DOSSIER (full)
+       The heavyweight version: sticky reel hero, positioning, trait
+       chips, a per-artist spectrum, a facts table, criteria-fit blocks
+       and a row of reel tiles. Use when the client asked for a
+       structured comparison rather than a bio.
+  ============================================================ -->
+  <section id="artist-dossier">
+    <figure class="cs-hero cs-hero-video cs-hero-sticky"><span class="reel-ribbon">Placeholder reel — swap for artist's</span><iframe src="" data-src="https://www.youtube-nocookie.com/embed/tvuCsOTQUeE?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=tvuCsOTQUeE&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3&amp;cc_load_policy=0&amp;enablejsapi=1&amp;fs=0&amp;hd=1&amp;vq=hd1080" title="[Artist] reel (placeholder)" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></figure>
+    <div class="cs-body">
+      <div class="section-head"><div><div class="slide-kicker">Shortlisted Artist — 02 / 04</div><h2>[Artist Name]</h2></div></div>
+      <div class="dossier">
+        <div class="dossier-left">
+          <p class="dossier-positioning">[One or two sentences positioning this artist — what makes their sound theirs, and why it answers the brief's adjectives.]</p>
+          <div class="trait-row"><span>Confident</span><span>Curious</span><span>Evocative</span><span>[genre / signature]</span></div>
+          <div class="spectrum">
+            <div class="spectrum-labels"><span>Organic soul/warmth</span><span>Electronic sheen</span></div>
+            <div class="spectrum-track"><span class="mk" style="left:41%"></span></div>
+            <div class="spectrum-caption">[Where this artist naturally sits, and how far they flex in each direction.]</div>
+          </div>
+          <div class="facts">
+            <div class="fact"><div class="k">Based in</div><div class="v">[City]</div></div>
+            <div class="fact"><div class="k">Formats</div><div class="v">Mnemonic · Sting · Ident</div></div>
+            <div class="fact"><div class="k">Availability</div><div class="v">[Open / by date]</div></div>
+            <div class="fact"><div class="k">Notable</div><div class="v">[Marquee credit]</div></div>
+            <div class="fact"><div class="k">Terms</div><div class="v">WFH — open to credit</div></div>
+            <div class="fact"><div class="k">Rate band</div><div class="v">[$ range]</div></div>
+          </div>
+          <a class="reel-btn openable" href="#" data-item="20">Watch full reel</a>
+        </div>
+        <div class="fit-grid">
+          <div class="fit"><div class="crit">[Criterion 01]</div><p>[Evidence against the first thing the client said they'd judge on.]</p></div>
+          <div class="fit"><div class="crit">[Criterion 02]</div><p>[Evidence against the second.]</p></div>
+          <div class="fit"><div class="crit">[Criterion 03]</div><p>[Evidence against the third.]</p></div>
+          <div class="fit"><div class="crit">Availability &amp; terms</div><p>[Fit against the window; comfort with work-for-hire and optional credit.]</p></div>
+        </div>
+      </div>
+      <div class="reel-grid">
+        <div class="reel-tile"><div class="fmt">Signature</div><div class="wave"><i style="height:40%"></i><i style="height:80%"></i><i style="height:55%"></i><i style="height:100%"></i><i style="height:35%"></i><i style="height:70%"></i><i style="height:50%"></i></div><b>[Track / cue]</b><small>drop embed here</small></div>
+        <div class="reel-tile"><div class="fmt">Sting</div><div class="wave"><i style="height:60%"></i><i style="height:30%"></i><i style="height:90%"></i><i style="height:45%"></i><i style="height:75%"></i><i style="height:25%"></i><i style="height:65%"></i></div><b>[Track / cue]</b><small>drop embed here</small></div>
+        <div class="reel-tile"><div class="fmt">Cinematic</div><div class="wave"><i style="height:35%"></i><i style="height:65%"></i><i style="height:45%"></i><i style="height:85%"></i><i style="height:55%"></i><i style="height:95%"></i><i style="height:40%"></i></div><b>[Track / cue]</b><small>drop embed here</small></div>
+        <div class="reel-tile"><div class="fmt">Product</div><div class="wave"><i style="height:70%"></i><i style="height:40%"></i><i style="height:60%"></i><i style="height:30%"></i><i style="height:80%"></i><i style="height:50%"></i><i style="height:90%"></i></div><b>[Track / cue]</b><small>drop embed here</small></div>
+      </div>
+      <span class="scaffold-note">Page type: full dossier — .dossier / .facts / .fit-grid / .reel-grid / .reel-ribbon</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 21 — ARTISTS ROSTER (portrait grid, not clickable)
+       Same .track-card markup, restyled 3:4 and inert via #id scoping.
+  ============================================================ -->
+  <section id="artists-roster">
+    <div class="section-head"><div><h2>Artists</h2></div></div>
+    <div class="track-grid">
+      <div class="track-card"><img src="assets/artists/nomi.jpg" alt="[Artist]"><span class="track-meta"><b>[Artist]</b><em>[Track]</em></span></div>
+      <div class="track-card"><img src="assets/artists/adore.jpg" alt="[Artist]"><span class="track-meta"><b>[Artist]</b><em>[Track]</em></span></div>
+      <div class="track-card"><img src="assets/artists/blondish.jpg" alt="[Artist]"><span class="track-meta"><b>[Artist]</b><em>[Track]</em></span></div>
+      <div class="track-card"><img src="assets/artists/goldie-boutilier.jpg" alt="[Artist]"><span class="track-meta"><b>[Artist]</b><em>[Track]</em></span></div>
+    </div>
+    <span class="scaffold-note">Page type: artists roster — .track-grid scoped by #artists-roster (3:4, no play glyph, inert)</span>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 22 — THE ASK (numbered request cards)
+       Mirrors the client's brief back at them, one card per request,
+       each pointing at the slide that answers it.
+  ============================================================ -->
+  <section id="the-ask">
+    <div class="section-head"><div><div class="slide-kicker">The Brief, Answered</div><h2>What [Client] asked for</h2></div></div>
+    <p class="lead dim">[One paragraph restating the commission, so everyone is working from the same brief. Then: N decisions were requested. This deck answers each.]</p>
+    <div class="ask-grid">
+      <div class="ask-card">
+        <div class="num">01</div>
+        <h3>[First request]</h3>
+        <p>[What they asked for, and the criteria they named.]</p>
+        <div class="answer">→ [Slide that answers it]</div>
+      </div>
+      <div class="ask-card">
+        <div class="num">02</div>
+        <h3>[Second request]</h3>
+        <p>[What they asked for.]</p>
+        <div class="answer">→ [Slide that answers it]</div>
+      </div>
+      <div class="ask-card">
+        <div class="num">03</div>
+        <h3>[Third request]</h3>
+        <p>[What they asked for.]</p>
+        <div class="answer">→ [Slide that answers it]</div>
+      </div>
+    </div>
+    <div class="ask-feeling"><span><b>Adjective</b> — [what it means here]</span><span><b>Adjective</b> — [what it means here]</span><span><b>Adjective</b> — [what it means here]</span></div>
+    <span class="scaffold-note">Page type: the ask — .ask-grid / .ask-card (+ optional .ask-feeling chips)</span>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 23 — THE FEELING (2x2 statement cards)
+  ============================================================ -->
+  <section id="feeling">
+    <div class="section-head"><div><div class="slide-kicker">The Brief</div><h2>The feeling we're after</h2></div></div>
+    <p class="lead dim">[The direction as a feeling, not a sound — plus the one reference the client gave you.]</p>
+    <div class="feeling-grid">
+      <div class="feel"><div class="fi">01</div><h3>[Adjective]</h3><p>[What that feels like in practice, in one sentence.]</p></div>
+      <div class="feel"><div class="fi">02</div><h3>[Adjective]</h3><p>[What that feels like in practice.]</p></div>
+      <div class="feel"><div class="fi">03</div><h3>[Adjective]</h3><p>[What that feels like in practice.]</p></div>
+      <div class="feel"><div class="fi">04</div><h3>[Adjective]</h3><p>[What that feels like in practice.]</p></div>
+    </div>
+    <span class="scaffold-note">Page type: feeling grid — .feeling-grid / .feel</span>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 24 — TEXTURE + STEER AWAY
+       A big statement, the spectrum with its sweet spot marked, and
+       the explicit do-not list beside it.
+  ============================================================ -->
+  <section id="texture">
+    <div class="section-head"><div><div class="slide-kicker">The Brief</div><h2>Sonic texture</h2></div></div>
+    <p class="texture-statement">[The tension the brief is really about, stated in one sentence with <b>the two poles in bold</b>. Then: the tension <b>is the point</b>; neither should dominate.]</p>
+    <div class="texture-split">
+      <div class="texture-spectrum">
+        <div class="spectrum">
+          <div class="spectrum-labels"><span>[Pole A]</span><span>[Pole B]</span></div>
+          <div class="spectrum-track"><span class="sweet"></span></div>
+        </div>
+        <div class="neither">The tension is the point — neither side should dominate.</div>
+      </div>
+      <div class="avoid">
+        <div class="avoid-head">
+          <svg class="avoid-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="15" y="17" width="18" height="15" rx="3"></rect>
+            <line x1="24" y1="11" x2="24" y2="17"></line>
+            <circle cx="24" cy="10" r="1.4" fill="currentColor"></circle>
+            <circle cx="20.5" cy="24.5" r="1.7" fill="currentColor"></circle>
+            <circle cx="27.5" cy="24.5" r="1.7" fill="currentColor"></circle>
+            <line x1="20.5" y1="29" x2="27.5" y2="29"></line>
+            <circle cx="24" cy="24" r="21"></circle>
+            <line x1="9.2" y1="9.2" x2="38.8" y2="38.8"></line>
+          </svg>
+          <div class="cs-label" style="margin:0">Steer away from</div>
+        </div>
+        <ul>
+          <li>[Anti-pattern]</li>
+          <li>[Anti-pattern]</li>
+          <li>[Anti-pattern]</li>
+          <li>[Anti-pattern]</li>
+        </ul>
+      </div>
+    </div>
+    <span class="scaffold-note">Page type: texture — .texture-statement / .texture-split / .spectrum .sweet / .avoid</span>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 25 — TECHNICAL REQUIREMENTS
+       One card per constraint, each answered directly underneath.
+  ============================================================ -->
+  <section id="technical">
+    <div class="section-head"><div><div class="slide-kicker">The Brief</div><h2>Technical requirements</h2></div></div>
+    <div class="grid">
+      <div class="card span-6 tech-card">
+        <div class="req">Requirement 01</div>
+        <h3>[Constraint]</h3>
+        <p>[The constraint in the client's terms.]</p>
+        <div class="addr"><b>How we address it:</b> [the concrete answer — a process step or a named deliverable].</div>
+      </div>
+      <div class="card span-6 tech-card">
+        <div class="req">Requirement 02</div>
+        <h3>[Constraint]</h3>
+        <p>[The constraint in the client's terms.]</p>
+        <div class="addr"><b>How we address it:</b> [the concrete answer].</div>
+      </div>
+    </div>
+    <span class="scaffold-note">Page type: technical requirements — .card.tech-card (.req / .addr)</span>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 26 — DELIVERABLES TABLE
+       Use the .d-new chip to flag anything you're adding beyond
+       what the client listed.
+  ============================================================ -->
+  <section id="deliverables">
+    <div class="section-head"><div><div class="slide-kicker">The Brief</div><h2>Creative deliverables</h2></div></div>
+    <p class="lead dim">[The full deliverable suite. We scope to exactly this.]</p>
+    <div class="deliv-wrap">
+      <table class="deliv-table">
+        <thead><tr><th>Deliverable</th><th>Length (est.)</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td class="d-name">[Core deliverable]</td><td class="d-len">2–3 sec</td><td class="d-purpose">[Where it gets used]</td></tr>
+          <tr><td class="d-name">[Short variant]</td><td class="d-len">0.5–1.5 sec</td><td class="d-purpose">[Social, trailers, notifications]</td></tr>
+          <tr><td class="d-name">[Extended variant]</td><td class="d-len">8–15 sec</td><td class="d-purpose">[Keynotes, launch films]</td></tr>
+          <tr><td class="d-name">Layered stems</td><td class="d-len">Varies</td><td class="d-purpose">Flexibility for editors / localization</td></tr>
+          <tr><td class="d-name">Usage guidelines</td><td class="d-len">—</td><td class="d-purpose">Brand consistency</td></tr>
+          <tr><td class="d-name">[Something you're adding]<span class="d-new">New</span></td><td class="d-len">Varies</td><td class="d-purpose">[Why it matters — this is the value-add row]</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <span class="scaffold-note">Page type: deliverables table — .deliv-table (.d-name / .d-len / .d-purpose / .d-new)</span>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 27 — BUDGET
+       One big number on the left, what it covers on the right.
+  ============================================================ -->
+  <section id="budget">
+    <div class="section-head"><div><div class="slide-kicker">The Engagement</div><h2>Recommended budget range</h2></div></div>
+    <div class="budget">
+      <div class="budget-figure">
+        <div class="k">[Fee basis — e.g. composer / producer fee, inclusive of production]</div>
+        <div class="range">$[X] – $[Y]<small>[Optional qualifier — e.g. benchmarked to current market rates]</small></div>
+      </div>
+      <div>
+        <div class="lead" style="font-size:17px;margin-bottom:18px">What the range covers:</div>
+        <ul class="budget-list">
+          <li>[Discovery &amp; creative development]</li>
+          <li>[The core deliverable and its variants]</li>
+          <li>[Secondary deliverables]</li>
+          <li>[Stems, mixes, and technical versions]</li>
+          <li>[Guidelines and integration support]</li>
+          <li>[Revisions and coordination with other partners]</li>
+        </ul>
+      </div>
+    </div>
+    <span class="scaffold-note">Page type: budget — .budget / .budget-figure / .budget-list</span>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 28 — PROCESS & TIMELINE (gantt)
+       16 columns = 4 months of 4 weeks. Bars are placed with inline
+       grid-column: start / span N. Column 1 is the row label, so a
+       bar starting in week 1 begins at grid-column 2.
+  ============================================================ -->
+  <section id="timeline">
+    <div class="section-head"><div><div class="slide-kicker">The Engagement</div><h2>Process &amp; Timeline</h2></div></div>
+    <div class="gantt-wrap">
+      <div class="gantt">
+        <div class="gantt-legend">
+          <span><i class="sw-bax"></i>Baxter House workstream</span>
+          <span><i class="sw-client"></i>Client decision / input</span>
+          <span><i class="sw-para"></i>Parallel — [other partner]</span>
+          <span><i class="sw-mile"></i>Milestone</span>
+        </div>
+        <div class="gantt-months">
+          <div class="spacer"></div>
+          <div class="mlabel" style="grid-column:2 / span 4">[Month 1]</div>
+          <div class="mlabel" style="grid-column:6 / span 4">[Month 2]</div>
+          <div class="mlabel" style="grid-column:10 / span 4">[Month 3]</div>
+          <div class="mlabel" style="grid-column:14 / span 4">[Month 4]</div>
+        </div>
+        <div class="gantt-row">
+          <div class="rlabel">Shortlist review &amp; selection<small>Client reviews, selects one</small></div>
+          <div class="lane"></div>
+          <div class="bar client" style="grid-column:2 / span 2">Review &amp; select</div>
+        </div>
+        <div class="gantt-row">
+          <div class="rlabel">Contracting &amp; onboarding<small>Paper and kickoff prep</small></div>
+          <div class="lane"></div>
+          <div class="bar bax" style="grid-column:3 / span 3">Paper &amp; kickoff prep</div>
+        </div>
+        <div class="gantt-row">
+          <div class="rlabel">Kickoff &amp; discovery<small>Sessions with the client</small></div>
+          <div class="lane"></div>
+          <div class="bar bax" style="grid-column:4 / span 2">Discovery</div>
+        </div>
+        <div class="gantt-row">
+          <div class="rlabel">Concept development<small>2–3 directions</small></div>
+          <div class="lane"></div>
+          <div class="bar bax" style="grid-column:5 / span 3">Directions</div>
+          <div class="milestone" style="grid-column:8" title="Direction selected"></div>
+        </div>
+        <div class="gantt-row">
+          <div class="rlabel">Build<small>Core deliverable + variants</small></div>
+          <div class="lane"></div>
+          <div class="bar bax" style="grid-column:8 / span 3">Core build</div>
+        </div>
+        <div class="gantt-row">
+          <div class="rlabel">Revisions<small>Client feedback loops</small></div>
+          <div class="lane"></div>
+          <div class="bar client" style="grid-column:10 / span 2">Revisions</div>
+        </div>
+        <div class="gantt-row">
+          <div class="rlabel">Full deliverable suite<small>Stems, mixes, variants</small></div>
+          <div class="lane"></div>
+          <div class="bar bax" style="grid-column:11 / span 3">Full suite + mixes</div>
+        </div>
+        <div class="gantt-row">
+          <div class="rlabel">[Partner workstream]<small>Runs in parallel, informs the work</small></div>
+          <div class="lane"></div>
+          <div class="bar para" style="grid-column:5 / span 9">[Parallel workstream]</div>
+        </div>
+        <div class="gantt-row">
+          <div class="rlabel">Guidelines &amp; final delivery<small>Usage guide + integration versions</small></div>
+          <div class="lane"></div>
+          <div class="bar bax" style="grid-column:14 / span 2">Deliver</div>
+          <div class="milestone" style="grid-column:16" title="Final delivery"></div>
+        </div>
+        <div class="gantt-row">
+          <div class="rlabel">Launch<small>Coordinated with the client's rollout</small></div>
+          <div class="lane"></div>
+          <div class="milestone" style="grid-column:17" title="Launch"></div>
+        </div>
+      </div>
+    </div>
+    <p class="gantt-caption">Timeline is a directionally-accurate estimate. Exact dates will vary on numerous, real-world factors.</p>
+    <span class="scaffold-note">Page type: gantt timeline — .gantt / .gantt-row / .bar / .milestone</span>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 29 — TWO-COLUMN STATEMENT
+       The case-study Ask/Delivered layout with no hero, used for any
+       "here's the situation / here's our position" slide.
+  ============================================================ -->
+  <section id="credit">
+    <div class="section-head"><div><div class="slide-kicker">Our Approach</div><h2>[The question this slide settles]</h2></div></div>
+    <div class="cs-layout">
+      <div class="cs-ask">
+        <div class="cs-label">[What the client named]</div>
+        <p>[Their position, stated fairly and in their own framing — this is the setup.]</p>
+      </div>
+      <div class="cs-did">
+        <div class="cs-label">[How we'd approach it]</div>
+        <ul>
+          <li>[Our position, point one.]</li>
+          <li>[Point two.]</li>
+          <li>[Point three — usually the one that protects their flexibility.]</li>
+        </ul>
+      </div>
+    </div>
+    <span class="scaffold-note">Page type: two-column statement — .cs-layout with no hero</span>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 30 — THE HOUSE (photo grid + modal)
+  ============================================================ -->
+  <section id="the-house">
+    <div class="section-head house-head"><div><h2>The House</h2><div class="hint">A creative compound in the heart of Los Angeles.<br>Sweeping views, stunning architecture, and 6 state-of-the-art music studios.</div></div></div>
+    <div class="track-grid">
+      <a class="track-card openable" href="assets/house/17-studio-a.jpg" data-item="21"><img src="assets/house/17-studio-a.jpg" alt="Studio A"><span class="track-meta"><b>Studio A</b></span></a>
+      <a class="track-card openable" href="assets/house/20-studio-s.jpg" data-item="22"><img src="assets/house/20-studio-s.jpg" alt="Studio S"><span class="track-meta"><b>Studio S</b></span></a>
+      <a class="track-card openable" href="assets/house/13-kitchen.jpg" data-item="23"><img src="assets/house/13-kitchen.jpg" alt="Kitchen"><span class="track-meta"><b>Kitchen</b></span></a>
+      <a class="track-card openable" href="assets/house/14-living.jpg" data-item="24"><img src="assets/house/14-living.jpg" alt="Living"><span class="track-meta"><b>Living</b></span></a>
+      <a class="track-card openable" href="assets/house/08-for-gems-living.jpg" data-item="25"><img src="assets/house/08-for-gems-living.jpg" alt="Lounge"><span class="track-meta"><b>Lounge</b></span></a>
+      <a class="track-card openable" href="assets/house/07-for-gems-kitchen.jpg" data-item="26"><img src="assets/house/07-for-gems-kitchen.jpg" alt="Kitchen"><span class="track-meta"><b>Kitchen</b></span></a>
+    </div>
+    <span class="scaffold-note">Page type: photo grid — .track-grid scoped by #the-house (16:8.8, no play glyph, opens modal)</span>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 31 — WRITING CAMPS (sequenced hero + masonry)
+       data-seq plays clip A, then swaps to clip B, then loops.
+       data-portrait names whichever id in the sequence is vertical —
+       it gets a blurred, zoomed copy of itself filling the pillarbox.
+  ============================================================ -->
+  <section id="camps">
+    <figure class="cs-hero cs-hero-video cs-hero-sticky camps-hero" data-seq="SwHDxFsKwfo,1P5cPL482Ms" data-portrait="1P5cPL482Ms"><iframe src="" data-src="https://www.youtube-nocookie.com/embed/SwHDxFsKwfo?autoplay=1&amp;mute=1&amp;controls=0&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;disablekb=1&amp;iv_load_policy=3&amp;cc_load_policy=0&amp;enablejsapi=1&amp;fs=0&amp;hd=1&amp;vq=hd1080" title="Baxter House Writing Camps" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe><iframe class="camps-hero-bg" src="" title="" aria-hidden="true" tabindex="-1" allow="autoplay; encrypted-media"></iframe></figure>
+    <div class="cs-body">
+      <div class="camps-intro">
+        <div class="section-head"><div><h2>Writing Camps</h2></div></div>
+        <ul class="camps-list">
+          <li>Curated teams built around every brief</li>
+          <li>Elite writers, producers &amp; artists</li>
+          <li>Real-time collaboration &amp; feedback</li>
+          <li>Faster turnarounds, fewer revisions</li>
+          <li>Higher win rate for custom music</li>
+        </ul>
+      </div>
+      <div class="cs-media camps-media">
+        <figure><img src="assets/camps/08-big-machine-sync-camp.png" alt="[Camp]" loading="lazy"></figure>
+        <figure><img src="assets/camps/02-peloton-sync-camp.png" alt="[Camp]" loading="lazy"></figure>
+      </div>
+      <p class="footnote camps-trusted"><span>Trusted by</span> [Brand] &middot; [Brand] &middot; [Brand] &middot; [Brand] &middot; [Brand]</p>
+      <span class="scaffold-note">Page type: camps — .camps-hero[data-seq][data-portrait] + .camps-intro + .cs-media</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 32 — CLOSING (cards over a crossfading photo)
+       The studio photos crossfade behind translucent cards.
+  ============================================================ -->
+  <section id="closing-cards">
+    <div class="section-head"><div><h2>Let's build something amazing together.</h2></div></div>
+    <div class="who-house closing-house">
+      <img class="closing-slide is-active" src="assets/house/17-studio-a.jpg" alt="" aria-hidden="true">
+      <img class="closing-slide" src="assets/house/20-studio-s.jpg" alt="" aria-hidden="true">
+      <img class="closing-slide" src="assets/house/14-living.jpg" alt="" aria-hidden="true">
+      <div class="grid">
+        <div class="card span-4"><h3>[Offer one]</h3><p>[One line on what it means for them.]</p></div>
+        <div class="card span-4"><h3>[Offer two]</h3><p>[One line.]</p></div>
+        <div class="card span-4"><h3>[Offer three]</h3><p>[One line.]</p></div>
+      </div>
+    </div>
+    <span class="scaffold-note">Page type: closing w/ crossfade — .closing-house / .closing-slide (JS cycles every 3s)</span>
+  </section>
+
+  <!-- ============================================================
+       PAGE TYPE 33 — CLOSING (stacked statements, no imagery)
+  ============================================================ -->
+  <section id="closing-stack">
+    <div class="section-head"><div><h2>Let's Build Something Together</h2></div></div>
+    <div class="closing-stack">
+      <div class="closing-item"><h3>[Offer one]</h3><p>[One line on what it means for them.]</p></div>
+      <div class="closing-item"><h3>[Offer two]</h3><p>[One line.]</p></div>
+      <div class="closing-item"><h3>[Offer three]</h3><p>[One line.]</p></div>
+      <div class="closing-item"><h3>[Offer four]</h3><p>[One line.]</p></div>
+    </div>
+    <span class="scaffold-note">Page type: closing, stacked — .closing-stack / .closing-item</span>
+  </section>
+</main>
+
+<!-- ===================== DETAIL MODAL ===================== -->
+<div class="modal-backdrop" id="modal" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-head">
+      <div><div class="modal-kicker" id="modalKicker">Item</div><h3 id="modalTitle">Title</h3></div>
+      <div class="modal-actions">
+        <button type="button" id="modalPrev" aria-label="Previous" title="Previous - Left arrow">&#8249;</button>
+        <button type="button" id="modalNext" aria-label="Next" title="Next - Right arrow">&#8250;</button>
+        <button type="button" class="modal-close" id="modalClose" aria-label="Close">&#215;</button>
+        <div class="modal-count" id="modalCount"></div>
+      </div>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  /* ---------- SLIDE NAVIGATION ---------- */
+  const main = document.querySelector('main');
+  const hero = document.querySelector('.hero');
+  const sideNav = document.getElementById('sideNav');
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = Array.from(document.querySelectorAll('nav a[href^="#"]'));
+  const sectionIds = navLinks.map(a => a.getAttribute('href'))
+    .filter((v,i,a)=>a.indexOf(v)===i).map(h=>h.slice(1));
+  const sections = Array.from(document.querySelectorAll('main > section[id]'));
+  const firstId = sectionIds[0];
+  let activeId = '';
+
+  /* ---------- HERO VIDEO AUDIO (per-slide mute/unmute) ---------- */
+  const ICON_MUTED = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>';
+  const ICON_ON = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>';
+  const heroFigs = Array.from(document.querySelectorAll('.cs-hero-video'));
+  heroFigs.forEach(fig => { fig.dataset.muted = '1'; });
+  const heroMuteBtn = document.getElementById('heroMute');
+  function setBtnState(btn, muted){
+    btn.innerHTML = muted ? ICON_MUTED : ICON_ON;
+    btn.setAttribute('aria-label', muted ? 'Unmute video' : 'Mute video');
+    btn.setAttribute('title', muted ? 'Unmute' : 'Mute');
+    btn.classList.toggle('is-on', !muted);
+  }
+  function activeHeroFig(){ return document.querySelector('main > section.active-section .cs-hero-video'); }
+  // Reflect the active slide's hero on the fixed button; hide it when the slide has no video.
+  function syncHeroMuteBtn(){
+    if(!heroMuteBtn) return;
+    const fig = activeHeroFig();
+    heroMuteBtn.style.display = fig ? '' : 'none';
+    if(fig) setBtnState(heroMuteBtn, fig.dataset.muted !== '0');
+  }
+  // Send a YouTube IFrame API command, retrying so it lands even before the player is ready.
+  function applyMute(fig, muted){
+    const f = fig.querySelector('iframe');
+    if(!f) return;
+    fig.dataset.muted = muted ? '1' : '0';
+    const token = (fig._muteToken = (fig._muteToken || 0) + 1);
+    let tries = 0;
+    const send = () => {
+      if(token !== fig._muteToken || tries++ > 6 || !f.getAttribute('src')) return;
+      try { f.contentWindow.postMessage(
+        JSON.stringify({event:'command', func: muted ? 'mute' : 'unMute', args:[]}), '*'); } catch(e){}
+      setTimeout(send, 250);
+    };
+    send();
+  }
+  // Play/pause a hero, retrying so the command lands even before the player is ready.
+  function playHero(fig, play){
+    const f = fig.querySelector('iframe');
+    if(!f) return;
+    const token = (fig._playToken = (fig._playToken || 0) + 1);
+    let tries = 0;
+    const send = () => {
+      if(token !== fig._playToken || tries++ > 6 || !f.getAttribute('src')) return;
+      try { f.contentWindow.postMessage(
+        JSON.stringify({event:'command', func: play ? 'playVideo' : 'pauseVideo', args:[]}), '*'); } catch(e){}
+      setTimeout(send, 250);
+    };
+    send();
+  }
+  // Only one hero may have sound at a time.
+  function soloUnmute(fig){ heroFigs.forEach(h => applyMute(h, h !== fig)); }
+  function muteAllHeroes(){ heroFigs.forEach(h => applyMute(h, true)); syncHeroMuteBtn(); }
+  if(heroMuteBtn){
+    heroMuteBtn.addEventListener('click', e => {
+      e.preventDefault();
+      const fig = activeHeroFig();
+      if(!fig) return;
+      if(fig.dataset.muted !== '0') soloUnmute(fig); else applyMute(fig, true);
+      syncHeroMuteBtn();
+    });
+  }
+
+  /* ---------- SEQUENCED HERO (Camps): play video A, then swap to B, then loop ---------- */
+  // Same background-hero treatment as the other slides, but each clip is NOT looped so it
+  // can fire an "ended" event; on end we swap the iframe src to the next id in data-seq.
+  const SEQ_PARAMS = 'autoplay=1&controls=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&iv_load_policy=3&cc_load_policy=0&enablejsapi=1&fs=0&hd=1&vq=hd1080';
+  const seqFigs = Array.from(document.querySelectorAll('.camps-hero'));
+  seqFigs.forEach(fig => { fig.dataset.seqIndex = fig.dataset.seqIndex || '0'; });
+  function seqEmbedUrl(id, muted){
+    return 'https://www.youtube-nocookie.com/embed/' + id + '?' + SEQ_PARAMS + '&mute=' + (muted ? 1 : 0);
+  }
+  // Portrait clips get a zoomed, blurred copy of themselves behind the foreground to fill the
+  // pillarbox (side) space. The bg loops on its own (muted) and is re-pointed whenever the
+  // sequence advances; landscape clips fill the frame already, so the bg is cleared for them.
+  function campsBgUrl(id){
+    return 'https://www.youtube-nocookie.com/embed/' + id + '?' + SEQ_PARAMS + '&mute=1&loop=1&playlist=' + id;
+  }
+  function campsSync(fig, id){
+    const bg = fig.querySelector('.camps-hero-bg');
+    const isPortrait = id && id === fig.dataset.portrait;
+    fig.classList.toggle('is-portrait', !!isPortrait);
+    if(!bg) return;
+    if(isPortrait){
+      const url = campsBgUrl(id);
+      if(bg.getAttribute('src') !== url) bg.setAttribute('src', url);
+    } else if(bg.getAttribute('src')){
+      bg.removeAttribute('src');
+    }
+  }
+  function campsStopBg(fig){
+    fig.classList.remove('is-portrait');
+    const bg = fig.querySelector('.camps-hero-bg');
+    if(bg && bg.getAttribute('src')) bg.removeAttribute('src');
+  }
+  // Nudge the player into emitting state events (needs the 'listening' handshake).
+  function seqStartListening(f){
+    let tries = 0;
+    const ping = () => {
+      if(tries++ > 20 || !f.getAttribute('src')) return;
+      try { f.contentWindow.postMessage(JSON.stringify({event:'listening'}), '*'); } catch(e){}
+      setTimeout(ping, 400);
+    };
+    ping();
+  }
+  function seqAdvance(fig){
+    if(fig._seqBusy) return;              // ignore the duplicate end events YT sends
+    const ids = (fig.dataset.seq || '').split(',').map(s => s.trim()).filter(Boolean);
+    if(ids.length < 2) return;
+    fig._seqBusy = true;
+    const f = fig.querySelector('iframe');
+    const next = (parseInt(fig.dataset.seqIndex || '0', 10) + 1) % ids.length;
+    const url = seqEmbedUrl(ids[next], fig.dataset.muted !== '0'); // keep mute state across the swap
+    fig.dataset.seqIndex = String(next);
+    f.dataset.src = url;                  // keep data-src in sync so showSection stays consistent
+    f.setAttribute('src', url);
+    campsSync(fig, ids[next]);            // point the pillar-fill bg at the new clip (or clear it)
+    seqStartListening(f);
+    setTimeout(() => { fig._seqBusy = false; }, 1500);
+  }
+  window.addEventListener('message', e => {
+    if(!seqFigs.length) return;
+    let data = e.data;
+    if(typeof data === 'string'){ try { data = JSON.parse(data); } catch(_){ return; } }
+    if(!data || typeof data !== 'object') return;
+    const ended = (data.event === 'onStateChange' && data.info === 0) ||
+                  (data.event === 'infoDelivery' && data.info && data.info.playerState === 0);
+    if(!ended) return;
+    const fig = seqFigs.find(fg => { const f = fg.querySelector('iframe'); return f && f.contentWindow === e.source; });
+    if(fig) seqAdvance(fig);
+  });
+
+  function showSection(id, updateHash=true){
+    const target = document.getElementById(id);
+    if(!target) return;
+    activeId = id;
+    main.classList.add('page-fade');
+    setTimeout(() => {
+      sections.forEach(s => s.classList.toggle('active-section', s.id === id));
+      navLinks.forEach(a => a.classList.toggle('active-nav', a.getAttribute('href') === '#'+id));
+      if(hero) hero.classList.toggle('is-hidden', id !== firstId);
+      // hero background videos: active slide plays (muted by default); the rest are paused + muted
+      heroFigs.forEach(fig => {
+        const f = fig.querySelector('iframe[data-src]');
+        if(!f) return;
+        const inActive = fig.closest('section') && fig.closest('section').id === id;
+        if(inActive){
+          if(f.getAttribute('src') !== f.dataset.src){
+            f.setAttribute('src', f.dataset.src);
+            // force captions off via the IFrame API (cc_load_policy alone isn't reliable)
+            let tries = 0;
+            const killCC = () => {
+              if(tries++ > 14 || f.getAttribute('src') !== f.dataset.src) return;
+              try {
+                ['captions','cc'].forEach(m => f.contentWindow.postMessage(
+                  JSON.stringify({event:'command', func:'unloadModule', args:[m]}), '*'));
+                f.contentWindow.postMessage(
+                  JSON.stringify({event:'command', func:'setOption', args:['captions','track', {}]}), '*');
+              } catch(e){}
+              setTimeout(killCC, 600);
+            };
+            setTimeout(killCC, 700);
+            if(fig.classList.contains('camps-hero')) seqStartListening(f); // begin end-of-video watch
+          }
+          if(fig.classList.contains('camps-hero')){
+            const ids = (fig.dataset.seq || '').split(',').map(s => s.trim()).filter(Boolean);
+            campsSync(fig, ids[parseInt(fig.dataset.seqIndex || '0', 10)] || ids[0]);
+          }
+          applyMute(fig, true);   // muted by default (autoplay requirement)
+          playHero(fig, true);    // resume if it was paused on a previous visit
+        } else if(f.getAttribute('src')){
+          applyMute(fig, true);   // force mute
+          playHero(fig, false);   // pause unfocused slides
+          if(fig.classList.contains('camps-hero')) campsStopBg(fig); // stop the pillar-fill bg off-screen
+        }
+      });
+      syncHeroMuteBtn();
+      window.scrollTo(0,0);
+      if(updateHash) history.replaceState(null,'','#'+id);
+      requestAnimationFrame(() => main.classList.remove('page-fade'));
+    }, 90);
+  }
+  function moveSection(delta){
+    const i = sectionIds.indexOf(activeId);
+    const next = i + delta;
+    if(next < 0 || next >= sectionIds.length) return;
+    showSection(sectionIds[next]);
+  }
+  function setNavOpen(open){
+    if(!sideNav || !navToggle) return;
+    sideNav.classList.toggle('nav-open', open);
+    document.body.classList.toggle('nav-is-open', open);
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    navToggle.textContent = open ? '×' : '☰';
+  }
+  const navClose = document.getElementById('navClose');
+  const isDesktop = () => window.matchMedia('(min-width:1051px)').matches;
+  if(navClose) navClose.addEventListener('click', () => document.body.classList.add('nav-collapsed'));
+  if(navToggle) navToggle.addEventListener('click', () => {
+    if(isDesktop() && document.body.classList.contains('nav-collapsed')){
+      document.body.classList.remove('nav-collapsed');
+      return;
+    }
+    setNavOpen(!sideNav.classList.contains('nav-open'));
+  });
+  navLinks.forEach(link => link.addEventListener('click', e => {
+    const id = link.getAttribute('href').slice(1);
+    if(!document.getElementById(id)) return;
+    e.preventDefault(); showSection(id); setNavOpen(false);
+  }));
+  // in-slide anchors (slate cards linking to an artist slide) also drive the deck
+  document.querySelectorAll('main a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+    const id = a.getAttribute('href').slice(1);
+    if(!id || !document.getElementById(id)) return;
+    e.preventDefault(); showSection(id); setNavOpen(false);
+  }));
+  document.getElementById('sectionPrev').addEventListener('click', () => moveSection(-1));
+  document.getElementById('sectionNext').addEventListener('click', () => moveSection(1));
+  const startId = location.hash && document.getElementById(location.hash.slice(1))
+    ? location.hash.slice(1) : firstId;
+  showSection(startId, false);
+
+  /* ---------- DETAIL MODAL ----------
+     Index in this array === the data-item on each .openable element.
+     Order: 0-5 track grid · 6-11 video grid · 12-17 remixes ·
+            18-19 brands walls · 20 dossier reel · 21-26 the house. */
+  const ITEMS = [
+    ['Track record','Bad Bunny - DTMF','https://www.youtube.com/embed/Tw08lNebAjE?autoplay=1&rel=0'],
+    ['Track record','KATSEYE - Debut','https://www.youtube.com/embed/bYg6aMDQ_TA?autoplay=1&rel=0'],
+    ['Track record','Tate McRae - Just Keep Watching','https://www.youtube.com/embed/dpvQqmX6SUI?autoplay=1&rel=0'],
+    ['Track record','OneRepublic - I Ain\'t Worried','https://www.youtube.com/embed/mNEUkkoUoIA?autoplay=1&rel=0'],
+    ['Track record','Karol G - Contigo','https://www.youtube.com/embed/NCmp7AV8O9s?autoplay=1&rel=0'],
+    ['Track record','Beyoncé - I Was Here','https://www.youtube.com/embed/i41qWJ6QjPI?autoplay=1&rel=0'],
+    ['Baxter House','New Balance 2026','https://www.youtube.com/embed/rH-YloK2Te4?autoplay=1&rel=0'],
+    ['Baxter House','Olympics × Coke - Hello World','https://www.youtube.com/embed/tvuCsOTQUeE?autoplay=1&rel=0'],
+    ['Baxter House','Super Bowl 2025 - Novartis','https://www.youtube.com/embed/vVCU6sg8cjk?autoplay=1&rel=0'],
+    ['Baxter House','Meduza - Official UEFA 2024','https://www.youtube.com/embed/C5B22ONbFrc?autoplay=1&rel=0'],
+    ['Baxter House','Pepsi - Debut: KATSEYE','https://www.youtube.com/embed/NFljoiSqLVg?autoplay=1&rel=0'],
+    ['Baxter House','Top Gun: Maverick - I Ain\'t Worried','https://www.youtube.com/embed/x9DtI1q55HM?autoplay=1&rel=0'],
+    ['Remixes','[Remix 01] (placeholder)','https://www.youtube.com/embed/rH-YloK2Te4?autoplay=1&rel=0'],
+    ['Remixes','[Remix 02] (placeholder)','https://www.youtube.com/embed/tvuCsOTQUeE?autoplay=1&rel=0'],
+    ['Remixes','[Remix 03] (placeholder)','https://www.youtube.com/embed/C5B22ONbFrc?autoplay=1&rel=0'],
+    ['Remixes','[Remix 04] (placeholder)','https://www.youtube.com/embed/NFljoiSqLVg?autoplay=1&rel=0'],
+    ['Remixes','[Remix 05] (placeholder)','https://www.youtube.com/embed/x9DtI1q55HM?autoplay=1&rel=0'],
+    ['Remixes','[Remix 06] (placeholder)','https://www.youtube.com/embed/vVCU6sg8cjk?autoplay=1&rel=0'],
+    ['Friends & Family','Brands We Love & Who Love Us','assets/brands/brands-wall.jpg','image'],
+    ['Friends & Family','Brands We Love & Who Love Us','assets/brands/brands-wall.jpg','image'],
+    ['Shortlisted artist','[Artist] reel (placeholder)','https://www.youtube.com/embed/tvuCsOTQUeE?autoplay=1&rel=0'],
+    ['The House','Studio A','assets/house/17-studio-a.jpg','image'],
+    ['The House','Studio S','assets/house/20-studio-s.jpg','image'],
+    ['The House','Kitchen','assets/house/13-kitchen.jpg','image'],
+    ['The House','Living','assets/house/14-living.jpg','image'],
+    ['The House','Lounge','assets/house/08-for-gems-living.jpg','image'],
+    ['The House','Kitchen','assets/house/07-for-gems-kitchen.jpg','image'],
+  ].map(([kicker,title,src,type]) => ({
+    kicker, title,
+    bodyHtml: type === 'image'
+      ? `<div class="video-embed"><img src="${src}" alt="${title}" style="width:100%;height:100%;object-fit:contain;display:block;background:#000"></div>`
+      : `<div class="video-embed"><iframe src="${src}" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe></div>`
+  }));
+  const modal = document.getElementById('modal');
+  let current = 0;
+  let modalGroup = ITEMS.map((_, i) => i);
+  function render(i){
+    if(!ITEMS.length) return;
+    current = (i + ITEMS.length) % ITEMS.length;
+    const it = ITEMS[current];
+    document.getElementById('modalKicker').textContent = it.kicker || '';
+    document.getElementById('modalTitle').textContent = it.title || '';
+    document.getElementById('modalBody').innerHTML = it.bodyHtml || '';
+    const groupPos = modalGroup.indexOf(current);
+    document.getElementById('modalCount').textContent = groupPos >= 0 ? `${groupPos + 1} of ${modalGroup.length}` : '';
+    muteAllHeroes(); // modal videos carry their own audio — never let a hero bleed under them
+    modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
+  }
+  function moveModal(delta){
+    const pos = modalGroup.indexOf(current);
+    if(pos < 0) return render(current + delta);
+    render(modalGroup[(pos + delta + modalGroup.length) % modalGroup.length]);
+  }
+  const close = () => {
+    modal.classList.remove('open'); modal.setAttribute('aria-hidden','true');
+    document.getElementById('modalBody').innerHTML = ''; // stop video playback
+  };
+  document.querySelectorAll('.openable').forEach(el =>
+    el.addEventListener('click', e => {
+      e.preventDefault();
+      const section = el.closest('section');
+      modalGroup = Array.from(section ? section.querySelectorAll('.openable[data-item]') : document.querySelectorAll('.openable[data-item]'))
+        .map(node => parseInt(node.dataset.item,10)).filter(Number.isFinite);
+      render(parseInt(el.dataset.item,10) || 0);
+    }));
+  document.getElementById('modalPrev').addEventListener('click', () => moveModal(-1));
+  document.getElementById('modalNext').addEventListener('click', () => moveModal(1));
+  document.getElementById('modalClose').addEventListener('click', close);
+  modal.addEventListener('click', e => { if(e.target === modal) close(); });
+
+  /* ---------- SCROLLYTELLING CAPTIONS ---------- */
+  document.querySelectorAll('.vv-scrolly').forEach(scrolly => {
+    const cap = scrolly.querySelector('.vv-caption');
+    const groups = Array.from(scrolly.querySelectorAll('.vv-group'));
+    if(!cap || !groups.length) return;
+    let currentText = null;
+    const setCap = (t) => {
+      if(t === currentText) return;
+      currentText = t;
+      cap.classList.remove('in');
+      setTimeout(() => { cap.textContent = t; cap.classList.add('in'); }, 180);
+    };
+    setCap(groups[0].dataset.text);
+    const ratios = new Map();
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => ratios.set(e.target, e.intersectionRatio));
+      let best = null, bestR = -1;
+      groups.forEach(g => { const r = ratios.get(g) || 0; if(r > bestR){ bestR = r; best = g; } });
+      if(best && bestR > 0) setCap(best.dataset.text);
+    }, { threshold:[0,0.2,0.4,0.6,0.8,1], rootMargin:'-15% 0px -15% 0px' });
+    groups.forEach(g => io.observe(g));
+  });
+
+  /* ---------- KEYBOARD (modal takes precedence over deck) ---------- */
+  document.addEventListener('keydown', e => {
+    const open = modal.classList.contains('open');
+    if(e.key === 'Escape'){ close(); setNavOpen(false); return; }
+    if(open){
+      if(e.key === 'ArrowLeft'){ e.preventDefault(); moveModal(-1); }
+      if(e.key === 'ArrowRight'){ e.preventDefault(); moveModal(1); }
+      return;
+    }
+    if(['ArrowRight','ArrowDown','PageDown'].includes(e.key)){ e.preventDefault(); moveSection(1); }
+    if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){ e.preventDefault(); moveSection(-1); }
+  });
+})();
+
+/* ---------- CLOSING STUDIO SLIDESHOW (crossfade every ~3s) ---------- */
+(function(){
+  const slides = Array.from(document.querySelectorAll('.closing-house .closing-slide'));
+  if(slides.length < 2) return;
+  // Respect reduced-motion: leave the first studio static, no cycling.
+  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let i = 0;
+  setInterval(() => {
+    const next = (i + 1) % slides.length, prev = i;
+    slides.forEach(s => { s.style.zIndex = '0'; });
+    slides[next].style.zIndex = '1';       // incoming fades in on top of the outgoing
+    slides[next].classList.add('is-active');
+    setTimeout(() => slides[prev].classList.remove('is-active'), 650);
+    i = next;
+  }, 3000);
+})();
+</script>
+</body>
+</html>
