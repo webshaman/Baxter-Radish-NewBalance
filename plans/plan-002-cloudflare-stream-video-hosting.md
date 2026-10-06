@@ -31,9 +31,12 @@ matching, and usage-based pricing on the order of a few dollars a month at our v
 ## Credentials
 Amit is adding the Cloudflare credentials to **Doppler**. Claude reads them from there (or
 from environment secrets in claude.ai cloud sessions); nothing is committed to the repo.
-- `CLOUDFLARE_ACCOUNT_ID`
+- `CLOUDFLARE_API_ACCOUNT_ID`
 - `CLOUDFLARE_STREAM_API_TOKEN` — API token scoped to *Stream: Edit*
-- Locally: `doppler run -- <command>`.
+- `CLOUDFLARE_STREAM_CUSTOMER_SUBDOMAIN` — `customer-<code>.cloudflarestream.com`
+- `CLOUDFLARE_STREAM_ENDPOINT`
+- Stored in Doppler project `klgeneral`, config `dev_personal`.
+- Locally: `doppler run -p klgeneral -c dev_personal -- <command>`.
 - Cloud sessions: the same values as environment secrets, and the environment's network
   access must allow `api.cloudflare.com`, `*.cloudflarestream.com` and
   `upload.videodelivery.net`.
@@ -64,3 +67,6 @@ from environment secrets in claude.ai cloud sessions); nothing is committed to t
   confirm it once the account is set up.
 - Whether to purge existing MP4s from git history (rewrite) or just stop adding new ones.
   Default: just stop adding; a history rewrite isn't worth the disruption.
+
+## Activities
+- activities/activity-002-plan-002-stream-volume-mbm.md

@@ -1,0 +1,148 @@
+#!/usr/bin/env python3
+"""Upload a folder of deck videos to Cloudflare Stream.
+
+Usage:
+  doppler run -p klgeneral -c dev_personal -- scripts/stream-upload <deck> <folder> [--titles titles.json]
+
+Skips files already uploaded for the same deck (matched on meta.deck + meta.file),
+waits for every video to be ready, and writes <folder>/stream-manifest.json.
+"""
+import argparse
+import json
+import os
+import re
+import subprocess
+import sys
+import time
+import urllib.request
+
+API = "https://api.cloudflare.com/client/v4/accounts/{acct}/stream"
+VIDEO_EXT = {".mp4", ".mov", ".m4v", ".webm", ".mkv"}
+
+
+def env(name):
+    value = os.environ.get(name, "").strip()
+    if not value:
+        sys.exit(f"missing env var {name} (run via doppler run)")
+    return value
+
+
+ACCT = env("CLOUDFLARE_API_ACCOUNT_ID")
+TOKEN = env("CLOUDFLARE_STREAM_API_TOKEN")
+HOST = env("CLOUDFLARE_STREAM_CUSTOMER_SUBDOMAIN").removeprefix("https://").strip("/")
+BASE = API.format(acct=ACCT)
+
+
+def api(method, path="", body=None):
+    req = urllib.request.Request(
+        BASE + path,
+        method=method,
+        data=json.dumps(body).encode() if body is not None else None,
+        headers={"Authorization": f"Bearer {TOKEN}", "Content-Type": "application/json"},
+    )
+    with urllib.request.urlopen(req) as r:
+        data = json.load(r)
+    if not data.get("success"):
+        sys.exit(f"API error {method} {path}: {data.get('errors')}")
+    return data
+
+
+def list_videos():
+    videos, cursor = [], None
+    while True:
+        q = "?limit=1000&asc=true" + (f"&start={cursor}" if cursor else "")
+        batch = api("GET", q)["result"]
+        videos += batch
+        if len(batch) < 1000:
+            return videos
+        cursor = batch[-1]["created"]
+
+
+def upload(path):
+    out = subprocess.run(
+        ["curl", "-sS", "--fail-with-body", "-X", "POST", BASE, "-H", "@-", "-F", f"file=@{path}"],
+        input=f"Authorization: Bearer {TOKEN}\n",
+        capture_output=True,
+        text=True,
+    )
+    try:
+        data = json.loads(out.stdout)
+    except json.JSONDecodeError:
+        sys.exit(f"upload failed for {path}: {out.stderr or out.stdout}")
+    if not data.get("success"):
+        sys.exit(f"upload failed for {path}: {data.get('errors')}")
+    return data["result"]["uid"]
+
+
+def title_from_filename(name):
+    stem = name
+    while os.path.splitext(stem)[1].lower() in VIDEO_EXT:
+        stem = os.path.splitext(stem)[0]
+    stem = re.sub(r"^\d+[-_ ]+", "", stem)
+    stem = re.sub(r"\s*-\s*", " - ", stem)
+    return stem.strip()
+
+
+def main():
+    p = argparse.ArgumentParser()
+    p.add_argument("deck")
+    p.add_argument("folder")
+    p.add_argument("--titles", help="JSON object mapping file name to title")
+    args = p.parse_args()
+
+    titles = json.load(open(args.titles)) if args.titles else {}
+    files = sorted(
+        f for f in os.listdir(args.folder)
+        if os.path.splitext(f)[1].lower() in VIDEO_EXT and not f.startswith(".")
+    )
+    if not files:
+        sys.exit(f"no videos in {args.folder}")
+
+    existing = {
+        v["meta"].get("file"): v["uid"]
+        for v in list_videos()
+        if v.get("meta", {}).get("deck") == args.deck
+    }
+
+    entries = []
+    for f in files:
+        title = titles.get(f) or title_from_filename(f)
+        uid = existing.get(f)
+        if uid:
+            print(f"skip    {f} ({uid})")
+        else:
+            print(f"upload  {f} ...", flush=True)
+            uid = upload(os.path.join(args.folder, f))
+        api("POST", f"/{uid}", {"meta": {"name": title, "deck": args.deck, "file": f}, "requireSignedURLs": False})
+        entries.append({"file": f, "title": title, "uid": uid})
+
+    pending = {e["uid"] for e in entries}
+    while pending:
+        for uid in list(pending):
+            v = api("GET", f"/{uid}")["result"]
+            state = v["status"]["state"]
+            if state == "error":
+                sys.exit(f"{uid} failed to process: {v['status']}")
+            if v.get("readyToStream"):
+                pending.discard(uid)
+                for e in entries:
+                    if e["uid"] == uid:
+                        e["duration"] = v.get("duration")
+                        e["width"] = v.get("input", {}).get("width")
+                        e["height"] = v.get("input", {}).get("height")
+        if pending:
+            print(f"waiting on {len(pending)} video(s) to finish processing ...", flush=True)
+            time.sleep(10)
+
+    for e in entries:
+        e["iframe"] = f"https://{HOST}/{e['uid']}/iframe"
+        e["thumbnail"] = f"https://{HOST}/{e['uid']}/thumbnails/thumbnail.jpg"
+
+    manifest = os.path.join(args.folder, "stream-manifest.json")
+    with open(manifest, "w") as fh:
+        json.dump({"deck": args.deck, "videos": entries}, fh, indent=2)
+    print(f"done: {len(entries)} videos, manifest at {manifest}")
+
+
+if __name__ == "__main__":
+    main()
