@@ -6,6 +6,7 @@ Usage:
 
 A deck is any top-level folder with an index.html. Its name comes from the
 <title>, and its date is when the folder's index.html was first committed.
+Newest first, except PINNED decks, which always lead the list.
 Run this after adding or renaming a deck, then commit decks/index.html.
 """
 import html
@@ -15,6 +16,7 @@ import subprocess
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SKIP = {"decks"}
+PINNED = {"template"}  # always listed first
 SUFFIX = re.compile(r"\s*[—–-]\s*Baxter House( Music)?\s*$")
 
 
@@ -35,6 +37,7 @@ def deck_rows():
         created = git("log", "--diff-filter=A", "--format=%cs", "--", f"{name}/index.html").splitlines()
         rows.append((name, title, created[-1] if created else ""))
     rows.sort(key=lambda r: r[2], reverse=True)
+    rows.sort(key=lambda r: r[0] not in PINNED)
     return rows
 
 
